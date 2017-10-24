@@ -1,0 +1,36 @@
+.header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 50px;
+	width: 100%;
+	@include center;
+	background: #22BE88;
+	@include headerShadow;
+	z-index: 98976876;
+	&>div {
+		width: 100%;
+		@include center;
+		justify-content: space-between;
+		&>.contacts {
+			border: none;
+			outline: none;
+			padding: 0;
+			background: url('people.svg') no-repeat center;
+			background-size: 35px 35px;
+			height: 40px;
+			width: 40px;
+			margin-left: 10px;
+		}
+		&>.logo {
+			background: url('pp.svg') no-repeat center;
+			background-size: contain;
+			height: 45px;
+			width: 45px;
+		}
+		&>#burg {
+			height: 50px;
+			width: 50px;
+		}
+	}
+}

@@ -1,0 +1,72 @@
+.menu {
+	position: absolute;
+	top: 50px;
+	right: 0;
+	width: 70%;
+	height: calc(100% - 50px);
+	background: #E3EBF0;
+	@include center;
+	align-items: flex-start;
+	@include leftShadow;
+	z-index: 10000;
+	transform: translateX(100%);
+	transition-duration: 0.3s;
+	@media #{$mq-670} {
+		width: 400px;
+	}
+	&>div {
+		@include center;
+		width: 100%;
+		flex-direction: column;
+		&>.prof {
+			margin-top: 20px;
+			width: 100%;
+			flex-direction: column;
+			@include center;
+			&>img {
+				height: 100px;
+				width: 100px;
+				border-radius: 50%;
+				overflow: hidden;
+				@include center;
+			}
+			&>h2 {
+				color: #7F8486;
+				font-weight: 400;
+			}
+		}
+		&>.options {
+			width: 100%;
+			@include center;
+			flex-direction: column;
+			border-top: 1px solid #C1C1C1;
+			margin-bottom: 20px;
+			&>button {
+				outline: none;
+				border: none;
+				height: 40px;
+				background: transparent;
+				width: 100%;
+				color: #828282;
+				border-bottom: 1px solid #C1C1C1;
+
+			}
+		}
+		&>button {
+			width: 80%;
+			outline: none;
+			border: none;
+			background: #E8454D;
+			color: #fff;
+			height: 45px;
+			border-radius: 5px;
+			@include buttonShadow;
+			text-transform: uppercase;
+		}
+	}
+}
+
+
+.menu-show {
+	transform: translateX(0%);
+}

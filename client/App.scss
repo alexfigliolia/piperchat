@@ -1,0 +1,26 @@
+@import 'components/variables';
+@import 'components/reset';
+
+html,
+body {
+	height: 100%;
+	width: 100%;
+	position: relative;
+	font-family: -apple-system, BlinkMacSystemFont, “Segoe UI”, Roboto, Helvetica, Arial, sans-serif;
+}
+
+.App {
+	height: 100%;
+	width: 100%;
+	position: relative;
+	@include center;
+	align-items: flex-end;
+}
+
+@import 'components/loader';
+@import 'components/login/login';
+@import 'components/header/header';
+@import 'components/header/burger';
+@import 'components/dashboard/dashboard';
+@import 'components/friendList/friend-list';
+@import 'components/menu/menu';
