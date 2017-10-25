@@ -59,8 +59,8 @@ export default class Me extends Component {
 		const hh = window.innerWidth < 670 ? 50 : 80;
 		let x = this.state.left < 0 ? 0 : this.state.left;
 		let y = this.state.top < hh ? hh : this.state.top;
-		x = this.state.left > window.innerWidth - 100 ? window.innerWidth - 100 : x;
-		y = this.state.top > window.innerHeight - hh ? window.innerHeight - 140 : y;
+		x = this.state.left > window.innerWidth - this.state.width ? window.innerWidth - this.state.width : x;
+		y = this.state.top > window.innerHeight - hh ? window.innerHeight - this.state.height : y;
 		return (
 			<video
 				onMouseDown={this.mouseDown}
