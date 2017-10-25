@@ -41,6 +41,7 @@ export default class Dashboard extends Component {
 		navigator.mediaDevices.getUserMedia(c)
 			.then((stream) => {
 			  this.onInitConnect(stream);
+			  console.log(stream);
 			})
 			.catch((err) => {
 				console.log(err);

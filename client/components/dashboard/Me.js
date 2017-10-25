@@ -64,6 +64,7 @@ export default class Me extends Component {
     		height="130" 
     		width="100"
     		autoPlay
+    		playsInline
     		style={{
     			top: `${y}px`,
     			left: `${x}px`
