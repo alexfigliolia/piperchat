@@ -15,8 +15,8 @@ export default class Me extends Component {
 		this.refs.me.onloadedmetadata = (e) => {
 	    this.refs.me.play();
 	    this.setState({ 
-	    	height: this.refs.me.videoHeight/3, 
-	    	width: this.refs.me.videoWidth/3
+	    	height: this.refs.me.videoHeight/3.5, 
+	    	width: this.refs.me.videoWidth/3.5
 	    });
 	  }
 	}
