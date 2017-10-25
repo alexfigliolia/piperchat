@@ -41,7 +41,7 @@ export default class Dashboard extends Component {
 		navigator.mediaDevices.getUserMedia(c)
 			.then((stream) => {
 			  this.onInitConnect(stream);
-			  console.log(stream);
+			  console.log(stream.getVideoTracks());
 			})
 			.catch((err) => {
 				console.log(err);
@@ -53,16 +53,16 @@ export default class Dashboard extends Component {
 
 	onInitConnect = (stream) => {
 		const me = document.querySelector('#me');
-		// const you = document.querySelector('#you');
+		const you = document.querySelector('#you');
 	  if ("srcObject" in me) {
 	    me.srcObject = stream;
-	    // you.srcObject = stream;
+	    you.srcObject = stream;
 	  } else if(URL in window) {
 	    me.src = window.URL.createObjectURL(stream);
-	    // you.src = window.URL.createObjectURL(stream);
+	    you.src = window.URL.createObjectURL(stream);
 	  } else {
 	  	me.src = window.webkitURL.createObjectURL(stream);
-	    // you.src = window.webkitURL.createObjectURL(stream);
+	    you.src = window.webkitURL.createObjectURL(stream);
 	  }
     this.setState({ meUrl: stream});
     this.stream = stream;

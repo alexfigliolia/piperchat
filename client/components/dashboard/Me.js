@@ -5,13 +5,17 @@ export default class Me extends Component {
 		super(props);
 		this.state = {
 			top: window.innerHeight - 150,
-			left: window.innerWidth - 120
+			left: window.innerWidth - 120,
+			height: 130,
+			width: 100
 		}
 	}
 
 	componentDidMount(){
-		document.getElementById('me').onloadedmetadata = function(e) {
-	    document.getElementById('me').play();
+		const me = document.getElementById('me');
+		me.onloadedmetadata = (e) => {
+	    me.play();
+	    this.setState({ height: me.videoHeight/3, width: me.videoWidth/3 });
 	  };
 	}
 
@@ -61,8 +65,8 @@ export default class Me extends Component {
 				onTouchEnd={this.touchEnd}
 				id="me" 
 				ref="me"
-    		height="130" 
-    		width="100"
+    		height={this.state.height}
+    		width={this.state.width}
     		autoPlay
     		playsInline
     		style={{
