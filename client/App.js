@@ -94,7 +94,9 @@ export default class App extends Component {
 
 	render = () => {
 		return(
-			<section className="App" style={{height: window.innerHeight}}>
+			<section 
+				className="App" 
+				style={{height: window.innerHeight}}>
 
 				{
 					!this.state.loggedIn &&

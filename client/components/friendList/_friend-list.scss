@@ -10,8 +10,12 @@
 	z-index: 10000;
 	transform: translateX(-100%);
 	transition-duration: 0.3s;
+	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
 	@media #{$mq-670} {
 		width: 400px;
+		height: calc(100% - 80px);
+		top: 80px;
 	}
 	&>div {
 		@include center;
@@ -36,7 +40,7 @@
 			@include center;
 			border-bottom: 1px solid #D0D7DB;
 			&>input {
-				height: 30px;
+				height: 40px;
 				width: 100%;
 				margin: 0;
 				padding: 0;
@@ -56,6 +60,10 @@
 				height: 40px;
 				@include center;
 				border-bottom: 1px solid #D0D7DB;
+				cursor: pointer;
+				&:hover {
+					background: #fff;
+				}
 				&>div {
 					@include center;
 					width: 100%;

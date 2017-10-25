@@ -10,9 +10,13 @@
 	@include leftShadow;
 	z-index: 10000;
 	transform: translateX(100%);
+	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
 	transition-duration: 0.3s;
 	@media #{$mq-670} {
 		width: 400px;
+		height: calc(100% - 80px);
+		top: 80px;
 	}
 	&>div {
 		@include center;

@@ -9,9 +9,16 @@ export default class Dashboard extends Component {
 
 		}
 	}
+
+	touchStart = (e) => {
+		e.preventDefault();
+	}
+
 	render = () => {
 		return (
-			<section className="dashboard">
+			<section 
+				className="dashboard"
+				onTouchStart={this.touchStart}>
 				<div>
 					<You
 						height={this.props.height}

@@ -5,9 +5,12 @@
 	height: 50px;
 	width: 100%;
 	@include center;
-	background: #22BE88;
+	background: #0F776E;
 	@include headerShadow;
 	z-index: 98976876;
+	@media #{$mq-670} {
+		height: 80px;
+	}
 	&>div {
 		width: 100%;
 		@include center;
@@ -21,16 +24,30 @@
 			height: 40px;
 			width: 40px;
 			margin-left: 10px;
+			@media #{$mq-670} {
+				width: 60px;
+				height: 60px;
+				background-size: 45px 45px;
+			}
 		}
 		&>.logo {
-			background: url('pp.svg') no-repeat center;
+			background: url('piper.jpg') no-repeat center;
 			background-size: contain;
+			margin-top: 2.5px;
 			height: 45px;
-			width: 45px;
+			width: 100px;
+			@media #{$mq-670} {
+				width: 150px;
+				height: 75px;
+			}
 		}
 		&>#burg {
-			height: 50px;
-			width: 50px;
+			height: 40px;
+			width: 40px;
+			@media #{$mq-670} {
+				width: 60px;
+				height: 60px;
+			}
 		}
 	}
 }
