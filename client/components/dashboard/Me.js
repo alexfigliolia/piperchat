@@ -12,11 +12,13 @@ export default class Me extends Component {
 	}
 
 	componentDidMount(){
-		const me = document.getElementById('me');
-		me.onloadedmetadata = (e) => {
-	    me.play();
-	    this.setState({ height: me.videoHeight/3, width: me.videoWidth/3 });
-	  };
+		this.refs.me.onloadedmetadata = (e) => {
+	    this.refs.me.play();
+	    this.setState({ 
+	    	height: this.refs.me.videoHeight/3, 
+	    	width: this.refs.me.videoWidth/3
+	    });
+	  }
 	}
 
 	moveMe = (e) => {
