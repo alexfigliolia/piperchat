@@ -9,13 +9,17 @@ export default class Me extends Component {
 		}
 	}
 
+	componentDidMount(){
+		document.getElementById('me').onloadedmetadata = function(e) {
+	    document.getElementById('me').play();
+	  };
+	}
+
 	moveMe = (e) => {
-		console.log(e.clientY + " - " + e.clientX);
 		this.setState({top: e.clientY - 70, left: e.clientX - 50});
 	}
 
 	touchMe = (e) => {
-		console.log(e.touches[0].clientY + " - " + e.touches[0].clientX);
 		this.setState({
 			top: e.touches[0].clientY - 70, 
 			left: e.touches[0].clientX - 50
@@ -23,23 +27,19 @@ export default class Me extends Component {
 	}
 
 	mouseDown = (e) => {
-		console.log('holding');
 		window.addEventListener('mousemove', this.moveMe, true);
 	}
 
 	mouseUp = (e) => {
-		console.log('released');
 		window.removeEventListener('mousemove', this.moveMe, true);
 		this.setState({top: e.clientY - 70, left: e.clientX - 50});
 	}
 
 	touchStart = (e) => {
-		console.log('holding');
 		window.addEventListener('touchmove', this.touchMe, true);
 	}
 
 	touchEnd = (e) => {
-		console.log('holding');
 		window.removeEventListener('touchmove', this.touchMe, true);
 		this.setState({
 			top: e.touches[0].clientY - 70, 
@@ -63,11 +63,11 @@ export default class Me extends Component {
 				ref="me"
     		height="130" 
     		width="100"
+    		autoPlay
     		style={{
     			top: `${y}px`,
     			left: `${x}px`
-    		}}
-    		src={this.props.src}></video>
+    		}}></video>
 		);
 	}
 }

@@ -5,13 +5,20 @@ export default class You extends Component {
   	super(props);
   }
 
+  componentDidMount(){
+    document.getElementById('you').onloadedmetadata = function(e) {
+      document.getElementById('you').play();
+    };
+  }
+
   render() {
     return (
     	<video 
-        src={this.props.src}
+        autoPlay
     		height={this.props.height - 50} 
     		width={this.props.width}
-        ref="you"></video>
+        ref="you"
+        id="you"></video>
     );
   }
 }

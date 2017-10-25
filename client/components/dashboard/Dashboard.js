@@ -11,29 +11,55 @@ export default class Dashboard extends Component {
 	}
 
 	componentDidMount(){
-		const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-		const v = {
-			video: {
-				mandatory: {
-					minWidth: '100px',
-					minHeight: '130px'
-				}
-			},
-			audio: true
+		if (navigator.mediaDevices === undefined) {
+		  navigator.mediaDevices = {};
+		}
+		if (navigator.mediaDevices.getUserMedia === undefined) {
+		  navigator.mediaDevices.getUserMedia = function(constraints) {
+				const getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+		    if (!getUserMedia) {
+		      return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+		    }
+		    return new Promise(function(resolve, reject) {
+		      getUserMedia.call(navigator, constraints, resolve, reject);
+		    });
+		  }
+		}
+		const c  = { 
+			audio: false, 
+			video: { 
+				frameRate: { 
+					ideal: 10, 
+					max: 15 
+				},
+				width: 100,
+				height: 130
+				// facingMode: (front? "user" : "environment") 
+			} 
 		};
-		getUserMedia.call(navigator, v, this.onInitConnect, this.onFailConnect);
+		navigator.mediaDevices.getUserMedia(c)
+			.then((stream) => {
+			  this.onInitConnect(stream);
+			})
+			.catch((err) => {
+				console.log(err);
+			  this.onFailConnect();
+			});
 		this.pc = new RTCPeerConnection(null);
 		console.log(this.pc);
 	}
 
 	onInitConnect = (stream) => {
-		if (window.URL) {
-    	this.setState({ meUrl: window.URL.createObjectURL(stream)});
-    } else if(window.webkitURL){	
-    	this.setState({ meUrl: window.webkitURL.createObjectURL(stream)});
-    } else{
-    	this.setState({ meUrl: stream});
-    }
+		const me = document.querySelector('#me');
+		const you = document.querySelector('#you');
+	  if ("srcObject" in me) {
+	    me.srcObject = stream;
+	    you.srcObject = stream;
+	  } else {
+	    me.src = window.URL.createObjectURL(stream);
+	    you.src = window.URL.createObjectURL(stream);
+	  }
+    this.setState({ meUrl: stream});
     this.stream = stream;
 	}
 
