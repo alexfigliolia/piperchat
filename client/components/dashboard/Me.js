@@ -9,37 +9,6 @@ export default class Me extends Component {
 		}
 	}
 
-	componentDidMount(){
-		const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-		let cameraStream;
-		const v = {
-			video: {
-				mandatory: {
-					minWidth: 100,
-					minHeight: 130
-				}
-			},
-			audio: true
-		};
-		getUserMedia.call(navigator, v, this.onInitConnect, this.onFailConnect);
-		// navigator.getUserMedia(v, this.onInitConnect, this.onFailConnect);
-		this.pc = new RTCPeerConnection(null);
-		console.log(this.pc);
-	}
-
-	onInitConnect = (stream) => {
-		if (window.webkitURL || window.URL) {
-			const URL = window.webkitURL || window.URL;
-    	this.refs.me.src = window.URL.createObjectURL(stream);
-    } else {
-    	this.refs.me.src = stream;
-    }
-	}
-
-	onFailConnect = () => {
-		console.log('fail');
-	}
-
 	moveMe = (e) => {
 		console.log(e.clientY + " - " + e.clientX);
 		this.setState({top: e.clientY - 70, left: e.clientX - 50});
@@ -97,7 +66,8 @@ export default class Me extends Component {
     		style={{
     			top: `${y}px`,
     			left: `${x}px`
-    		}}></video>
+    		}}
+    		src={this.props.src}></video>
 		);
 	}
 }

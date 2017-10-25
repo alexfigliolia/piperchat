@@ -8,8 +8,10 @@ export default class You extends Component {
   render() {
     return (
     	<video 
+        src={this.props.src}
     		height={this.props.height - 50} 
-    		width={this.props.width}></video>
+    		width={this.props.width}
+        ref="you"></video>
     );
   }
 }
