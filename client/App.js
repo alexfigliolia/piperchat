@@ -46,7 +46,6 @@ export default class App extends Component {
 		if(this.loader !== null) {
 			this.loader.remove();
 		}
-		console.log(window.navigator.mediaDevices);
 		window.addEventListener('resize', () => {
 			this.setState({ height: window.innerHeight, width: window.innerWidth });
 		});
