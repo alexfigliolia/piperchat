@@ -32,6 +32,7 @@ export default class Dashboard extends Component {
 					ideal: 10, 
 					max: 15 
 				},
+				facingMode: "user"
 				// width: 100,
 				// height: 130
 				// facingMode: (front? "user" : "environment") 
@@ -55,9 +56,12 @@ export default class Dashboard extends Component {
 	  if ("srcObject" in me) {
 	    me.srcObject = stream;
 	    you.srcObject = stream;
-	  } else {
+	  } else if(URL in window) {
 	    me.src = window.URL.createObjectURL(stream);
 	    you.src = window.URL.createObjectURL(stream);
+	  } else {
+	  	me.src = window.webkitURL.createObjectURL(stream);
+	    you.src = window.webkitURL.createObjectURL(stream);
 	  }
     this.setState({ meUrl: stream});
     this.stream = stream;
