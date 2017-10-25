@@ -11,8 +11,13 @@ export default class Dashboard extends Component {
 	}
 
 	componentDidMount(){
+		console.log(navigator.mediaDevices.getUserMedia);
+		let nav;
 		if (navigator.mediaDevices === undefined) {
 		  navigator.mediaDevices = {};
+		  nav = navigator;
+		} else {
+			nav = navigator.mediaDevices;
 		}
 		if (navigator.mediaDevices.getUserMedia === undefined) {
 		  navigator.mediaDevices.getUserMedia = function(constraints) {
@@ -24,7 +29,7 @@ export default class Dashboard extends Component {
 		      getUserMedia.call(navigator, constraints, resolve, reject);
 		    });
 		  }
-		}
+		} else {}
 		const c  = { 
 			audio: false, 
 			video: { 
@@ -37,7 +42,7 @@ export default class Dashboard extends Component {
 				// facingMode: (front? "user" : "environment") 
 			} 
 		};
-		navigator.mediaDevices.getUserMedia(c)
+		nav.getUserMedia(c)
 			.then((stream) => {
 			  this.onInitConnect(stream);
 			})
