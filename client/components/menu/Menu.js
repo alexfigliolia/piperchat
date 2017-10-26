@@ -76,7 +76,6 @@ export default class Menu extends PureComponent {
 									type="file" 
 									name="myImage" 
 									accept="image/*" 
-									capture="camera"
 									onChange={this.handleImage} />
 							</div>
 						</div>
