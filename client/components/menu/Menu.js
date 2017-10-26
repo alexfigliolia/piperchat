@@ -22,12 +22,18 @@ export default class Menu extends PureComponent {
 		if(e.target.value === "") e.target.parentNode.classList.remove('focus');
 	}
 
+	handleChange = (e) => {
+		this.setState({
+			profText: e.target.value === "" ? "Close" : "Save"
+		});
+	}
+
 	makeChanges = () => {
 		this.setState((prevState, prevProps) => {
 			return {
 				profClasses: prevState.profClasses === "prof" ? "prof prof-flip" : "prof",
 				profileClasses: prevState.profileClasses === "profile" ? "profile profile-show" : "profile",
-				profText: prevState.profText === "Profile" ? "Save" : "Profile"
+				profText: prevState.profText === "Profile" ? "Close" : "Profile"
 			}
 		});
 	}
@@ -43,8 +49,8 @@ export default class Menu extends PureComponent {
  			const name = this.refs.newName.value;
 	    this.props.updateName(name);
 	    this.refs.newName.value = "";
-	    this.refs.newName.blur();
-	    this.refs.newName.classList.remove('focus');
+	    this.refs.newName.parentNode.blur();
+	    this.refs.newName.parentNode.classList.remove('focus');
 	    this.makeChanges();
  		} else {
  			this.makeChanges();
@@ -91,6 +97,7 @@ export default class Menu extends PureComponent {
 						<div className="input">
 							<label htmlFor="pn">Name</label>
 							<input
+								onChange={this.handleChange}
 								onFocus={this.onFocus}
 								onBlur={this.onBlur} 
 								id="pn" 

@@ -3,21 +3,26 @@ import React, { Component } from 'react';
 export default class FriendList extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-
-		}
 	}
+
+	handleSearch = (e) => {
+		this.props.handleSearch(e.target.value);
+	}
+
 	render = () => {
 		return (
 			<section className={this.props.classes}>
 				<div>
 					<h2>Your Friends</h2>
 					<div className="add-friend">
-						<input type="text" placeholder="Search Contacts"/>
+						<input 
+							type="search" 
+							placeholder="Search Contacts"
+							onChange={this.handleSearch} />
 					</div>
 					<div className="list">
 						{
-							this.props.contacts.map((dude, i) => {
+							this.props.search.map((dude, i) => {
 								return (
 									<div 
 										className="contact"

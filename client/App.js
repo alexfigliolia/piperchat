@@ -22,6 +22,11 @@ export default class App extends Component {
       	{ name: "Erica Figliolia", online: false, image: "cityweb-small.jpg" },
       	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" }
       ],
+      search: [
+      	{ name: "Steve Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Erica Figliolia", online: false, image: "cityweb-small.jpg" },
+      	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" }
+      ],
       openChats: [],
       height: window.innerHeight,
       width: window.innerWidth
@@ -78,12 +83,19 @@ export default class App extends Component {
     });
   }
 
-  handleNewImage = (img) => {
-  	this.state.user.image = img;
-  }
+  handleNewImage = (img) => this.state.user.image = img;
 
-  updateName = (name) => {
-  	this.state.user.name = name;
+  updateName = (name) => this.state.user.name = name;
+
+  handleSearch = (val) => {
+  	const results = [];
+    for(let i = 0; i < this.state.contacts.length; i++) {
+      let friend = this.state.contacts[i].name.toLowerCase();
+      if(friend.indexOf(val.toLowerCase()) !== -1) {
+        results.push(this.state.contacts[i]);
+      }
+    }
+    this.setState({ search: results });
   }
 
 	render = () => {
@@ -116,7 +128,8 @@ export default class App extends Component {
 					this.state.loggedIn &&
 					<FriendList
 						classes={this.state.friendListClasses}
-						contacts={this.state.contacts} />
+						search={this.state.search}
+						handleSearch={this.handleSearch} />
 				}
 
 				{
