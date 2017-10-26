@@ -61,8 +61,15 @@
 				@include center;
 				border-bottom: 1px solid #D0D7DB;
 				cursor: pointer;
+				position: relative;
+				transition-duration: 0.3s;
 				&:hover {
 					background: #fff;
+					transform: translateX(100px);
+					&>.call-message>div>button {
+						transform: rotate(0deg) scale(1);
+						transition-delay: 0.1s;
+					}
 				}
 				&>div {
 					@include center;
@@ -87,11 +94,47 @@
 						font-weight: 500;
 						font-size: 1em;
 					}
-					&>div {
+					&>.online {
 						height: 10px;
 						width: 10px;
 						background: green;
 						border-radius: 50%;
+					}
+				}
+				&>.call-message {
+					position: absolute;
+					top: 0;
+					left: 0;
+					height: calc(100% + 1px);
+					width: 100px;
+					@include center;
+					transform: translateX(-100%);
+					border-bottom: 1px solid #D0D7DB;
+					border-right: 1px solid #D0D7DB;
+					background: #fff;
+					&>div {
+						width: 72.5px;
+						height: 100%;
+						@include center;
+						justify-content: space-between;
+						&>button {
+							outline: none;
+							border: none;
+							height: 30px;
+							width: 30px;
+							background: blue;
+							border-radius: 50%;
+							background: #557AF0 url('chat.svg') no-repeat center;
+							background-size: 15px 15px;
+							transform: rotate(-180deg) scale(0);
+							transition-duration: 0.35s;
+							@include buttonShadow;
+							padding: 0;
+						}
+						&>button:last-of-type {
+							background: #4DDB90 url('call.svg') no-repeat center;
+							background-size: 17.5px 17.5px;
+						}
 					}
 				}
 			}

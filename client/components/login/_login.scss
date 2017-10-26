@@ -153,3 +153,65 @@
 		}
 	}
 }
+
+
+
+.input {
+	width: 85%;
+	max-width: 400px;
+	position: relative;
+	@include center;
+	flex-direction: column;
+	margin-bottom: 12.5px;
+	position: relative;
+	&::after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		width: 0%;
+		height: 2px;
+		background: #fff;
+		transition-duration: 0.5s;
+	}
+	&::before {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 1px;
+		background: #fff;
+	}
+	&>label {
+		position: absolute;
+		top: 0;
+		left: 0;
+		color: #fff;
+		transform: translate(7.5%, 20px) scale(1.1);
+		width: 100%;
+		transition-duration: 0.3s;
+		font-weight: 200;
+	}
+	&>input {
+		appearance: none;
+		padding: 0px;
+		margin: 0;
+		height: 50px;
+		width: 100%;
+		outline: none;
+		border: none;
+		background: transparent;
+		color: #fff;
+		font-weight: 200;
+	}
+}
+.focus {
+	&::after {
+		width: 100%;
+		left: 0%;
+	}
+	&>label {
+		transform: translate(0%, -7.5px) scale(1);
+	}
+}

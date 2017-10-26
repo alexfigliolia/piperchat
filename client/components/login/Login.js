@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Meteor } from 'meteor/meteor';
 import { validateEmail, validateName } from '../../helpers/helpers';
 
 export default class Login extends Component {

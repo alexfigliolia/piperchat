@@ -12,7 +12,8 @@ export default class Header extends Component {
     		<div>
     			<button 
             onClick={this.props.friends}
-            className="contacts"></button>
+            className="contacts">
+          </button>
     			<div className="logo"></div>
     			<Burger
     				classes={this.props.burgerStuff} 

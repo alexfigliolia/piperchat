@@ -4,38 +4,25 @@ import Header from './components/header/Header';
 import Dashboard from './components/dashboard/Dashboard';
 import FriendList from './components/friendList/FriendList';
 import Menu from './components/menu/Menu';
+import Chatbox from './components/chatbox/Chatbox';
 
 export default class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			loggedIn: true,
-			user: {
-				name: 'Alex Figliolia',
-				image: "cityweb-small.jpg"
-			},
+			user: { name: 'Alex Figliolia', image: "cityweb-small.jpg" },
 			burgerClasses: "hamburglar is-open",
       burgerToggle: true,
       friendListClasses: "friend-list",
       friendToggle: true,
       menuClasses: "menu",
       contacts: [
-      	{
-      		name: "Some Guy",
-      		online: true,
-      		image: "cityweb-small.jpg"
-      	},
-      	{
-      		name: "Another Guy",
-      		online: false,
-      		image: "cityweb-small.jpg"
-      	},
-      	{
-      		name: "Dis Guy",
-      		online: true,
-      		image: "cityweb-small.jpg"
-      	}
+      	{ name: "Steve Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Erica Figliolia", online: false, image: "cityweb-small.jpg" },
+      	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" }
       ],
+      openChats: [],
       height: window.innerHeight,
       width: window.innerWidth
 		}
@@ -91,6 +78,14 @@ export default class App extends Component {
     });
   }
 
+  handleNewImage = (img) => {
+  	this.state.user.image = img;
+  }
+
+  updateName = (name) => {
+  	this.state.user.name = name;
+  }
+
 	render = () => {
 		return(
 			<section 
@@ -128,7 +123,16 @@ export default class App extends Component {
 					this.state.loggedIn &&
 					<Menu
 						classes={this.state.menuClasses}
-						user={this.state.user} />
+						user={this.state.user}
+						handleNewImage={this.handleNewImage}
+						updateName={this.updateName} />
+				}
+
+				{
+					this.state.loggedIn &&
+					this.state.openChats.map((chat, i) => {
+						return <Chatbox />
+					})
 				}
 
 			</section>

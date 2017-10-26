@@ -26,9 +26,16 @@ export default class FriendList extends Component {
 											<img src={dude.image} alt="friend" />
 											<h3>{dude.name}</h3>
 											<div
+												className="online"
 												style={{
 													background: dude.online ? "#51C68C" : "#A8AEB1"
 												}}></div>
+										</div>
+										<div className="call-message">
+											<div>
+												<button></button>
+												<button></button>
+											</div>
 										</div>
 									</div>
 								);

@@ -22,21 +22,109 @@
 		@include center;
 		width: 100%;
 		flex-direction: column;
+		position: relative;
 		&>.prof {
 			margin-top: 20px;
 			width: 100%;
 			flex-direction: column;
 			@include center;
-			&>img {
+			&>.image {
 				height: 100px;
 				width: 100px;
 				border-radius: 50%;
 				overflow: hidden;
 				@include center;
+				transition-duration: 0.3s;
+				position: relative;
+				&>img {
+					@include center;
+					height: 100px;
+					width: auto;
+					backface-visibility: hidden;
+					transition-duration: 0.4s;
+					overflow: hidden;
+				}
+				&>.upload{
+					@include center;
+					position: absolute;
+					top: 0;
+					left: 0;
+					height: 100%;
+					width: 100%;
+					color: transparent;
+					transform: rotateY(-180deg);
+					backface-visibility: hidden;
+					transition-duration: 0.3s;
+					transform-origin: 50% 50%;
+					background: #fff url('upload.svg') no-repeat center;
+					background-size: 50px 50px;
+					&>input {
+						outline: none;
+						border: none;
+						-moz-appearance: none;
+						-webkit-appearance: none;
+						-ms-appearance: none;
+						appearance: none;
+						height: 100%;
+						width: 100%;
+						color: transparent;
+						background: transparent;
+						opacity: 0;
+					}
+				}
 			}
 			&>h2 {
 				color: #7F8486;
 				font-weight: 400;
+				width: 100%;
+				text-align: center;
+				transition-duration: 0.3s;
+			}
+		}
+		&>.prof-flip {
+			&>.image {
+				transform: rotateY(180deg);
+				@include headerShadow;
+				&>.upload {
+					transform: rotateY(0deg);
+				}
+				&>img {
+					opacity: 0;
+				}
+			}
+			&>h2 {
+				transform: translateX(-100%);
+			}
+		}
+		&>.profile {
+			position: absolute;
+			top: 120px;
+			left: 0;
+			height: auto;
+			width: 100%;
+			@include center;
+			&>.input {
+				@include center;
+				flex-direction: column;
+				z-index: 40;
+				transform: translateX(110%);
+				transition-duration: 0.3s;
+				position: relative;
+				&::after,
+				&::before {
+					background: $plite;
+				}
+				&>label {
+					color: $piper;
+				}
+				&>input {
+					color: $plite;
+				}
+			}
+		}
+		&>.profile-show {
+			&>.input {
+				transform: translateX(0%);
 			}
 		}
 		&>.options {
@@ -53,6 +141,7 @@
 				width: 100%;
 				color: #828282;
 				border-bottom: 1px solid #C1C1C1;
+				transition-duration: 0.3s;
 
 			}
 		}
