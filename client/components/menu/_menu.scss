@@ -43,6 +43,7 @@
 					backface-visibility: hidden;
 					transition-duration: 0.4s;
 					overflow: hidden;
+					border-radius: 50%;
 				}
 				&>.upload{
 					@include center;
@@ -98,7 +99,7 @@
 			}
 		}
 		&>.profile {
-			position: absolute;
+			position: fixed;
 			top: 120px;
 			left: 0;
 			height: auto;
@@ -107,7 +108,6 @@
 			&>.input {
 				@include center;
 				flex-direction: column;
-				z-index: 40;
 				transform: translateX(110%);
 				transition-duration: 0.3s;
 				position: relative;
@@ -148,6 +148,7 @@
 		}
 		&>button {
 			width: 80%;
+			max-width: 250px;
 			outline: none;
 			border: none;
 			background: #E8454D;

@@ -1,37 +1,95 @@
 import React, { Component, PropTypes } from 'react';
+import update from 'immutability-helper';
 
 export default class Chatbox extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			me: 'Alex',
-			currentChat: 'steve',
+      classes: "chatbox",
+			me: 'Alex Figliolia',
+			currentChat: 'Steve Figliolia',
 			messages: [
-				{ to: 'Alex', from: 'Steve', text: 'hello', date: new Date() },
-				{ to: 'Steve', from: 'Alex', text: 'hello', date: new Date() }
+				{ to: 'Alex Figliolia', from: 'Steve Figliolia', text: 'hello', date: new Date() },
+				{ to: 'Steve Figliolia', from: 'Alex Figliolia', text: 'hello', date: new Date() }
 			]
 		}
 	}
 
+  componentDidMount(){
+    this.mc = document.getElementById('mc');
+  }
+
+  handleEnter = (e) => {
+    if(e.which === 13) {
+      e.preventDefault();
+      this.sendMessage();
+    }
+  }
+
+  sendMessage = () => {
+    if(this.refs.m.value !== "") {
+      this.refs.send.classList.add('fly');
+      setTimeout(() => { this.refs.send.classList.add('return')}, 300);
+      setTimeout(() => { this.refs.send.classList.add('came-back')}, 350);
+      setTimeout(() => { this.refs.send.classList.remove('fly', 'return', 'came-back')}, 600);
+      const m = { to: 'Steve Figliolia', from: 'Alex Figliolia', text: this.refs.m.value, date: new Date()};
+      const s = this.state.messages;
+      const ns = update(s, {$push: [m]});
+      this.setState({ messages: ns }, () => {
+        this.mc.scrollTop = this.mc.scrollHeight;
+        this.refs.m.value = '';
+      });
+    }
+  }
+
+  hideChat = () => {
+    this.setState((prevState, prevProps) => {
+      return {
+        classes: prevState.classes === "chatbox" ? "chatbox chatbox-hide" : "chatbox"
+      }
+    });
+  }
+
 	render() {
     return (
-      <div className="chatbox chatbox-hide">
+      <div className={this.state.classes}>
       	<div>
-      		<div className="with">Some dude</div>
-      		<div className="messages">
+      		<div className="with">
+            {this.state.currentChat}
+            <button 
+              onClick={this.props.closeChat}
+              className="closer"></button>
+            <button
+              style={{
+                transform: this.state.classes === "chatbox chatbox-hide" ? 
+                "rotate(180deg)" : "rotate(0deg)"
+              }} 
+              onClick={this.hideChat}
+              className="hide"></button>
+          </div>
+      		<div className="messages" id="mc">
       			{
       				this.state.messages.map((message, i) => {
       					return (
       						<div 
       							className={message.from === this.state.me ? 
-      							"message message-mine" : "message message-yours"}>{message.text}</div>
+      							"message message-mine" : "message message-yours"}
+                    key={i}>{message.text}</div>
       					);
       				})
       			}
       		</div>
       		<div className="send-messages">
-      			<textarea placeholder="Message"></textarea>
-      			<button className="send"></button>
+      			<textarea
+              onKeyDown={this.handleEnter}
+              ref="m" 
+              placeholder="Message"></textarea>
+      			<button 
+              className="send"
+              ref="send"
+              onClick={this.sendMessage}>
+              <img src="send.svg" alt="send message" />
+            </button>
       		</div>
       	</div>
       </div>

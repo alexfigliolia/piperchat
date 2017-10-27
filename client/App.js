@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import update from 'immutability-helper';
 import Login from './components/login/Login';
 import Header from './components/header/Header';
 import Dashboard from './components/dashboard/Dashboard';
@@ -29,7 +30,8 @@ export default class App extends Component {
       ],
       openChats: [],
       height: window.innerHeight,
-      width: window.innerWidth
+      width: window.innerWidth,
+      currentChat: "Steve Figliolia",
 		}
 		this.loader = document.getElementById('appLoader');
 	}
@@ -83,9 +85,17 @@ export default class App extends Component {
     });
   }
 
-  handleNewImage = (img) => this.state.user.image = img;
+  handleNewImage = (img) => {
+  	const s = this.state.user;
+  	const ns = update(s, {image: {$set: img}});
+  	this.setState({user: ns});
+  }
 
-  updateName = (name) => this.state.user.name = name;
+  updateName = (name) => {
+  	const s = this.state.user;
+  	const ns = update(s, {name: {$set: name}});
+  	this.setState({user: ns});
+  }
 
   handleSearch = (val) => {
   	const results = [];
@@ -96,6 +106,10 @@ export default class App extends Component {
       }
     }
     this.setState({ search: results });
+  }
+
+  closeChat = () => {
+  	this.setState({currentChat: ""});
   }
 
 	render = () => {
@@ -142,10 +156,9 @@ export default class App extends Component {
 				}
 
 				{
-					this.state.loggedIn &&
-					this.state.openChats.map((chat, i) => {
-						return <Chatbox />
-					})
+					this.state.currentChat !== "" &&
+					<Chatbox
+						closeChat={this.closeChat} />
 				}
 
 			</section>
