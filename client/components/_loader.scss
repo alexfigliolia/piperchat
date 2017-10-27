@@ -7,7 +7,7 @@
 	overflow: hidden;
 	width: 100%;
 	@include backgroundBottom;
-	z-index: 2000000000000;
+	z-index: 20000000000000987;
 	@include center;
 	&>div {
 		@include center;
@@ -73,9 +73,14 @@
 }
 
 .app-loader-hidden {
-	transform: translateY(-100%);
+	transform: scaleY(-100%);
 	transform-origin: 50% 100%;
 	transition-duration: 0.3s;
 	transition-delay: 0.3s;
 	transition-timing-function: ease-in-out;
+  & .loader {
+    transform: scale(0);
+    transition-duration: 0.3s;
+    transition-delay: 0s;
+  }
 }

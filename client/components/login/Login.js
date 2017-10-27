@@ -47,7 +47,7 @@ export default class Login extends Component {
       if(err){
         this.setState({ error: err.reason, buttonClasses: "login-button" });
       } else {
-        this.setState({ error: "", buttonClasses: "login-button, login-thinking, login-thunk" });
+        this.setState({ error: "", buttonClasses: "login-button login-thinking login-thunk" });
       }
     });
 	}
@@ -61,7 +61,7 @@ export default class Login extends Component {
           if(err) {
             this.setState({ error: err.reason, buttonClasses: "login-button" });
           } else {
-            this.setState({ error: "", buttonClasses: "login-button, login-thinking, login-thunk" });
+            this.setState({ error: "", buttonClasses: "login-button login-thinking login-thunk" });
           }
         });
       }
@@ -70,9 +70,9 @@ export default class Login extends Component {
 
   render = () => {
     return (
-      <section className="login">
+      <section className={this.props.classes}>
       	<div>
-      	<img src="pp.svg" alt="pied piper" />
+      	  <img src="pp.svg" alt="pied piper" />
       		<h1>{this.state.action}</h1>
       		<div>
       			{

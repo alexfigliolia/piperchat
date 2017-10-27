@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-// import { Schedules } from '../api/schedules.js';
+import { BuddyLists } from '../api/buddyList.js';
 // import { Employees } from '../api/employees.js';
 // import { Group } from '../api/group.js';
 import { createContainer } from 'meteor/react-meteor-data';
@@ -8,32 +8,32 @@ import App from './App.js';
 export default AppContainer = createContainer(() => {
   const users = Meteor.subscribe('userData');
   const id = Meteor.userId();
-  // const user = Meteor.user();
-  // const userSchedules = Meteor.subscribe('schedules');
+  const user = Meteor.user();
+  const userFriends = Meteor.subscribe('buddyLists');
   // const userEmployees = Meteor.subscribe('employees');
   // const userGroup = Meteor.subscribe('group');
-  // const schedulesReady = userSchedules.ready();
+  const friendsReady = userFriends.ready();
   // const employeesReady = userEmployees.ready();
   // const groupReady = userGroup.ready();
-  // const schedules = Schedules.find({owner: id}, {sort: {'schedule.for': 1}}).fetch();
+  const friends = BuddyLists.find({owner: id}).fetch();
   // const employees = Employees.find({owner: id}).fetch();
   // const group = Group.find({owner: id}).fetch();
-  // const schedulesExist = schedulesReady && !!schedules;
+  const friendsExist = friendsReady && !!friends;
   // const employeesExist = employeesReady && !!employees;
   // const groupExists = groupReady && !!group;
   return {
     id,
-    // user,
-    // schedulesReady,
+    user,
+    friendsReady,
     // employeesReady,
     // groupReady,
     // userSchedules,
     // userEmployees,
     // userGroup,
-    // schedulesExist,
+    friendsExist,
     // employeesExist,
     // groupExists,
-    // schedules,
+    friends,
     // employees,
     // group
   };

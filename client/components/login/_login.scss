@@ -3,6 +3,10 @@
 	width: 100%;
 	@include center;
 	@include backgroundBottom;
+	z-index: 980347093498;
+	position: fixed;
+	top: 0;
+	left: 0;
 	&>div {
 		@include center;
 		flex-direction: column;
@@ -12,6 +16,8 @@
 			color: #fff;
 			font-size: 8vh;
 			margin: 0;
+			transform: translateX(100px);
+			opacity: 0;
 		}
 		&>div {
 			@include center;
@@ -19,6 +25,8 @@
 			width: 100%;
 			margin-top: 10px;
 			margin-bottom: 15px;
+			transform: translateX(100px);
+			opacity: 0;
 			&>h2 {
 				font-weight: 900;
 				color: #E86D7A;
@@ -105,7 +113,9 @@
 			padding: 0;
 			font-weight: 900;
 			position: relative;
-			transition: width 0.25s 0s, margin 0.25s 0s, border-radius 0.4s 0s;
+			transition: width 0.25s 0s, margin 0.25s 0s, border-radius 0.4s 0s, transform 0.5s 0s;
+			transform: translateX(100px);
+			opacity: 0;
 			&>img {
 				position: absolute;
 				top: 15%;
@@ -140,6 +150,8 @@
 		}
 		&>h3 {
 			color: #fff;
+			transform: translateX(100px);
+			opacity: 0;
 			&>a {
 				color: #7DF1FF;
 				cursor: pointer;
@@ -150,8 +162,37 @@
 			width: 80px;
 			margin: 0;
 			margin-bottom: -10px;
+			transform: scale(0) rotate(180deg);
 		}
 	}
+}
+
+.login-show {
+	&>div {
+		&>img {
+			transform: scale(1) rotate(0deg);
+			transition-duration: 0.3s;
+			transition-delay: 0.5s;
+			transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		}
+		&>h1,
+		&>div,
+		&>h3 {
+			transform: translateX(0%);
+			opacity: 1;
+			transition-duration: 0.5s;
+			transition-delay: 0s;
+		}
+		&>.login-button {
+			transform: translateX(0%);
+			opacity: 1;
+		}
+	}
+}
+
+.login-hide {
+	transform: translateY(-100%);
+	transition-duration: 0.5s;
 }
 
 

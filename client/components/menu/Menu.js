@@ -57,6 +57,10 @@ export default class Menu extends PureComponent {
   	this.refs.upload.focus();
   }
 
+  logout = () => {
+  	Meteor.logout();
+  }
+
 	render = () => {
 		return (
 			<section className={this.props.classes}>
@@ -87,7 +91,7 @@ export default class Menu extends PureComponent {
 						<button>Privacy</button>
 						<button>Settings</button>
 					</div>
-					<button>Log out</button>
+					<button onClick={this.logout}>Log out</button>
 					<div className={this.state.profileClasses}>
 						<div className="input">
 							<label htmlFor="pn">Name</label>

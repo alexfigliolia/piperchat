@@ -10,7 +10,7 @@ export default class Dashboard extends Component {
 		}
 	}
 
-	componentDidMount(){
+	init(){
 		if (navigator.mediaDevices === undefined) {
 		  navigator.mediaDevices = {};
 		}
@@ -49,6 +49,18 @@ export default class Dashboard extends Component {
 			});
 		this.pc = new RTCPeerConnection(null);
 		console.log(this.pc);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if(nextProps.user !== this.props.user) {
+			if(nextProps.user !== null) {
+				this.init();
+			} else {
+				if(this.stream !== undefined && this.stream !== null) {
+					this.stream.getVideoTracks()[0].stop();
+				}
+			}
+		}
 	}
 
 	onInitConnect = (stream) => {

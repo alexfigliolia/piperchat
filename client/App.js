@@ -11,13 +11,15 @@ export default class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			loggedIn: true,
+			loggedIn: false,
 			user: { name: 'Alex Figliolia', image: "cityweb-small.jpg" },
+			userDB: null,
 			burgerClasses: "hamburglar is-open",
       burgerToggle: true,
       friendListClasses: "friend-list",
       friendToggle: true,
       menuClasses: "menu",
+      loginClasses: "login",
       contacts: [
       	{ name: "Steve Figliolia", online: true, image: "cityweb-small.jpg" },
       	{ name: "Erica Figliolia", online: false, image: "cityweb-small.jpg" },
@@ -30,26 +32,38 @@ export default class App extends Component {
       ],
       height: window.innerHeight,
       width: window.innerWidth,
-      currentChats: [ "Steve Figliolia", "Erica Figliolia" ]
+      currentChats: []
 		}
 		this.loader = document.getElementById('appLoader');
 	}
 
 	componentDidMount() {
-		if(this.loader !== null) {
-			this.loader.remove();
-		}
 		window.addEventListener('resize', () => {
 			this.setState({ height: window.innerHeight, width: window.innerWidth });
 		});
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log(nextProps);
-		if(nextProps.id !== null) {
-			this.setState({ loggedIn: true });
-		} else {
-			this.setState({ loggedIn: false });
+		if(this.props !== nextProps) {
+			console.log(nextProps);
+			if(nextProps.user === null || nextProps.user === undefined) {
+				if(this.loader !== null) {
+					this.loader.classList.add('app-loader-hidden');
+					this.setState({ loggedIn: false });
+					setTimeout(() => { 
+						this.loader.remove();
+						this.setState({ loginClasses: "login login-show "})
+					 }, 600);
+				}
+			} else {
+				this.setState({ userDB: nextProps.user, loginClasses: "login login-show" });
+				setTimeout(() => { this.setState({ loginClasses: "login login-show login-hide" }) }, 600);
+				setTimeout(() => { this.setState({ loggedIn: true }) }, 1100);
+				if(this.loader !== null) {
+					this.loader.classList.add('app-loader-hidden');
+					setTimeout(() => { this.loader.remove() }, 500);
+				}
+			}
 		}
 	}
 
@@ -132,23 +146,19 @@ export default class App extends Component {
 
 				{
 					!this.state.loggedIn &&
-					<Login />
+					<Login
+						classes={this.state.loginClasses} />
 				}
 
-				{
-					this.state.loggedIn &&
-					<Header
-						burgerStuff={this.state.burgerClasses}
-						burger={this.toggleBurger}
-						friends={this.toggleFriends} />
-				}
+				<Header
+					burgerStuff={this.state.burgerClasses}
+					burger={this.toggleBurger}
+					friends={this.toggleFriends} />
 
-				{
-					this.state.loggedIn &&
-					<Dashboard
+				<Dashboard
+						user={this.state.userDB}
 						height={this.state.height}
 						width={this.state.width} />
-				}
 
 				{
 					this.state.loggedIn &&
@@ -169,6 +179,7 @@ export default class App extends Component {
 				}
 
 				{
+					this.state.loggedIn &&
 					this.state.width < 957 ?
 					this.state.currentChats.length > 0 &&
 					 <Chatbox
@@ -176,7 +187,8 @@ export default class App extends Component {
 							with={this.state.currentChats[this.state.currentChats.length - 1]}
 							left={0}
 							closeChat={this.closeChat} />	
-					: this.state.currentChats.map((chat, i) => {
+					: this.state.loggedIn &&
+					this.state.currentChats.map((chat, i) => {
 						return <Chatbox
 											index={i}
 											key={i}
