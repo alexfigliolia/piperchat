@@ -166,21 +166,21 @@ export default class App extends Component {
 				}
 
 				{
-					window.innerWidth < 957 ?
-						 this.state.currentChats.length > 0 &&
-						 <Chatbox
-								index={0}
-								with={this.state.currentChats[this.state.currentChats.length - 1]}
-								left={0}
-								closeChat={this.closeChat} />	
-						: this.state.currentChats.map((chat, i) => {
-							return <Chatbox
-												index={i}
-												key={i}
-												with={chat}
-												left={i}
-												closeChat={this.closeChat} />	
-						})
+					this.state.width < 957 ?
+					this.state.currentChats.length > 0 &&
+					 <Chatbox
+							index={0}
+							with={this.state.currentChats[this.state.currentChats.length - 1]}
+							left={0}
+							closeChat={this.closeChat} />	
+					: this.state.currentChats.map((chat, i) => {
+						return <Chatbox
+											index={i}
+											key={i}
+											with={chat}
+											left={i}
+											closeChat={this.closeChat} />	
+					})
 				}
 
 			</section>
