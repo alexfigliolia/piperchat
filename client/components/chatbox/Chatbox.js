@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import update from 'immutability-helper';
 
 export default class Chatbox extends Component {
@@ -11,12 +11,13 @@ export default class Chatbox extends Component {
 			messages: [
 				{ to: 'Alex Figliolia', from: 'Steve Figliolia', text: 'hello', date: new Date() },
 				{ to: 'Steve Figliolia', from: 'Alex Figliolia', text: 'hello', date: new Date() }
-			]
+			],
+      width: 300
 		}
 	}
 
-  componentDidMount(){
-    this.mc = document.getElementById('mc');
+  componentDidMount() {
+    this.setState({width: this.refs.mc.clientWidth})
   }
 
   handleEnter = (e) => {
@@ -36,7 +37,7 @@ export default class Chatbox extends Component {
       const s = this.state.messages;
       const ns = update(s, {$push: [m]});
       this.setState({ messages: ns }, () => {
-        this.mc.scrollTop = this.mc.scrollHeight;
+        this.refs.mc.scrollTop = this.refs.mc.scrollHeight;
         this.refs.m.value = '';
       });
     }
@@ -52,11 +53,16 @@ export default class Chatbox extends Component {
 
 	render() {
     return (
-      <div className={this.state.classes}>
+      <div 
+        className={this.state.classes}
+        style={{
+          left: this.props.left * this.state.width + 'px'
+        }}>
       	<div>
       		<div className="with">
-            {this.state.currentChat}
-            <button 
+            {this.props.with}
+            <button
+              data-index={this.props.index} 
               onClick={this.props.closeChat}
               className="closer"></button>
             <button
@@ -67,7 +73,7 @@ export default class Chatbox extends Component {
               onClick={this.hideChat}
               className="hide"></button>
           </div>
-      		<div className="messages" id="mc">
+      		<div className="messages" ref="mc">
       			{
       				this.state.messages.map((message, i) => {
       					return (

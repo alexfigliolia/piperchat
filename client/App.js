@@ -28,10 +28,9 @@ export default class App extends Component {
       	{ name: "Erica Figliolia", online: false, image: "cityweb-small.jpg" },
       	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" }
       ],
-      openChats: [],
       height: window.innerHeight,
       width: window.innerWidth,
-      currentChat: "Steve Figliolia",
+      currentChats: [ "Steve Figliolia", "Erica Figliolia" ]
 		}
 		this.loader = document.getElementById('appLoader');
 	}
@@ -108,8 +107,18 @@ export default class App extends Component {
     this.setState({ search: results });
   }
 
-  closeChat = () => {
-  	this.setState({currentChat: ""});
+  closeChat = (e) => {
+  	const i = e.target.dataset.index;
+  	const cc = this.state.currentChats;
+  	const ns = update(cc, {$splice: [[[i], 1]]});
+  	this.setState({currentChats: ns});
+  }
+
+  openChat = (e) => {
+  	const name = e.target.dataset.with;
+  	const cc = this.state.currentChats;
+  	const ns = update(cc, {$push: [name]});
+  	this.setState({currentChats: ns});
   }
 
 	render = () => {
@@ -143,7 +152,8 @@ export default class App extends Component {
 					<FriendList
 						classes={this.state.friendListClasses}
 						search={this.state.search}
-						handleSearch={this.handleSearch} />
+						handleSearch={this.handleSearch}
+						openChat={this.openChat} />
 				}
 
 				{
@@ -156,9 +166,21 @@ export default class App extends Component {
 				}
 
 				{
-					this.state.currentChat !== "" &&
-					<Chatbox
-						closeChat={this.closeChat} />
+					window.innerWidth < 957 ?
+						 this.state.currentChats.length > 0 &&
+						 <Chatbox
+								index={0}
+								with={this.state.currentChats[this.state.currentChats.length - 1]}
+								left={0}
+								closeChat={this.closeChat} />	
+						: this.state.currentChats.map((chat, i) => {
+							return <Chatbox
+												index={i}
+												key={i}
+												with={chat}
+												left={i}
+												closeChat={this.closeChat} />	
+						})
 				}
 
 			</section>

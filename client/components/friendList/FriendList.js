@@ -38,7 +38,9 @@ export default class FriendList extends Component {
 										</div>
 										<div className="call-message">
 											<div>
-												<button></button>
+												<button
+													data-with={dude.name} 
+													onClick={this.props.openChat}></button>
 												<button></button>
 											</div>
 										</div>
