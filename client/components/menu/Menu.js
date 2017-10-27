@@ -23,9 +23,7 @@ export default class Menu extends PureComponent {
 	}
 
 	handleChange = (e) => {
-		this.setState({
-			profText: e.target.value === "" ? "Close" : "Save"
-		});
+		this.setState({ profText: e.target.value === "" ? "Close" : "Save" });
 	}
 
 	makeChanges = () => {
@@ -39,8 +37,8 @@ export default class Menu extends PureComponent {
 	}
 
 	handleImage = () => {
-    let imgs = this.refs.upload.files;
-        img = imgs[imgs.length - 1].name;
+    const imgs = this.refs.upload.files;
+    const img = imgs[imgs.length - 1].name;
     this.props.handleNewImage(window.URL.createObjectURL(imgs[imgs.length - 1]));
   }
 
@@ -51,10 +49,8 @@ export default class Menu extends PureComponent {
 	    this.refs.newName.value = "";
 	    this.refs.newName.parentNode.blur();
 	    this.refs.newName.parentNode.classList.remove('focus');
-	    this.makeChanges();
- 		} else {
- 			this.makeChanges();
- 		}
+	  }
+	  this.makeChanges();
   }
 
   focusUpload = (e) => {

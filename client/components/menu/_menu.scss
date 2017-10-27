@@ -36,6 +36,8 @@
 				@include center;
 				transition-duration: 0.3s;
 				position: relative;
+				background: #fff;
+				background-size: cover;
 				&>img {
 					@include center;
 					height: 100px;
@@ -44,6 +46,7 @@
 					transition-duration: 0.4s;
 					overflow: hidden;
 					border-radius: 50%;
+					// transform: scale(1.1);
 				}
 				&>.upload{
 					@include center;

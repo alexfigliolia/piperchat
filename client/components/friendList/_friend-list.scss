@@ -10,7 +10,8 @@
 	z-index: 10000;
 	transform: translateX(-100%);
 	transition-duration: 0.3s;
-	overflow: scroll;
+	overflow-x: hidden;
+	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;
 	@media #{$mq-670} {
 		width: 400px;
@@ -39,6 +40,8 @@
 			width: 100%;
 			@include center;
 			border-bottom: 1px solid #D0D7DB;
+			border-radius: 0px;
+			height: 40px;
 			&>input {
 				height: 40px;
 				width: 100%;
@@ -48,6 +51,7 @@
 				outline: none;
 				border: none;
 				text-align: center;
+				border-radius: 0px;
 			}
 		}
 		&>.list {

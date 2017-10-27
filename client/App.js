@@ -117,8 +117,11 @@ export default class App extends Component {
   openChat = (e) => {
   	const name = e.target.dataset.with;
   	const cc = this.state.currentChats;
-  	const ns = update(cc, {$push: [name]});
-  	this.setState({currentChats: ns});
+  	if(cc.indexOf(name) === -1) {
+  		const ns = update(cc, {$push: [name]});
+  		this.setState({currentChats: ns});
+  	}
+  	this.toggleFriends();
   }
 
 	render = () => {
@@ -169,7 +172,7 @@ export default class App extends Component {
 					this.state.width < 957 ?
 					this.state.currentChats.length > 0 &&
 					 <Chatbox
-							index={0}
+							index={this.state.currentChats.length - 1}
 							with={this.state.currentChats[this.state.currentChats.length - 1]}
 							left={0}
 							closeChat={this.closeChat} />	
@@ -179,6 +182,7 @@ export default class App extends Component {
 											key={i}
 											with={chat}
 											left={i}
+											width={this.state.currentChats.length}
 											closeChat={this.closeChat} />	
 					})
 				}
