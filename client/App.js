@@ -23,12 +23,39 @@ export default class App extends Component {
       contacts: [
       	{ name: "Steve Figliolia", online: true, image: "cityweb-small.jpg" },
       	{ name: "Erica Figliolia", online: false, image: "cityweb-small.jpg" },
-      	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" }
+      	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Steve Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Erica Figliolia", online: false, image: "cityweb-small.jpg" },
+      	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Steve Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Erica Figliolia", online: false, image: "cityweb-small.jpg" },
+      	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Steve Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Erica Figliolia", online: false, image: "cityweb-small.jpg" },
+      	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Steve Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Erica Figliolia", online: false, image: "cityweb-small.jpg" },
+      	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" },
       ],
       search: [
       	{ name: "Steve Figliolia", online: true, image: "cityweb-small.jpg" },
       	{ name: "Erica Figliolia", online: false, image: "cityweb-small.jpg" },
-      	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" }
+      	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Steve Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Erica Figliolia", online: false, image: "cityweb-small.jpg" },
+      	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Steve Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Erica Figliolia", online: false, image: "cityweb-small.jpg" },
+      	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Steve Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Erica Figliolia", online: false, image: "cityweb-small.jpg" },
+      	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Steve Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Erica Figliolia", online: false, image: "cityweb-small.jpg" },
+      	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Steve Figliolia", online: true, image: "cityweb-small.jpg" },
+      	{ name: "Erica Figliolia", online: false, image: "cityweb-small.jpg" },
+      	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" },
       ],
       height: window.innerHeight,
       width: window.innerWidth,
@@ -47,30 +74,40 @@ export default class App extends Component {
 		if(this.props !== nextProps) {
 			console.log(nextProps);
 			if(nextProps.user === null || nextProps.user === undefined) {
-				if(this.loader !== null) {
-					this.loader.classList.add('app-loader-hidden');
-					this.setState({ loggedIn: false });
-					setTimeout(() => { 
-						this.loader.remove();
-						this.setState({ loginClasses: "login login-show "})
-					 }, 600);
-				}
+				this.needsAuth();
 			} else {
-				this.setState({ userDB: nextProps.user, loginClasses: "login login-show" });
-				setTimeout(() => { this.setState({ loginClasses: "login login-show login-hide" }) }, 600);
-				setTimeout(() => { this.setState({ loggedIn: true }) }, 1100);
-				if(this.loader !== null) {
-					this.loader.classList.add('app-loader-hidden');
-					setTimeout(() => { this.loader.remove() }, 500);
-				}
+				this.letEmIn(nextProps);
 			}
 		}
 	}
 
+	needsAuth = () => {
+		if(this.loader !== null) {
+			this.loader.classList.add('app-loader-hidden-op');
+			this.setState({ loggedIn: false });
+			setTimeout(() => { 
+				this.loader.remove();
+				this.setState({ loginClasses: "login login-show "})
+			 }, 600);
+		} else {
+			this.setState({ loginClasses: "login login-show "});
+		}
+	}
+
+	letEmIn = (path) => {
+		this.setState({ userDB: path.user, loginClasses: "login login-show" });
+		setTimeout(() => { 
+			this.setState({ loginClasses: "login login-show login-hide" }) 
+			if(this.loader !== null) {
+				this.loader.classList.add('app-loader-hidden')
+				setTimeout(() => { this.loader.remove() }, 800);
+			}
+		}, 600);
+		setTimeout(() => { this.setState({ loggedIn: true }) }, 1100);
+	}
+
 	toggleBurger = () => {
-		if(!this.state.friendToggle) {
-  		this.toggleFriends();
-  	}
+		if(!this.state.friendToggle) this.toggleFriends();
     this.setState((prevState, prevProps) => {
       return {
         burgerToggle : !prevState.burgerToggle,
@@ -85,9 +122,7 @@ export default class App extends Component {
   }
 
   toggleFriends = () => {
-  	if(!this.state.burgerToggle) {
-  		this.toggleBurger();
-  	}
+  	if(!this.state.burgerToggle) this.toggleBurger();
     this.setState((prevState, prevProps) => {
       return {
       	friendToggle : !prevState.friendToggle,
@@ -113,7 +148,7 @@ export default class App extends Component {
   handleSearch = (val) => {
   	const results = [];
     for(let i = 0; i < this.state.contacts.length; i++) {
-      let friend = this.state.contacts[i].name.toLowerCase();
+      const friend = this.state.contacts[i].name.toLowerCase();
       if(friend.indexOf(val.toLowerCase()) !== -1) {
         results.push(this.state.contacts[i]);
       }
@@ -188,7 +223,7 @@ export default class App extends Component {
 							left={0}
 							closeChat={this.closeChat} />	
 					: this.state.loggedIn &&
-					this.state.currentChats.map((chat, i) => {
+						this.state.currentChats.map((chat, i) => {
 						return <Chatbox
 											index={i}
 											key={i}

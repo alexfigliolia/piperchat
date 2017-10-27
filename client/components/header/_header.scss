@@ -7,7 +7,7 @@
 	@include center;
 	background: #0F776E;
 	@include headerShadow;
-	z-index: 98976876;
+	z-index: 98876;
 	@media #{$mq-670} {
 		height: 80px;
 	}

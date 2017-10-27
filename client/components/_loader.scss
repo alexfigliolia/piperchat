@@ -7,78 +7,42 @@
 	overflow: hidden;
 	width: 100%;
 	@include backgroundBottom;
-	z-index: 20000000000000987;
+	z-index: 20000900987;
 	@include center;
 	&>div {
 		@include center;
-		width: 100%;
-		height: 100%;
-		&>.show-box {
-			@include center;
-			width: 150px;
-		}
+    &>svg {
+      height: 100px;
+      width: auto;
+      animation: jump 1s infinite;
+    }
 	}
 }
 
-
-
-.loader {
-  position: relative;
-  margin: 0px auto;
-  width: 150px;
-  &:before {
-    content:'';
-    display: block;
-    padding-top: 100%;
-  }
-}
-
-.circular {
-  animation: rotate 2s linear infinite;
-  height: 100%;
-  transform-origin: center center;
-  width: 100%;
-  position: absolute;
-  top: 0; bottom: 0; left: 0; right: 0;
-  margin: auto;
-}
-
-
-.path {
-  stroke-dasharray: 1,200;
-  stroke-dashoffset: 0;
-  animation: dash 1.5s ease-in-out infinite;
-  stroke: #fff;
-  stroke-linecap: round;
-}
-
-@keyframes rotate{
- 100%{
-  transform: rotate(360deg);
- }
-}
-@keyframes dash{
- 0%{
-  stroke-dasharray: 1,200;
-  stroke-dashoffset: 0;
- }
- 50%{
-  stroke-dasharray: 89,200;
-  stroke-dashoffset: -35px;
- }
- 100%{
-  stroke-dasharray: 89,200;
-  stroke-dashoffset: -124px;
- }
+@keyframes jump {
+  0% { transform: scale(1) } 
+  50% { transform: scale(1.2) }
+  100% { transform: scale(1) }
 }
 
 .app-loader-hidden {
-	transform: scaleY(-100%);
-	transform-origin: 50% 100%;
-	transition-duration: 0.3s;
+	transform: translateY(-100%);
+	transition-duration: 0.5s;
 	transition-delay: 0.3s;
 	transition-timing-function: ease-in-out;
-  & .loader {
+  &>div {
+    transform: scale(0);
+    transition-duration: 0.3s;
+    transition-delay: 0s;
+  }
+}
+
+.app-loader-hidden-op {
+  opacity: 0;
+  transition-duration: 0.3s;
+  transition-delay: 0.3s;
+  transition-timing-function: ease-in-out;
+  &>div {
     transform: scale(0);
     transition-duration: 0.3s;
     transition-delay: 0s;
