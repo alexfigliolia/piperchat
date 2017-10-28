@@ -11,11 +11,14 @@ export default class Dashboard extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if(nextProps.id !== null && nextProps.id !== undefined) {
-			if(this.stream === undefined || this.steam === null && nextProps.id !== this.props.id) this.getLocalStream();
-		} else {
-			if(this.stream !== undefined && this.stream !== null) {
-				this.stream.getVideoTracks()[0].stop();
+		if(nextProps.user !== this.props.user && !this.stream) {
+			console.log(nextProps);
+			if(nextProps.id !== null && nextProps.id !== undefined) {
+				if(this.stream === undefined || this.steam === null && nextProps.id !== this.props.id) this.getLocalStream();
+			} else {
+				if(this.stream !== undefined && this.stream !== null) {
+					this.stream.getVideoTracks()[0].stop();
+				}
 			}
 		}
 	}
@@ -37,10 +40,7 @@ export default class Dashboard extends Component {
 			const c  = { 
 				audio: false, 
 				video: { 
-					frameRate: { 
-						ideal: 10, 
-						max: 15 
-					},
+					frameRate: { ideal: 10, max: 15 },
 					facingMode: "user"
 					// width: 100,
 					// height: 130
