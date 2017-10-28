@@ -41,7 +41,7 @@
   opacity: 0;
   transition-duration: 0.3s;
   transition-delay: 0.3s;
-  transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in;
   &>div {
     transform: scale(0);
     transition-duration: 0.3s;

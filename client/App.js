@@ -95,7 +95,14 @@ export default class App extends Component {
 	}
 
 	letEmIn = (path) => {
-		this.setState({ userDB: path.user, loginClasses: "login login-show" });
+		this.setState({ 
+			userDB: path.user, 
+			user: {
+				name: path.user.name, 
+				image: "cityweb-small.jpg"
+			}, 
+			loginClasses: "login login-show"
+		});
 		setTimeout(() => { 
 			this.setState({ loginClasses: "login login-show login-hide" }) 
 			if(this.loader !== null) {
@@ -136,12 +143,6 @@ export default class App extends Component {
   handleNewImage = (img) => {
   	const s = this.state.user;
   	const ns = update(s, {image: {$set: img}});
-  	this.setState({user: ns});
-  }
-
-  updateName = (name) => {
-  	const s = this.state.user;
-  	const ns = update(s, {name: {$set: name}});
   	this.setState({user: ns});
   }
 

@@ -9,6 +9,12 @@ export default class FriendList extends Component {
 		this.props.handleSearch(e.target.value);
 	}
 
+	componentWillReceiveProps(nextProps) {
+		if(nextProps !== this.props && this.props.classes === "friend-list") {
+			this.refs.list.scrollTop = 0;
+		}
+	}
+
 	render = () => {
 		return (
 			<section className={this.props.classes}>
@@ -20,7 +26,7 @@ export default class FriendList extends Component {
 							placeholder="Search Contacts"
 							onChange={this.handleSearch} />
 					</div>
-					<div className="list">
+					<div ref="list" className="list">
 						{
 							this.props.search.map((dude, i) => {
 								return (

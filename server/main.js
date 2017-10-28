@@ -42,3 +42,14 @@ Meteor.publish('buddyLists', function(){
 		return this.ready();
 	}
 });
+
+Meteor.methods({
+
+  'user.changeName'(name){
+    check(name, String);
+    return Meteor.users.update({ _id: Meteor.userId() }, {
+      $set: { name: name }
+    });
+  }
+  
+});

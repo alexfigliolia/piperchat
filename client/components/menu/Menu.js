@@ -8,7 +8,16 @@ export default class Menu extends PureComponent {
 			classes: "",
 			profClasses: "prof",
 			profileClasses: "profile",
-			profText: "Profile"
+			profText: "Profile",
+			userName: this.props.user.name
+		}
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if(nextProps.user.name !== this.props.user.name) this.setState({ userName: nextProps.user.name});
+		if(nextProps.classes === "menu" && this.state.profClasses === "prof prof-flip") {
+			this.makeChanges();
+			this.setState({ userName: nextProps.user.name });
 		}
 	}
 
@@ -23,11 +32,16 @@ export default class Menu extends PureComponent {
 	}
 
 	handleChange = (e) => {
-		this.setState({ profText: e.target.value === "" ? "Close" : "Save" });
+		this.setState({ profText: e.target.value === "" ? "Close" : "Save", userName: e.target.value });
 	}
 
 	makeChanges = () => {
 		this.setState((prevState, prevProps) => {
+			if(prevState.profClasses === "prof") {
+				this.refs.newName.parentNode.classList.add('focus');
+			} else {
+				this.refs.newName.parentNode.classList.remove('focus');
+			}
 			return {
 				profClasses: prevState.profClasses === "prof" ? "prof prof-flip" : "prof",
 				profileClasses: prevState.profileClasses === "profile" ? "profile profile-show" : "profile",
@@ -43,14 +57,15 @@ export default class Menu extends PureComponent {
   }
 
   handleNameChange = () => {
- 		if(this.refs.newName.value !== "") {
- 			const name = this.refs.newName.value;
-	    this.props.updateName(name);
-	    this.refs.newName.value = "";
-	    this.refs.newName.parentNode.blur();
-	    this.refs.newName.parentNode.classList.remove('focus');
+ 		if(this.refs.newName.value !== this.props.user.name) {
+ 			Meteor.call('user.changeName', this.refs.newName.value, (error, result) => {
+ 				if(error) {
+ 					console.log(error);
+ 				} else {
+ 					this.makeChanges();
+ 				}
+ 			});
 	  }
-	  this.makeChanges();
   }
 
   focusUpload = (e) => {
@@ -83,7 +98,8 @@ export default class Menu extends PureComponent {
 					</div>
 					<div className="options">
 						<button 
-							onClick={this.state.profText === "Profile" ? this.makeChanges : this.handleNameChange}
+							onClick={this.state.profText === "Profile" || 
+											 this.state.profText === "Close" ? this.makeChanges : this.handleNameChange}
 							style={{
 								color: this.state.profText === "Profile" ? "#828282" : "#fff",
 								background: this.state.profText === "Profile" ? "none" : "#139A8F"
@@ -101,7 +117,8 @@ export default class Menu extends PureComponent {
 								onBlur={this.onBlur} 
 								id="pn" 
 								type="text"
-								ref="newName" />
+								ref="newName"
+								value={this.state.userName} />
 						</div>
 					</div>
 				</div>
