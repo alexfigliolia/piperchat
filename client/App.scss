@@ -16,6 +16,9 @@ body {
 	position: relative;
 	@include center;
 	align-items: flex-end;
+	position: fixed;
+	top: 0;
+	left: 0;
 }
 
 @import 'components/loader';

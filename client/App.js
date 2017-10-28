@@ -175,7 +175,7 @@ export default class App extends Component {
 
 	render = () => {
 		return(
-			<section 
+			<section
 				className="App" 
 				style={{height: window.innerHeight}}>
 

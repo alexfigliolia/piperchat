@@ -35,6 +35,8 @@
 			border-bottom: 1px solid #D0D7DB;
 			margin: 0;
 			height: 50px;
+			color: $piper;
+			background: #fff;
 			@include center;
 			position: fixed;
 			top: 0;
@@ -50,13 +52,14 @@
 			position: fixed;
 			top: 50px;
 			left: 0;
+			background: #fff;
 			z-index: 3;
 			&>input {
 				height: 40px;
 				width: 100%;
 				margin: 0;
 				padding: 0;
-				background: #F0F9FD;
+				background: transparent;
 				outline: none;
 				border: none;
 				text-align: center;
@@ -65,7 +68,7 @@
 		}
 		&>.list {
 			width: 100%;
-			height: auto;
+			height: calc(100% - 90px);
 			max-height: calc(100% - 90px);
 			overflow-y: scroll;
 			-webkit-overflow-scrolling: touch;
