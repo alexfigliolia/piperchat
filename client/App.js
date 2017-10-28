@@ -94,10 +94,7 @@ export default class App extends Component {
 	}
 
 	letEmIn = (path) => {
-		this.setState({ 
-			user: path.user, 
-			loginClasses: "login login-show"
-		});
+		this.setState({ user: path.user, loginClasses: "login login-show" });
 		setTimeout(() => { 
 			this.setState({ loginClasses: "login login-show login-hide" }) 
 			if(this.loader !== null) {
@@ -188,9 +185,9 @@ export default class App extends Component {
 
 				<Dashboard
 					user={this.state.user}
+					userId={this.props.id}
 					height={this.state.height}
-					width={this.state.width}
-					id={this.props.id} />
+					width={this.state.width} />
 
 				{
 					this.state.loggedIn &&

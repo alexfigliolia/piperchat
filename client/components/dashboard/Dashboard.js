@@ -11,11 +11,12 @@ export default class Dashboard extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if(nextProps.id !== null && nextProps.id !== undefined) {
-			if(this.stream === undefined || this.stream === null && nextProps.id !== this.props.id) this.getLocalStream();
+		if(nextProps.userId !== null && nextProps.userId !== undefined) {
+			if(this.stream === undefined || this.stream === null) this.getLocalStream();
 		} else {
 			if(this.stream !== undefined && this.stream !== null) {
 				this.stream.getVideoTracks()[0].stop();
+				this.stream = null;
 			}
 		}
 	}
@@ -44,14 +45,14 @@ export default class Dashboard extends Component {
 		navigator.mediaDevices.getUserMedia(c)
 			.then((stream) => {
 			  this.onInitConnect(stream);
-			  console.log(stream.getVideoTracks());
+			  // console.log(stream.getVideoTracks());
 			})
 			.catch((err) => {
 				console.log(err);
 			  this.onFailConnect();
 			});
 		this.pc = new RTCPeerConnection(null);
-		console.log(this.pc);
+		// console.log(this.pc);
 	}
 
 	onInitConnect = (stream) => {
@@ -60,12 +61,15 @@ export default class Dashboard extends Component {
 	  if ("srcObject" in me) {
 	    me.srcObject = stream;
 	    you.srcObject = stream;
+	    console.log('connected with srcObject');
 	  } else if(URL in window) {
 	    me.src = window.URL.createObjectURL(stream);
 	    you.src = window.URL.createObjectURL(stream);
+	    console.log('connected with window.URL');
 	  } else {
 	  	me.src = window.webkitURL.createObjectURL(stream);
 	    you.src = window.webkitURL.createObjectURL(stream);
+	    console.log('connected with src');
 	  }
     this.setState({ meUrl: stream});
     this.stream = stream;
