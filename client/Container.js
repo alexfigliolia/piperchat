@@ -1,40 +1,40 @@
 import { Meteor } from 'meteor/meteor';
 import { BuddyLists } from '../api/buddyList.js';
-// import { Employees } from '../api/employees.js';
-// import { Group } from '../api/group.js';
-import { createContainer } from 'meteor/react-meteor-data';
+import { Conversations } from '../api/conversations.js';
+import { Messages } from '../api/messages.js';
+import { withTracker } from 'meteor/react-meteor-data';
 import App from './App.js';
 
-export default AppContainer = createContainer(() => {
+export default AppContainer = withTracker((props) => {
   const users = Meteor.subscribe('userData');
   const id = Meteor.userId();
   const user = Meteor.user();
   const userFriends = Meteor.subscribe('buddyLists');
-  // const userEmployees = Meteor.subscribe('employees');
-  // const userGroup = Meteor.subscribe('group');
+  const userConversations = Meteor.subscribe('conversations');
+  const userMessages = Meteor.subscribe('messages');
   const friendsReady = userFriends.ready();
-  // const employeesReady = userEmployees.ready();
-  // const groupReady = userGroup.ready();
+  const conversationsReady = userConversations.ready();
+  const messagesReady = userMessages.ready();
   const friends = BuddyLists.find({owner: id}).fetch();
-  // const employees = Employees.find({owner: id}).fetch();
-  // const group = Group.find({owner: id}).fetch();
+  const conversations = Conversations.find({owner: id}).fetch();
+  const messages = Messages.find({owner: id}).fetch();
   const friendsExist = friendsReady && !!friends;
-  // const employeesExist = employeesReady && !!employees;
-  // const groupExists = groupReady && !!group;
+  const conversationsExist = conversationsReady && !!conversations;
+  const messagesExists = messagesReady && !!messages;
   return {
     id,
     user,
     friendsReady,
-    // employeesReady,
-    // groupReady,
-    // userSchedules,
-    // userEmployees,
-    // userGroup,
+    conversationsReady,
+    messagesReady,
+    userFriends,
+    userConversations,
+    userMessages,
     friendsExist,
-    // employeesExist,
-    // groupExists,
+    conversationsExist,
+    messagesExists,
     friends,
-    // employees,
-    // group
+    conversations,
+    messages
   };
-}, App);
+})(App);

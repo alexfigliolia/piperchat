@@ -10,20 +10,22 @@ export default class Upload extends PureComponent {
 	handleImage = () => {
     const imgs = this.refs.upload.files;
     const img = imgs[imgs.length - 1];
+    this.props.handleNewImage(window.URL.createObjectURL(img));
+    this.props.makeChanges();
     const fd = new FormData();
     fd.append('upload_preset', CloudConfig.preset);
 	  fd.append('tags', 'browser_upload'); // Optional - add tag for image admin in Cloudinary
 	  fd.append('file', img);
     axios.post(CloudConfig.url, fd, AxiosConfig)
-	  .then((res) => {
+	  .then(res => {
 	    console.log(res);
 	    let url = res.data.secure_url.split('/');
-      url.splice(-2, 0, 'q_auto/f_auto/w_200');
+      url.splice(-2, 0, 'q_auto/f_auto/w_200,c_fit');
       url = url.join('/')
 	    Meteor.call('user.addImage', url, (error, result) => {
-	    	if(error) { console.log(error) } else { this.props.makeChanges(); }
+	    	if(error) console.log(error);
 	    });
-	  }).catch((err) => console.log(err) );
+	  }).catch(err => console.log(err) );
   }
 
 	render() {

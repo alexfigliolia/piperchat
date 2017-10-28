@@ -89,7 +89,7 @@ export default class App extends Component {
 				this.setState({ loginClasses: "login login-show "})
 			 }, 600);
 		} else {
-			this.setState({ loginClasses: "login login-show "});
+			this.setState({ loggedIn: false, loginClasses: "login login-show "});
 		}
 	}
 
@@ -163,6 +163,12 @@ export default class App extends Component {
   	this.toggleFriends();
   }
 
+  handleNewImage = (img) => {
+  	const user = this.state.user;
+  	const newTempImage = update(user, {image: {$set: img}});
+  	this.setState({user: newTempImage});
+  }
+
 	render = () => {
 		return(
 			<section
@@ -183,7 +189,8 @@ export default class App extends Component {
 				<Dashboard
 					user={this.state.user}
 					height={this.state.height}
-					width={this.state.width} />
+					width={this.state.width}
+					id={this.props.id} />
 
 				{
 					this.state.loggedIn &&
@@ -198,7 +205,8 @@ export default class App extends Component {
 					this.state.loggedIn &&
 					<Menu
 						classes={this.state.menuClasses}
-						user={this.state.user} />
+						user={this.state.user}
+						handleNewImage={this.handleNewImage} />
 				}
 
 				{

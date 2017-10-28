@@ -10,10 +10,18 @@ export default class Dashboard extends Component {
 		}
 	}
 
-	init(){
-		if (navigator.mediaDevices === undefined) {
-		  navigator.mediaDevices = {};
+	componentWillReceiveProps(nextProps) {
+		if(nextProps.id !== null) {
+			if(this.stream === undefined || this.steam === null) this.init();
+		} else {
+			if(this.stream !== undefined && this.stream !== null) {
+				this.stream.getVideoTracks()[0].stop();
+			}
 		}
+	}
+
+	init(){
+		if (navigator.mediaDevices === undefined) navigator.mediaDevices = {};
 		if (navigator.mediaDevices.getUserMedia === undefined) {
 		  navigator.mediaDevices.getUserMedia = function(constraints) {
 				const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
@@ -51,18 +59,6 @@ export default class Dashboard extends Component {
 		console.log(this.pc);
 	}
 
-	componentWillReceiveProps(nextProps) {
-		if(nextProps.user !== this.props.user) {
-			if(nextProps.user !== null && nextProps.user !== undefined) {
-				this.init();
-			} else {
-				if(this.stream !== undefined && this.stream !== null) {
-					this.stream.getVideoTracks()[0].stop();
-				}
-			}
-		}
-	}
-
 	onInitConnect = (stream) => {
 		const me = document.querySelector('#me');
 		const you = document.querySelector('#you');
@@ -80,13 +76,9 @@ export default class Dashboard extends Component {
     this.stream = stream;
 	}
 
-	onFailConnect = () => {
-		console.log('fail');
-	}
+	onFailConnect = () => console.log('fail');
 
-	touchStart = (e) => {
-		e.preventDefault();
-	}
+	touchStart = (e) => e.preventDefault();
 
 	render = () => {
 		return (

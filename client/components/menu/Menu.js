@@ -64,7 +64,9 @@ export default class Menu extends PureComponent {
 					<div className={this.state.profClasses}>
 						<div className="image">
 							<img src={this.props.user.image} alt="me" />
-							<Upload makeChanges={this.makeChanges} />
+							<Upload
+								handleNewImage={this.props.handleNewImage} 
+								makeChanges={this.makeChanges} />
 						</div>
 						<h2>{this.props.user.name}</h2>
 					</div>
