@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { CloudConfig } from './CloudConfig';
+import { CloudConfig, AxiosConfig } from './CloudConfig';
 import axios from 'axios';
 
 export default class Upload extends PureComponent {
@@ -14,11 +14,11 @@ export default class Upload extends PureComponent {
     fd.append('upload_preset', CloudConfig.preset);
 	  fd.append('tags', 'browser_upload'); // Optional - add tag for image admin in Cloudinary
 	  fd.append('file', img);
-    axios.post(CloudConfig.url, fd)
+    axios.post(CloudConfig.url, fd, AxiosConfig)
 	  .then((res) => {
 	    console.log(res);
 	    let url = res.data.secure_url.split('/');
-      url.splice(-2, 0, 'q_auto/ar_4:3,c_fill,w_auto');
+      url.splice(-2, 0, 'q_auto/f_auto/w_200');
       url = url.join('/')
 	    Meteor.call('user.addImage', url, (error, result) => {
 	    	if(error) { console.log(error) } else { this.props.makeChanges(); }

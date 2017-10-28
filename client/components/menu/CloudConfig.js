@@ -3,3 +3,7 @@ export const CloudConfig = {
 	preset: 'h09eychm',
 	name: 'alexfig'
 }
+
+export const AxiosConfig = {
+	onUploadProgress: progressEvent => console.log(progressEvent.loaded)
+}
