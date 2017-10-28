@@ -53,7 +53,7 @@ export default class Dashboard extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		if(nextProps.user !== this.props.user) {
-			if(nextProps.user !== null) {
+			if(nextProps.user !== null && nextProps.user !== undefined) {
 				this.init();
 			} else {
 				if(this.stream !== undefined && this.stream !== null) {

@@ -19,6 +19,7 @@ Meteor.publish('userData', function() {
      ,{
        fields: {
           "name" : 1,
+          "image": 1,
           "_id": 1
        }
      });
@@ -33,7 +34,7 @@ Meteor.publish('buddyLists', function(){
 	var schedules = BuddyLists.find({owner: currentUser}, {
 		fields: {
 			friends: 1,
-			owner: 1
+			owner: 1,
 		}
 	});
 	if(currentUser) {
@@ -50,6 +51,15 @@ Meteor.methods({
     return Meteor.users.update({ _id: Meteor.userId() }, {
       $set: { name: name }
     });
+  },
+
+  'user.addImage'(url) {
+    check(url, String);
+    return Meteor.users.update({ _id: Meteor.userId() }, {
+      $set: { image: url }
+    });
+    //Add garbage collection for old images
+    //Fetch old image from user object and delete
   }
-  
+
 });

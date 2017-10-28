@@ -12,8 +12,7 @@ export default class App extends Component {
 		super(props);
 		this.state = {
 			loggedIn: false,
-			user: { name: 'Alex Figliolia', image: "cityweb-small.jpg" },
-			userDB: null,
+			user: null,
 			burgerClasses: "hamburglar is-open",
       burgerToggle: true,
       friendListClasses: "friend-list",
@@ -96,11 +95,7 @@ export default class App extends Component {
 
 	letEmIn = (path) => {
 		this.setState({ 
-			userDB: path.user, 
-			user: {
-				name: path.user.name, 
-				image: "cityweb-small.jpg"
-			}, 
+			user: path.user, 
 			loginClasses: "login login-show"
 		});
 		setTimeout(() => { 
@@ -138,12 +133,6 @@ export default class App extends Component {
         										"friend-list"
       }
     });
-  }
-
-  handleNewImage = (img) => {
-  	const s = this.state.user;
-  	const ns = update(s, {image: {$set: img}});
-  	this.setState({user: ns});
   }
 
   handleSearch = (val) => {
@@ -192,9 +181,9 @@ export default class App extends Component {
 					friends={this.toggleFriends} />
 
 				<Dashboard
-						user={this.state.userDB}
-						height={this.state.height}
-						width={this.state.width} />
+					user={this.state.user}
+					height={this.state.height}
+					width={this.state.width} />
 
 				{
 					this.state.loggedIn &&
@@ -209,9 +198,7 @@ export default class App extends Component {
 					this.state.loggedIn &&
 					<Menu
 						classes={this.state.menuClasses}
-						user={this.state.user}
-						handleNewImage={this.handleNewImage}
-						updateName={this.updateName} />
+						user={this.state.user} />
 				}
 
 				{

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Meteor } from 'meteor/meteor';
+import Upload from './Upload';
 
 export default class Menu extends PureComponent {
 	constructor(props){
@@ -21,9 +22,7 @@ export default class Menu extends PureComponent {
 		}
 	}
 
-	logout = () => {
-		Meteor.logout();
-	}
+	logout = () => Meteor.logout();
 
 	onFocus = (e) => e.target.parentNode.classList.add('focus');
 
@@ -50,30 +49,12 @@ export default class Menu extends PureComponent {
 		});
 	}
 
-	handleImage = () => {
-    const imgs = this.refs.upload.files;
-    const img = imgs[imgs.length - 1].name;
-    this.props.handleNewImage(window.URL.createObjectURL(imgs[imgs.length - 1]));
-  }
-
   handleNameChange = () => {
  		if(this.refs.newName.value !== this.props.user.name) {
  			Meteor.call('user.changeName', this.refs.newName.value, (error, result) => {
- 				if(error) {
- 					console.log(error);
- 				} else {
- 					this.makeChanges();
- 				}
+ 				if(error) { console.log(error) } else { this.makeChanges() }
  			});
 	  }
-  }
-
-  focusUpload = (e) => {
-  	this.refs.upload.focus();
-  }
-
-  logout = () => {
-  	Meteor.logout();
   }
 
 	render = () => {
@@ -83,16 +64,7 @@ export default class Menu extends PureComponent {
 					<div className={this.state.profClasses}>
 						<div className="image">
 							<img src={this.props.user.image} alt="me" />
-							<div 
-								onClick={this.focusUpload}
-								className="upload">
-								<input 
-									ref="upload"
-									type="file" 
-									name="myImage" 
-									accept="image/*" 
-									onChange={this.handleImage} />
-							</div>
+							<Upload makeChanges={this.makeChanges} />
 						</div>
 						<h2>{this.props.user.name}</h2>
 					</div>
