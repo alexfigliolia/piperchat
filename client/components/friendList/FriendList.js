@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Friend from './Friend';
 
 export default class FriendList extends Component {
 	constructor(props) {
@@ -30,27 +31,12 @@ export default class FriendList extends Component {
 						{
 							this.props.search.map((dude, i) => {
 								return (
-									<div 
-										className="contact"
-										key={i}>
-										<div>
-											<img src={dude.image} alt="friend" />
-											<h3>{dude.name}</h3>
-											<div
-												className="online"
-												style={{
-													background: dude.online ? "#51C68C" : "#A8AEB1"
-												}}></div>
-										</div>
-										<div className="call-message">
-											<div>
-												<button
-													data-with={dude.name} 
-													onClick={this.props.openChat}></button>
-												<button></button>
-											</div>
-										</div>
-									</div>
+									<Friend 
+										key={i}
+										name={dude.name}
+										image={dude.image}
+										online={dude.online}
+										openChat={this.props.openChat} />
 								);
 							})
 						}
