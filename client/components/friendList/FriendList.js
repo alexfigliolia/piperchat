@@ -20,15 +20,17 @@ export default class FriendList extends Component {
 		return (
 			<section className={this.props.classes}>
 				<div>
-					<div className="piper">
-						<div className="icon"></div>
-						<h2>Friends</h2>
-					</div>
-					<div className="add-friend">
-						<input 
-							type="search" 
-							placeholder="Search Contacts"
-							onChange={this.handleSearch} />
+					<div className="list-header">
+						<div className="piper">
+							<div className="icon"></div>
+							<h2>Friends</h2>
+						</div>
+						<div className="add-friend">
+							<input 
+								type="search" 
+								placeholder="Find Someone"
+								onChange={this.handleSearch} />
+						</div>
 					</div>
 					<div ref="list" className="list">
 						{

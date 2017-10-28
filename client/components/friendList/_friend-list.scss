@@ -25,71 +25,69 @@
 		width: 100%;
 		transition-delay: 0s;
 		position: relative;
-		&>h2 {
+		&>.list-header {
+			position: fixed;
+			top:0;
+			left: 0;
 			width: 100%;
-			text-align: center;
-			font-weight: 200;
-			border-bottom: 1px solid #D0D7DB;
-			margin: 0;
-			font-size: 1.75em;
-			height: 70px;
-			color: $plite;
+			z-index: 3;
+			@include center;
 			background: #EBEDF1;
-			@include center;
-			position: fixed;
-			top: 0;
-			left: 0;
-			z-index: 3;
-		}
-		&>.piper {
-			height: 70px;
-			width: 100%;
-			@include center;
-			&>.icon {
-				height: 50px;
-				width: 50px;
-				background: url('ppg.svg') no-repeat 50% -100%;
-				background-size: 50px 50px;
-				align-self: flex-start;
-				margin-top: 10px;
-			}
-			&>h2 {
-				margin-top: 30px;
-				font-weight: 600;
-				color: $plite;
-				font-size: 1.75em;
-			}
-		}
-		&>.add-friend {
-			width: 100%;
-			@include center;
+			flex-direction: column;
+			justify-content: space-between;
 			border-bottom: 1px solid #D0D7DB;
-			border-radius: 0px;
-			height: 50px;
-			position: fixed;
-			top: 70px;
-			left: 0;
-			background: #fff;
-			z-index: 3;
-			&>input {
-				height: 50px;
+			&>.piper {
 				width: 100%;
-				margin: 0;
-				padding: 0;
-				background: transparent;
-				outline: none;
-				border: none;
-				text-align: center;
-				border-radius: 0px;
+				@include center;
+				align-items: flex-end;
+				flex-direction: row;
+				height: 50px;
+				margin-top: 10px;
+				margin-bottom: 5px;
+				&>.icon {
+					height: 50px;
+					width: 50px;
+					background: url('ppg.svg') no-repeat bottom;
+					background-size: 50px 50px;
+				}
+				&>h2 {
+					align-self: center;
+					margin: 0;
+					padding: 0;
+					font-weight: 600;
+					color: $plite;
+					font-size: 1.75em;
+					margin-top: 7.5px;
+				}
+			}
+			&>.add-friend {
+				width: 90%;
+				@include center;
+				height: 30px;
+				margin-top: 10px;
+				&>input {
+					font-size: 0.9em;
+					height: 30px;
+					width: 100%;
+					margin: 0;
+					padding: 0;
+					background: transparent;
+					border-radius: 100px;
+					background: #fff;
+					outline: none;
+					border: none;
+					text-align: center;
+					margin-top: -20px;
+				}
 			}
 		}
 		&>.list {
 			width: 100%;
-			height: calc(100% - 120px);
-			max-height: calc(100% - 120px);
+			height: calc(100% - 105px);
+			max-height: calc(100% - 105px);
 			overflow-y: scroll;
 			-webkit-overflow-scrolling: touch;
-			margin-top: 50px;
+			margin-top: 105px;
 			overflow-x: hidden;
 			display: block;
 			&>.contact {
