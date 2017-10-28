@@ -12,7 +12,7 @@ export default class Dashboard extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		if(nextProps.id !== null && nextProps.id !== undefined) {
-			if(this.stream === undefined || this.steam === null && nextProps.id !== this.props.id) this.getLocalStream();
+			if(this.stream === undefined || this.stream === null && nextProps.id !== this.props.id) this.getLocalStream();
 		} else {
 			if(this.stream !== undefined && this.stream !== null) {
 				this.stream.getVideoTracks()[0].stop();
