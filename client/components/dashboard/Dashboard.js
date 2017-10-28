@@ -11,8 +11,8 @@ export default class Dashboard extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if(nextProps.id !== null) {
-			if(this.stream === undefined || this.steam === null) this.init();
+		if(nextProps.id !== null && nextProps.id !== undefined) {
+			if(this.stream === undefined || this.steam === null && nextProps.id !== this.props.id) this.getLocalStream();
 		} else {
 			if(this.stream !== undefined && this.stream !== null) {
 				this.stream.getVideoTracks()[0].stop();
@@ -20,43 +20,45 @@ export default class Dashboard extends Component {
 		}
 	}
 
-	init(){
-		if (navigator.mediaDevices === undefined) navigator.mediaDevices = {};
-		if (navigator.mediaDevices.getUserMedia === undefined) {
-		  navigator.mediaDevices.getUserMedia = function(constraints) {
-				const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-		    if (!getUserMedia) {
-		      return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
-		    }
-		    return new Promise(function(resolve, reject) {
-		      getUserMedia.call(navigator, constraints, resolve, reject);
-		    });
-		  }
+	getLocalStream(){
+		if(!this.stream) {
+			if (navigator.mediaDevices === undefined) navigator.mediaDevices = {};
+			if (navigator.mediaDevices.getUserMedia === undefined) {
+			  navigator.mediaDevices.getUserMedia = function(constraints) {
+					const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+			    if (!getUserMedia) {
+			      return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+			    }
+			    return new Promise(function(resolve, reject) {
+			      getUserMedia.call(navigator, constraints, resolve, reject);
+			    });
+			  }
+			}
+			const c  = { 
+				audio: false, 
+				video: { 
+					frameRate: { 
+						ideal: 10, 
+						max: 15 
+					},
+					facingMode: "user"
+					// width: 100,
+					// height: 130
+					// facingMode: (front? "user" : "environment") 
+				} 
+			};
+			navigator.mediaDevices.getUserMedia(c)
+				.then((stream) => {
+				  this.onInitConnect(stream);
+				  console.log(stream.getVideoTracks());
+				})
+				.catch((err) => {
+					console.log(err);
+				  this.onFailConnect();
+				});
+			this.pc = new RTCPeerConnection(null);
+			console.log(this.pc);
 		}
-		const c  = { 
-			audio: false, 
-			video: { 
-				frameRate: { 
-					ideal: 10, 
-					max: 15 
-				},
-				facingMode: "user"
-				// width: 100,
-				// height: 130
-				// facingMode: (front? "user" : "environment") 
-			} 
-		};
-		navigator.mediaDevices.getUserMedia(c)
-			.then((stream) => {
-			  this.onInitConnect(stream);
-			  console.log(stream.getVideoTracks());
-			})
-			.catch((err) => {
-				console.log(err);
-			  this.onFailConnect();
-			});
-		this.pc = new RTCPeerConnection(null);
-		console.log(this.pc);
 	}
 
 	onInitConnect = (stream) => {

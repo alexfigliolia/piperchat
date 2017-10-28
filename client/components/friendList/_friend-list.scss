@@ -31,6 +31,7 @@
 			font-weight: 200;
 			border-bottom: 1px solid #D0D7DB;
 			margin: 0;
+			font-size: 1.75em;
 			height: 70px;
 			color: $plite;
 			background: #EBEDF1;
@@ -40,19 +41,38 @@
 			left: 0;
 			z-index: 3;
 		}
+		&>.piper {
+			height: 70px;
+			width: 100%;
+			@include center;
+			&>.icon {
+				height: 50px;
+				width: 50px;
+				background: url('ppg.svg') no-repeat 50% -100%;
+				background-size: 50px 50px;
+				align-self: flex-start;
+				margin-top: 10px;
+			}
+			&>h2 {
+				margin-top: 30px;
+				font-weight: 600;
+				color: $plite;
+				font-size: 1.75em;
+			}
+		}
 		&>.add-friend {
 			width: 100%;
 			@include center;
 			border-bottom: 1px solid #D0D7DB;
 			border-radius: 0px;
-			height: 40px;
+			height: 50px;
 			position: fixed;
 			top: 70px;
 			left: 0;
 			background: #fff;
 			z-index: 3;
 			&>input {
-				height: 40px;
+				height: 50px;
 				width: 100%;
 				margin: 0;
 				padding: 0;
@@ -65,16 +85,13 @@
 		}
 		&>.list {
 			width: 100%;
-			height: calc(100% - 110px);
-			max-height: calc(100% - 110px);
+			height: calc(100% - 120px);
+			max-height: calc(100% - 120px);
 			overflow-y: scroll;
 			-webkit-overflow-scrolling: touch;
-			margin-top: 110px;
+			margin-top: 50px;
 			overflow-x: hidden;
 			display: block;
-			opacity: 0;
-			transform: translateX(-100%);
-			transition-duration: 0.3s;
 			&>.contact {
 				width: 100%;
 				height: 50px;
@@ -82,6 +99,8 @@
 				border-bottom: 1px solid #D0D7DB;
 				cursor: pointer;
 				position: relative;
+				opacity: 0;
+				transform: translateX(-100%);
 				transition-duration: 0.3s;
 				&:hover {
 					background: #fff;
@@ -164,8 +183,7 @@
 
 .friend-list-show {
 	transform: translateX(0%);
-	&>div>.list,
-	&>div>.add-friend {	
+	&>div>.list>.contact{	
 		transform: translateX(0%);
 		opacity: 1;
 		transition-delay: 0.1s;

@@ -20,7 +20,10 @@ export default class FriendList extends Component {
 		return (
 			<section className={this.props.classes}>
 				<div>
-					<h2>Your Friends</h2>
+					<div className="piper">
+						<div className="icon"></div>
+						<h2>Friends</h2>
+					</div>
 					<div className="add-friend">
 						<input 
 							type="search" 
