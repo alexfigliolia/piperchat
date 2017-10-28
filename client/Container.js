@@ -5,7 +5,7 @@ import { Messages } from '../api/messages.js';
 import { withTracker } from 'meteor/react-meteor-data';
 import App from './App.js';
 
-export default AppContainer = withTracker((props) => {
+export default AppContainer = withTracker(() => {
   const users = Meteor.subscribe('userData');
   const id = Meteor.userId();
   const user = Meteor.user();
