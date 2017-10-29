@@ -9,7 +9,7 @@ export default AppContainer = withTracker(() => {
   const userSub = Meteor.subscribe('userData');
   const id = Meteor.userId();
   const user = Meteor.user();
-  const usersSub = Meteor.subscribe('users');
+  const usersSub = Meteor.subscribe('allUserData');
   const userFriends = Meteor.subscribe('buddyLists');
   const userConversations = Meteor.subscribe('conversations');
   const userMessages = Meteor.subscribe('messages');
@@ -21,7 +21,7 @@ export default AppContainer = withTracker(() => {
   const friends = BuddyLists.find().fetch();
   const conversations = Conversations.find().fetch();
   const messages = Messages.find().fetch();
-  const usersExist = users.Ready && !!users;
+  const usersExist = usersReady && !!users;
   const friendsExist = friendsReady && !!friends;
   const conversationsExist = conversationsReady && !!conversations;
   const messagesExists = messagesReady && !!messages;

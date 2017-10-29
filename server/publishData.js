@@ -36,7 +36,7 @@ Meteor.publish('userData', function() {
   }
 });
 
-Meteor.publish('users', function() {
+Meteor.publish('allUserData', function() {
   var currentUser;
   currentUser = this.userId;
   if (currentUser) {
