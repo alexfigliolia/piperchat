@@ -20,8 +20,9 @@ export default class Dashboard extends Component {
 				onTouchStart={this.touchStart}>
 				<div>
 					{
-						!navigator.mediaDevices.getUserMedia({video: true}) && 
-						!navigator.getUserMedia({video: true}) &&
+						this.props.loggedIn &&
+						!navigator.mediaDevices.getUserMedia && 
+						!navigator.getUserMedia &&
 						<div
 							style={{
 								position: 'absolute',
