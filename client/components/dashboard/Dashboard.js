@@ -42,7 +42,6 @@ export default class Dashboard extends Component {
 				// width: 100,
 				// height: 130
 				// facingMode: (front? "user" : "environment") 
-			} 
 		};
 		navigator.mediaDevices.getUserMedia(c)
 			.then((stream) => {
