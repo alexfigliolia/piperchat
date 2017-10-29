@@ -36,20 +36,20 @@ Meteor.publish('userData', function() {
   }
 });
 
-Meteor.publish('allUserData', function() {
-  var currentUser;
-  currentUser = this.userId;
-  if (currentUser) {
-     return Meteor.users.find({},
-     {
-       fields: {
-          "name" : 1
-       }
-     });
-  } else {
-    return this.ready();
-  }
-});
+// Meteor.publish('allUserData', function() {
+//   var currentUser;
+//   currentUser = this.userId;
+//   if (currentUser) {
+//      return Meteor.users.find({},
+//      {
+//        fields: {
+//           "name" : 1
+//        }
+//      });
+//   } else {
+//     return this.ready();
+//   }
+// });
 
 Meteor.publish('buddyLists', function(){
 	var currentUser;
