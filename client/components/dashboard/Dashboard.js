@@ -9,7 +9,6 @@ export default class Dashboard extends Component {
 			meUrl: null
 		}
 		this.stream = null;
-		this.support = navigator.mediaDevices.getUserMedia || navigator.getUserMedia ? true : false;
 	}
 
 	touchStart = (e) => e.preventDefault();
@@ -22,7 +21,6 @@ export default class Dashboard extends Component {
 				<div>
 					{
 						this.props.loggedIn &&
-						this.support &&
 						<You
 							ref="you"
 							height={this.props.height}
@@ -31,20 +29,9 @@ export default class Dashboard extends Component {
 
 					{
 						this.props.loggedIn &&
-						this.support &&
 						<Me 
 							style={{background: "green"}} 
 							src={this.state.meUrl} />
-					}
-
-					{
-						this.props.loggedIn &&
-						!this.support &&
-						<div className="error">
-							<h2>We at Piper Chat are very sorry</h2>
-							<h3>Your browser does not support video chat</h3>
-							<p>Please try Google Chrome for desktop, Safari for iOS, or Chrome for Android</p>
-						</div>
 					}
 					
 				</div>

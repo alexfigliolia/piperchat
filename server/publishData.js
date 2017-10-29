@@ -36,6 +36,21 @@ Meteor.publish('userData', function() {
   }
 });
 
+Meteor.publish('users', function() {
+  var currentUser;
+  currentUser = this.userId;
+  if (currentUser) {
+     return Meteor.users.find({},
+     {
+       fields: {
+          "name" : 1
+       }
+     });
+  } else {
+    return this.ready();
+  }
+});
+
 Meteor.publish('buddyLists', function(){
 	var currentUser;
 	currentUser = this.userId;
