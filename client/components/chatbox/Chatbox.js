@@ -17,7 +17,8 @@ export default class Chatbox extends Component {
 	}
 
   componentDidMount() {
-    this.setState({width: this.refs.mc.clientWidth})
+    this.setState({width: this.refs.mc.clientWidth});
+    console.log(this);
   }
 
   handleEnter = (e) => {
@@ -56,7 +57,8 @@ export default class Chatbox extends Component {
       <div 
         className={this.state.classes}
         style={{
-          left: this.props.left * this.state.width + 'px'
+          left: this.props.width < 100 ? this.props.left * this.state.width + 'px' : this.props.left * this.state.width + 'px',
+          width: this.props.wwidth / this.props.width + 'px'
         }}>
       	<div>
       		<div className="with">

@@ -22,6 +22,7 @@ body {
 	position: relative;
 	@include center;
 	align-items: flex-end;
+	background: #4C4C4C;
 }
 
 @import 'components/loader';

@@ -24,3 +24,4 @@ accounts-google
 fourseven:scss
 seba:minifiers-autoprefixer
 force-ssl
+peerlibrary:reactive-publish

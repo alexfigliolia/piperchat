@@ -11,6 +11,8 @@
 		left: 0px;
 		width: 400px;
 		height: 400px;
+		max-width: 400px;
+		max-height: 400px;
 	}
 	&>div {
 		@include center;

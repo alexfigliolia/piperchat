@@ -20,6 +20,7 @@ export default class App extends Component {
       menuClasses: "menu",
       loginClasses: "login",
       contacts: [
+      	{ name: "Dana Figliolia", online: true, image: "cityweb-small.jpg" },
       	{ name: "Steve Figliolia", online: true, image: "cityweb-small.jpg" },
       	{ name: "Erica Figliolia", online: false, image: "cityweb-small.jpg" },
       	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" },
@@ -37,6 +38,7 @@ export default class App extends Component {
       	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" },
       ],
       search: [
+      	{ name: "Dana Figliolia", online: true, image: "cityweb-small.jpg" },
       	{ name: "Steve Figliolia", online: true, image: "cityweb-small.jpg" },
       	{ name: "Erica Figliolia", online: false, image: "cityweb-small.jpg" },
       	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" },
@@ -187,7 +189,8 @@ export default class App extends Component {
 					user={this.state.user}
 					userId={this.props.id}
 					height={this.state.height}
-					width={this.state.width} />
+					width={this.state.width}
+					loggedIn={this.state.loggedIn} />
 
 				{
 					this.state.loggedIn &&
@@ -214,6 +217,7 @@ export default class App extends Component {
 							index={this.state.currentChats.length - 1}
 							with={this.state.currentChats[this.state.currentChats.length - 1]}
 							left={0}
+							width={this.state.width}
 							closeChat={this.closeChat} />	
 					: this.state.loggedIn &&
 						this.state.currentChats.map((chat, i) => {
@@ -223,6 +227,7 @@ export default class App extends Component {
 											with={chat}
 											left={i}
 											width={this.state.currentChats.length}
+											wwidth={this.state.width}
 											closeChat={this.closeChat} />	
 					})
 				}

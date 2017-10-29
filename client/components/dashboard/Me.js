@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getLocalStream, closeStream } from './stream';
 
 export default class Me extends Component {
 	constructor(props){
@@ -8,11 +9,12 @@ export default class Me extends Component {
 			left: window.innerWidth - 120,
 			height: 130,
 			width: 100,
-			tD: 0.3
+			tD: 0.5
 		}
 	}
 
 	componentDidMount(){
+		setTimeout(() => { getLocalStream() }, 1000);
 		this.refs.me.onloadedmetadata = (e) => {
 	    this.refs.me.play();
 	    this.setState({ 
@@ -22,6 +24,10 @@ export default class Me extends Component {
 	    	left: (window.innerWidth - 5) - this.refs.me.videoWidth/3.5
 	    });
 	  }
+	}
+
+	componentWillUnmount() {
+		closeStream();
 	}
 
 	moveMe = (e) => {
@@ -36,6 +42,7 @@ export default class Me extends Component {
 	}
 
 	mouseDown = (e) => {
+		this.setState({tD: 0});
 		window.addEventListener('mousemove', this.moveMe, true);
 	}
 
@@ -45,7 +52,7 @@ export default class Me extends Component {
 	}
 
 	touchStart = (e) => {
-		this.setState({td: 0});
+		this.setState({tD: 0});
 		window.addEventListener('touchmove', this.touchMe, true);
 	}
 
@@ -72,7 +79,7 @@ export default class Me extends Component {
     		autoPlay
     		playsInline
     		style={{
-    			transitionDuration: this.state.td + 's',
+    			transition: `all ${this.state.tD}s`,
     			top: `${y}px`,
     			left: `${x}px`
     		}}></video>
