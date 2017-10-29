@@ -21,6 +21,7 @@ const getLocalStream = () => {
 		})
 		.catch((err) => {
 			console.log(err);
+			return err;
 		  onFailConnect();
 		});
 	// this.pc = new RTCPeerConnection(null);
