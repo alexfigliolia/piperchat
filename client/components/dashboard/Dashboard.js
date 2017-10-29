@@ -22,10 +22,12 @@ export default class Dashboard extends Component {
 	}
 
 	getLocalStream(){
-		if (navigator.mediaDevices === undefined) navigator.mediaDevices = {};
+		if (navigator.mediaDevices === undefined) {
+		  navigator.mediaDevices = {};
+		}
 		if (navigator.mediaDevices.getUserMedia === undefined) {
 		  navigator.mediaDevices.getUserMedia = function(constraints) {
-				const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+		    let getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 		    if (!getUserMedia) {
 		      return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
 		    }
@@ -53,6 +55,24 @@ export default class Dashboard extends Component {
 			});
 		this.pc = new RTCPeerConnection(null);
 		// console.log(this.pc);
+
+		navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+			.then(function(stream) {
+			  var video = document.querySelector('video');
+			  // Older browsers may not have srcObject
+			  if ("srcObject" in video) {
+			    video.srcObject = stream;
+			  } else {
+			    // Avoid using this in new browsers, as it is going away.
+			    video.src = window.URL.createObjectURL(stream);
+			  }
+			  video.onloadedmetadata = function(e) {
+			    video.play();
+			  };
+			})
+			.catch(function(err) {
+			  console.log(err.name + ": " + err.message);
+			});
 	}
 
 	onInitConnect = (stream) => {
@@ -62,15 +82,19 @@ export default class Dashboard extends Component {
 	    me.srcObject = stream;
 	    you.srcObject = stream;
 	    console.log('connected with srcObject');
-	  } else if(URL in window) {
+	  } 
+	  else 
+	  	// if(URL in window) 
+	  {
 	    me.src = window.URL.createObjectURL(stream);
 	    you.src = window.URL.createObjectURL(stream);
 	    console.log('connected with window.URL');
-	  } else {
-	  	me.src = window.webkitURL.createObjectURL(stream);
-	    you.src = window.webkitURL.createObjectURL(stream);
-	    console.log('connected with src');
-	  }
+	  } 
+	  // else {
+	  // 	me.src = window.webkitURL.createObjectURL(stream);
+	  //   you.src = window.webkitURL.createObjectURL(stream);
+	  //   console.log('connected with src');
+	  // }
     this.setState({ meUrl: stream});
     this.stream = stream;
 	}

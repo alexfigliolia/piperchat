@@ -7,7 +7,8 @@ export default class Me extends Component {
 			top: window.innerHeight - 150,
 			left: window.innerWidth - 120,
 			height: 130,
-			width: 100
+			width: 100,
+			tD: 0.3
 		}
 	}
 
@@ -44,6 +45,7 @@ export default class Me extends Component {
 	}
 
 	touchStart = (e) => {
+		this.setState({td: 0});
 		window.addEventListener('touchmove', this.touchMe, true);
 	}
 
@@ -74,6 +76,7 @@ export default class Me extends Component {
     		autoPlay
     		playsInline
     		style={{
+    			transitionDuration: this.state.td + 's',
     			top: `${y}px`,
     			left: `${x}px`
     		}}></video>
