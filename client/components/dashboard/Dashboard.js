@@ -8,11 +8,12 @@ export default class Dashboard extends Component {
 		this.state = {
 			meUrl: null
 		}
+		this.stream = null;
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if(nextProps.userId !== null && nextProps.userId !== undefined) {
-			if(this.stream === undefined || this.stream === null) this.getLocalStream();
+		if(nextProps.userId !== null && nextProps.userId !== undefined && this.stream === null) {
+			this.getLocalStream();
 		} else {
 			if(this.stream !== undefined && this.stream !== null) {
 				this.stream.getVideoTracks()[0].stop();
