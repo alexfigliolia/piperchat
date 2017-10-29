@@ -38,7 +38,7 @@ export default class Dashboard extends Component {
 		}
 		const c  = { 
 			audio: false, 
-			video: { frameRate: { ideal: 10, max: 15 }, facingMode: "user"
+			video: true
 				// width: 100,
 				// height: 130
 				// facingMode: (front? "user" : "environment") 
@@ -56,23 +56,23 @@ export default class Dashboard extends Component {
 		this.pc = new RTCPeerConnection(null);
 		// console.log(this.pc);
 
-		navigator.mediaDevices.getUserMedia({ audio: true, video: true })
-			.then(function(stream) {
-			  var video = document.querySelector('video');
-			  // Older browsers may not have srcObject
-			  if ("srcObject" in video) {
-			    video.srcObject = stream;
-			  } else {
-			    // Avoid using this in new browsers, as it is going away.
-			    video.src = window.URL.createObjectURL(stream);
-			  }
-			  video.onloadedmetadata = function(e) {
-			    video.play();
-			  };
-			})
-			.catch(function(err) {
-			  console.log(err.name + ": " + err.message);
-			});
+		// navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+		// 	.then(function(stream) {
+		// 	  var video = document.querySelector('video');
+		// 	  // Older browsers may not have srcObject
+		// 	  if ("srcObject" in video) {
+		// 	    video.srcObject = stream;
+		// 	  } else {
+		// 	    // Avoid using this in new browsers, as it is going away.
+		// 	    video.src = window.URL.createObjectURL(stream);
+		// 	  }
+		// 	  video.onloadedmetadata = function(e) {
+		// 	    video.play();
+		// 	  };
+		// 	})
+		// 	.catch(function(err) {
+		// 	  console.log(err.name + ": " + err.message);
+		// 	});
 	}
 
 	onInitConnect = (stream) => {
