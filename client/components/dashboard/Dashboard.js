@@ -20,6 +20,21 @@ export default class Dashboard extends Component {
 				onTouchStart={this.touchStart}>
 				<div>
 					{
+						!navigator.mediaDevices.getUserMedia({video: true}) && 
+						!navigator.getUserMedia({video: true}) &&
+						<div
+							style={{
+								position: 'absolute',
+								top: '80px',
+								left: '0px',
+								width: '100%',
+								zIndex: '39'
+							}}>
+							<h2>We're very sorry that your browser will not support Video Chat</h2>
+							<h3>Please try again using Google Chrome for desktop, Safari on ios, or Chrome for Android</h3>
+						</div>
+					}
+					{
 						this.props.loggedIn &&
 						<You
 							ref="you"

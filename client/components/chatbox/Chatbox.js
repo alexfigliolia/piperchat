@@ -64,12 +64,12 @@ export default class Chatbox extends Component {
   }
 
 	render() {
-    const l = this.getWidth();
+    const l = this.getWidth() + 1;
     return (
       <div 
         className={this.state.classes}
         style={{
-          left: this.props.width < 100 ? l * this.props.left + 'px' : this.props.left * this.state.width + 'px',
+          left: this.props.width < 100 ? l * this.props.left  + 'px' : this.props.left * this.state.width + 'px',
           width: this.props.wwidth / this.props.width + 'px'
         }}>
       	<div>
