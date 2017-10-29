@@ -40,7 +40,7 @@ export default class Dashboard extends Component {
 					{
 						this.props.loggedIn &&
 						!this.support &&
-						<div>
+						<div className="error">
 							<h2>We at Piper Chat are very sorry</h2>
 							<h3>Your browser does not support video chat</h3>
 							<p>Please try Google Chrome for desktop, Safari for iOS, or Chrome for Android</p>

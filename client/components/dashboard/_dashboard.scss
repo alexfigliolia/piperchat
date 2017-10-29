@@ -23,5 +23,37 @@
 			background: #4C4C4C url('loader.gif') no-repeat center;
 			background-size: 50px 50px;
 		}
+		&>.error {
+			width: 90%;
+			max-width: 450px;
+			@include center;
+			flex-direction: column;
+			color: $piper;
+			background: #fff;
+			padding: 30px 20px;
+			border-radius: 5px;
+			@include headerShadow;
+			&>h2,
+			&>h3,
+			&>p {
+				width: 90%;
+				text-align: center;	
+				margin: 0;
+			}
+			&>h2 {
+				color: #D13D47;
+				font-size: 1em;
+				width: 100%;
+			}
+			&>h3 {
+				margin-top: 10px;
+				margin-bottom: 10px;
+				font-size: 1em;
+				width: 100%;
+			}
+			&>p {
+				width: 100%;
+			}
+		}
 	}
 }
