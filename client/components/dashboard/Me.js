@@ -51,10 +51,6 @@ export default class Me extends Component {
 
 	touchEnd = (e) => {
 		window.removeEventListener('touchmove', this.touchMe, true);
-		// this.setState({
-		// 	top: e.touches[0].clientY - 70, 
-		// 	left: e.touches[0].clientX - 50
-		// });
 	}
 
 	render = () => {

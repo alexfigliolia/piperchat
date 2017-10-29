@@ -12,19 +12,19 @@ export default class Dashboard extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if(nextProps.userId !== null && nextProps.userId !== undefined && this.stream === null) {
+		if(nextProps.userId !== null && nextProps.userId !== undefined && this.state.meUrl === null) {
 			this.getLocalStream();
 		}
-		if(this.stream !== undefined && this.stream !== null && nextProps.userId === null) {
+		if(this.state.meUrl !== null && nextProps.userId === null) {
 			this.stream.getTracks()[0].stop();
 			this.stream = null;
+			this.setState({ meUrl: null});
+			console.log('i should disconnect');
 		}
 	}
 
 	getLocalStream(){
-		if (navigator.mediaDevices === undefined) {
-		  navigator.mediaDevices = {};
-		}
+		if (navigator.mediaDevices === undefined) navigator.mediaDevices = {};
 		if (navigator.mediaDevices.getUserMedia === undefined) {
 		  navigator.mediaDevices.getUserMedia = function(constraints) {
 		    let getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
@@ -36,42 +36,16 @@ export default class Dashboard extends Component {
 		    });
 		  }
 		}
-		const c  = { 
-			audio: false, 
-			video: true
-				// width: 100,
-				// height: 130
-				// facingMode: (front? "user" : "environment") 
-		};
+		const c  = { audio: false, video: true };
 		navigator.mediaDevices.getUserMedia(c)
 			.then((stream) => {
 			  this.onInitConnect(stream);
-			  // console.log(stream.getVideoTracks());
 			})
 			.catch((err) => {
 				console.log(err);
 			  this.onFailConnect();
 			});
 		this.pc = new RTCPeerConnection(null);
-		// console.log(this.pc);
-
-		// navigator.mediaDevices.getUserMedia({ audio: true, video: true })
-		// 	.then(function(stream) {
-		// 	  var video = document.querySelector('video');
-		// 	  // Older browsers may not have srcObject
-		// 	  if ("srcObject" in video) {
-		// 	    video.srcObject = stream;
-		// 	  } else {
-		// 	    // Avoid using this in new browsers, as it is going away.
-		// 	    video.src = window.URL.createObjectURL(stream);
-		// 	  }
-		// 	  video.onloadedmetadata = function(e) {
-		// 	    video.play();
-		// 	  };
-		// 	})
-		// 	.catch(function(err) {
-		// 	  console.log(err.name + ": " + err.message);
-		// 	});
 	}
 
 	onInitConnect = (stream) => {
@@ -80,20 +54,10 @@ export default class Dashboard extends Component {
 	  if ("srcObject" in me) {
 	    me.srcObject = stream;
 	    you.srcObject = stream;
-	    console.log('connected with srcObject');
-	  } 
-	  else 
-	  	// if(URL in window) 
-	  {
+	  } else {
 	    me.src = window.URL.createObjectURL(stream);
 	    you.src = window.URL.createObjectURL(stream);
-	    console.log('connected with window.URL');
-	  } 
-	  // else {
-	  // 	me.src = window.webkitURL.createObjectURL(stream);
-	  //   you.src = window.webkitURL.createObjectURL(stream);
-	  //   console.log('connected with src');
-	  // }
+	  }
     this.setState({ meUrl: stream});
     this.stream = stream;
 	}

@@ -83,7 +83,7 @@ export default class App extends Component {
 	needsAuth = () => {
 		if(this.loader !== null) {
 			this.loader.classList.add('app-loader-hidden-op');
-			this.setState({ loggedIn: false });
+			this.setState({ loggedIn: false, user: null, burgerClasses: "hamburglar is-open", burgerToggle: true, friendListClasses: "friend-list", friendToggle: true, menuClasses: "menu" });
 			setTimeout(() => { 
 				this.loader.remove();
 				this.setState({ loginClasses: "login login-show "})
