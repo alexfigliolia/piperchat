@@ -18,7 +18,18 @@ export default class Chatbox extends Component {
 
   componentDidMount() {
     this.setState({width: this.refs.mc.clientWidth});
-    console.log(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.width !== this.props.width) {
+      this.setState({width: this.refs.mc.clientWidth});
+    }
+  }
+
+  getWidth = () => {
+    if(this.refs.mc) {
+      return this.refs.mc.clientWidth;
+    }
   }
 
   handleEnter = (e) => {
@@ -53,11 +64,12 @@ export default class Chatbox extends Component {
   }
 
 	render() {
+    const l = this.getWidth();
     return (
       <div 
         className={this.state.classes}
         style={{
-          left: this.props.width < 100 ? this.props.left * this.state.width + 'px' : this.props.left * this.state.width + 'px',
+          left: this.props.width < 100 ? l * this.props.left + 'px' : this.props.left * this.state.width + 'px',
           width: this.props.wwidth / this.props.width + 'px'
         }}>
       	<div>
