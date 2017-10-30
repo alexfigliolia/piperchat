@@ -80,7 +80,7 @@ Meteor.methods({
 
   'user.sendRequest'(name, image) {
     check(name, String);
-    check(image, String);
+    // check(image, String);
     const user =  Meteor.users.findOne({name: name, image: image}, { _id: 1});
     return BuddyLists.update({owner: user._id}, {
       $push: {
