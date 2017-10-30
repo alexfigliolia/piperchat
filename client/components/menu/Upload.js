@@ -18,7 +18,6 @@ export default class Upload extends PureComponent {
 	  fd.append('file', img);
     axios.post(CloudConfig.url, fd, AxiosConfig)
 	  .then(res => {
-	    console.log(res);
 	    let url = res.data.secure_url.split('/');
       url.splice(-2, 0, 'q_auto/f_auto/w_100,h_100,c_fill');
       url = url.join('/')

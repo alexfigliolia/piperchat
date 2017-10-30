@@ -13,7 +13,6 @@ export default class User extends Component {
   		if(error) {
   			console.log(error);
   		} else {
-  			console.log(result);
   			this.setState({ sentRequest: true });
   		}
   	});
@@ -21,11 +20,7 @@ export default class User extends Component {
 
   acceptRequest = (e) => {
   	Meteor.call('user.acceptRequest', e.target.dataset.name, e.target.dataset.image, (error, result) => {
-  		if(error) {
-  			console.log(error);
-  		} else {
-  			console.log(result);
-  		}
+  		if(error) console.log(error);
   	});
   }
 
