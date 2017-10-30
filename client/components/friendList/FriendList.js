@@ -43,6 +43,17 @@ export default class FriendList extends Component {
 					</div>
 					<div ref="list" className="list">
 						{
+							this.props.sentRequests.map((user, i) => {
+								return (
+									<User
+										key={i}
+										name={user.name}
+										image={user.image}
+										sentReqest={true} />
+								);
+							})
+						}
+						{
 							this.props.requests.map((user, i) => {
 								return (
 									<User

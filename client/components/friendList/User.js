@@ -54,7 +54,7 @@ export default class User extends Component {
 						:
 						<div className="add-new">
 							{
-								this.state.sentRequest === null ?
+								this.props.sentRequest !== true || this.props.sentRequest === undefined ?
 								<button 
 									data-name={this.props.name}
 									data-image={this.props.image}

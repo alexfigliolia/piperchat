@@ -62,6 +62,13 @@ export default class Login extends Component {
             this.setState({ error: err.reason, buttonClasses: "login-button" });
           } else {
             this.setState({ error: "", buttonClasses: "login-button login-thinking login-thunk" });
+            Meteor.call('user.createBuddyList', (error, result) => {
+              if(error) {
+                console.log(error);
+              } else {
+                console.log(result);
+              }
+            });
           }
         });
       }

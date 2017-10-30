@@ -59,6 +59,7 @@ export default class App extends Component {
       	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" },
       ],
       requests: [],
+      sentRequests: [],
       height: window.innerHeight,
       width: window.innerWidth,
       currentChats: []
@@ -97,26 +98,12 @@ export default class App extends Component {
 	}
 
 	letEmIn = (path) => {
-		Meteor.call('user.checkForBuddyList', (error, result) => {
-			if(error){
-				console.log(error);
-			} else {
-				if(result.length === 0) {
-					Meteor.call('user.createBuddyList', (error, result) => {
-						if(error) {
-							console.log(error);
-						} else {
-							console.log(result);
-						}
-					});
-				}
-			}
-		});
 		this.setState({ 
 			user: path.user, 
 			contacts: path.buddyList.length !== 0 ? path.buddyList[0].friends : [],
 			search: path.buddyList.length !== 0 ? path.buddyList[0].friends : [],
 			requests: path.buddyList.length !== 0 ? path.buddyList[0].requests : [],
+			sentRequests: path.buddyList.length !== 0 && path.buddyList[0].sentRequests !== undefined ? path.buddyList[0].sentRequests : [],
 			loginClasses: "login login-show" 
 		});
 		setTimeout(() => { 
@@ -226,6 +213,7 @@ export default class App extends Component {
 						search={this.state.search}
 						contacts={this.state.contacts}
 						requests={this.state.requests}
+						sentRequests={this.state.sentRequests}
 						handleSearch={this.handleSearch}
 						openChat={this.openChat} />
 				}

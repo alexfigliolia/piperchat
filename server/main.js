@@ -14,7 +14,8 @@ Meteor.methods({
     return BuddyLists.insert({
       owner: Meteor.userId(),
       friends: [],
-      requests: []
+      requests: [],
+      sentRequests: []
     });
   },
 
@@ -88,6 +89,11 @@ Meteor.methods({
     check(name, String);
     // check(image, String);
     const user =  Meteor.users.findOne({name: name, image: image}, { _id: 1});
+    BuddyLists.update({owner: Meteor.userId()}, {
+      $push: {
+        sentRequests: {name: user.name, image: user.image, _id: user.id}
+      }
+    });
     const bl = BuddyLists.find({owner: user._id}).fetch()[0];
     const reqs = bl.requests;
     let exists = false;
@@ -117,6 +123,9 @@ Meteor.methods({
     BuddyLists.update({owner: user._id}, {
       $push: { 
         friends: { name: Meteor.user().name , image: Meteor.user().image, _id: Meteor.userId() } 
+      },
+      $pull: {
+        sentRequests: { _id: Meteor.userId()}
       }
     });
   },
