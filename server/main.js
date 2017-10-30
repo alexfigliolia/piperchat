@@ -88,11 +88,20 @@ Meteor.methods({
     check(name, String);
     // check(image, String);
     const user =  Meteor.users.findOne({name: name, image: image}, { _id: 1});
-    return BuddyLists.update({owner: user._id}, {
-      $push: {
-        requests: { name: Meteor.user().name, image: Meteor.user().image, _id: Meteor.userId() }
-      }
-    })
+    const bl = BuddyLists.find({owner: user._id}).fetch()[0];
+    const reqs = bl.requests;
+    let exists = false;
+    for(let i = 0; i < reqs.length; i++) {
+      console.log(reqs[i]);
+      if(Meteor.userId() === reqs[i]._id) exists = true;
+    }
+    if(!exists) {
+      return BuddyLists.update({owner: user._id}, {
+        $push: {
+          requests: { name: Meteor.user().name, image: Meteor.user().image, _id: Meteor.userId() }
+        }
+      })
+    }
   },
 
   'user.acceptRequest'(name, image){
