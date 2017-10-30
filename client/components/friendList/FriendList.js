@@ -25,6 +25,15 @@ export default class FriendList extends Component {
 		return exists;
 	}
 
+	checkInReqs = (name) => {
+		console.log(this.props.sentRequests);
+		let exists = false;
+		this.props.sentRequests.forEach((contact) => {
+			if(contact.name === name) exists = true;
+		});
+		return exists;
+	}
+
 	render = () => {
 		return (
 			<section className={this.props.classes}>
@@ -49,7 +58,7 @@ export default class FriendList extends Component {
 										key={i}
 										name={user.name}
 										image={user.image}
-										sentReqest={true} />
+										sentRequest={true} />
 								);
 							})
 						}
@@ -60,21 +69,25 @@ export default class FriendList extends Component {
 										key={i}
 										name={user.name}
 										image={user.image}
-										isRequest={true} />
+										isRequest={true}
+										sentRequest={false} />
 								);
 							})
 						}
 						{
 							this.props.search.map((dude, i) => {
-								if(!this.checkInContacts(dude.name) && dude.name !== this.props.user.name) {
+								if(!this.checkInContacts(dude.name) && 
+									 !this.checkInReqs(dude.name) && 
+									 dude.name !== this.props.user.name) {
 									return (
 										<User
 											key={i}
 											name={dude.name}
 											image={dude.image}
-											isRequest={false} />
+											isRequest={false}
+											sentRequest={false} />
 									);
-								} else if(dude.name !== this.props.user.name) {
+								} else if(dude.name !== this.props.user.name && !this.checkInReqs(dude.name)) {
 									return (
 										<Friend 
 											key={i}

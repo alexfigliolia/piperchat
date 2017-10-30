@@ -1,20 +1,9 @@
 import React, { Component } from 'react';
 
 export default class User extends Component {
-  constructor(props) {
-  	super(props);
-  	this.state = {
-  		sentRequest: null
-  	}
-  }
-
   sendRequest = (e) => {
   	Meteor.call('user.sendRequest', e.target.dataset.name, e.target.dataset.image, (error, result) => {
-  		if(error) {
-  			console.log(error);
-  		} else {
-  			this.setState({ sentRequest: true });
-  		}
+  		if(error) console.log(error);
   	});
   }
 
@@ -54,7 +43,7 @@ export default class User extends Component {
 						:
 						<div className="add-new">
 							{
-								this.props.sentRequest !== true || this.props.sentRequest === undefined ?
+								!this.props.sentRequest ?
 								<button 
 									data-name={this.props.name}
 									data-image={this.props.image}

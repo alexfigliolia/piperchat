@@ -91,7 +91,7 @@ Meteor.methods({
     const user =  Meteor.users.findOne({name: name, image: image}, { _id: 1});
     BuddyLists.update({owner: Meteor.userId()}, {
       $push: {
-        sentRequests: {name: user.name, image: user.image, _id: user.id}
+        sentRequests: {name: user.name, image: user.image, _id: user._id}
       }
     });
     const bl = BuddyLists.find({owner: user._id}).fetch()[0];
@@ -132,11 +132,16 @@ Meteor.methods({
 
   'user.denyRequest'(name, image) {
     const user =  Meteor.users.findOne({name: name, image: image}, { _id: 1});
+    BuddyLists.update({owner: user._id}, {
+      $pull: {
+        sentRequests: {_id: Meteor.userId()}
+      }
+    });
     const bl = BuddyLists.find({owner: Meteor.userId()}).fetch()[0];
     const reqs = bl.requests;
     for(let i = 0; i<reqs.length; i++) {
       if(reqs[i]._id === user._id) {
-        return BuddyLists.update({owner: Meteor.userId()}, {
+        BuddyLists.update({owner: Meteor.userId()}, {
           $pull: {
             requests: { _id: user._id}
           }
