@@ -33,18 +33,14 @@ Meteor.methods({
       for(let j = 0; j < buddyLists[i].friends.length; j++) {
         if(buddyLists[i].friends[j]._id === Meteor.userId()) {
           BuddyLists.update({_id: buddyListId}, {
-            $set: {
-              ['friends.' + j + '.name']: name 
-            }
+            $set: { ['friends.' + j + '.name']: name }
           });
         }
       }
       for(let k = 0; k < buddyLists[i].requests.length; j++) {
         if(buddyLists[k].requests[k]._id === Meteor.userId()) {
           BuddyLists.update({_id: buddyListId}, {
-            $set: {
-              ['requests.' + k + '.name']: name 
-            }
+            $set: { ['requests.' + k + '.name']: name }
           });
         }
       }
@@ -67,18 +63,14 @@ Meteor.methods({
       for(let j = 0; j < buddyLists[i].friends.length; j++) {
         if(buddyLists[i].friends[j]._id === Meteor.userId()) {
           BuddyLists.update({_id: buddyListId}, {
-            $set: {
-              ['friends.' + j + '.image']: url
-            }
+            $set: { ['friends.' + j + '.image']: url }
           });
         }
       }
       for(let k = 0; k < buddyLists[i].requests.length; j++) {
         if(buddyLists[k].requests[k]._id === Meteor.userId()) {
           BuddyLists.update({_id: buddyListId}, {
-            $set: {
-              ['requests.' + k + '.image']: url 
-            }
+            $set: { ['requests.' + k + '.image']: url }
           });
         }
       }
@@ -90,9 +82,7 @@ Meteor.methods({
     // check(image, String);
     const user =  Meteor.users.findOne({name: name, image: image}, { _id: 1});
     BuddyLists.update({owner: Meteor.userId()}, {
-      $push: {
-        sentRequests: {name: user.name, image: user.image, _id: user._id}
-      }
+      $push: { sentRequests: {name: user.name, image: user.image, _id: user._id} }
     });
     const bl = BuddyLists.find({owner: user._id}).fetch()[0];
     const reqs = bl.requests;
@@ -103,9 +93,7 @@ Meteor.methods({
     }
     if(!exists) {
       return BuddyLists.update({owner: user._id}, {
-        $push: {
-          requests: { name: Meteor.user().name, image: Meteor.user().image, _id: Meteor.userId() }
-        }
+        $push: { requests: { name: Meteor.user().name, image: Meteor.user().image, _id: Meteor.userId() } }
       })
     }
   },
@@ -113,38 +101,26 @@ Meteor.methods({
   'user.acceptRequest'(name, image){
     const user =  Meteor.users.findOne({name: name, image: image}, { _id: 1});
     BuddyLists.update({owner: Meteor.userId()}, {
-      $pull: { 
-        requests: {_id: user._id } 
-      },
-      $push: {
-        friends: { name: name , image: image, _id: user._id } 
-      }
+      $pull: { requests: {_id: user._id } },
+      $push: { friends: { name: name , image: image, _id: user._id } }
     });
     BuddyLists.update({owner: user._id}, {
-      $push: { 
-        friends: { name: Meteor.user().name , image: Meteor.user().image, _id: Meteor.userId() } 
-      },
-      $pull: {
-        sentRequests: { _id: Meteor.userId()}
-      }
+      $push: { friends: { name: Meteor.user().name , image: Meteor.user().image, _id: Meteor.userId() } },
+      $pull: { sentRequests: { _id: Meteor.userId()} }
     });
   },
 
   'user.denyRequest'(name, image) {
     const user =  Meteor.users.findOne({name: name, image: image}, { _id: 1});
     BuddyLists.update({owner: user._id}, {
-      $pull: {
-        sentRequests: {_id: Meteor.userId()}
-      }
+      $pull: { sentRequests: {_id: Meteor.userId()} }
     });
     const bl = BuddyLists.find({owner: Meteor.userId()}).fetch()[0];
     const reqs = bl.requests;
     for(let i = 0; i<reqs.length; i++) {
       if(reqs[i]._id === user._id) {
         BuddyLists.update({owner: Meteor.userId()}, {
-          $pull: {
-            requests: { _id: user._id}
-          }
+          $pull: { requests: { _id: user._id} }
         });
         break;
       }
