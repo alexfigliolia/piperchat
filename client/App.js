@@ -103,7 +103,7 @@ export default class App extends Component {
 			contacts: path.buddyList.length !== 0 ? path.buddyList[0].friends : [],
 			search: path.buddyList.length !== 0 ? path.buddyList[0].friends : [],
 			requests: path.buddyList.length !== 0 ? path.buddyList[0].requests : [],
-			sentRequests: path.buddyList.length !== 0 && path.buddyList[0].sentRequests !== undefined ? path.buddyList[0].sentRequests : [],
+			sentRequests: path.buddyList.length !== 0 ? path.buddyList[0].sentRequests : [],
 			loginClasses: "login login-show" 
 		});
 		setTimeout(() => { 

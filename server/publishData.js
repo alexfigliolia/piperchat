@@ -59,6 +59,7 @@ Meteor.publish('buddyLists', function(){
 		fields: {
 			friends: 1,
       requests: 1,
+      sentRequests: 1,
 			owner: 1,
 		}
 	});
