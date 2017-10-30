@@ -24,6 +24,12 @@ export default class User extends Component {
   	});
   }
 
+  denyRequest = (e) => {
+  	Meteor.call('user.denyRequest', e.target.dataset.name, e.target.dataset.image, (error, result) => {
+  		if(error) console.log(error);
+  	});
+  }
+
   render() {
     return (
       <div 
@@ -36,7 +42,7 @@ export default class User extends Component {
 						<div className="accept-deny">
 							<button 
 								className="deny"
-								onClick={this.acceptRequest}
+								onClick={this.denyRequest}
 								data-name={this.props.name}
 								data-image={this.props.image}></button>
 							<button 

@@ -230,8 +230,8 @@
 							outline: none; 
 							border: none;
 							border-radius: 50%;
-							background: $plite url('loader.gif') no-repeat center;
-							background-size: contain;
+							background: #6477D6 url('send.svg') no-repeat 55% 50%;
+							background-size: 17.5px 17.5px;
 							@include buttonShadow;
 						}
 					}

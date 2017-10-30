@@ -92,8 +92,8 @@ Meteor.methods({
     const reqs = bl.requests;
     let exists = false;
     for(let i = 0; i < reqs.length; i++) {
-      console.log(reqs[i]);
       if(Meteor.userId() === reqs[i]._id) exists = true;
+      break;
     }
     if(!exists) {
       return BuddyLists.update({owner: user._id}, {
@@ -121,6 +121,22 @@ Meteor.methods({
         friends: { name: Meteor.user().name , image: Meteor.user().image, _id: Meteor.userId() } 
       }
     });
+  },
+
+  'user.denyRequest'(name, image) {
+    const user =  Meteor.users.findOne({name: name, image: image}, { _id: 1});
+    const bl = BuddyLists.find({owner: Meteor.userId()}).fetch()[0];
+    const reqs = bl.requests;
+    for(let i = 0; i<reqs.length; i++) {
+      if(reqs[i]._id === user._id) {
+        return BuddyLists.update({owner: Meteor.userId()}, {
+          $pull: {
+            requests: { _id: user._id}
+          }
+        });
+        break;
+      }
+    }
   }
 
 });

@@ -43,6 +43,17 @@ export default class FriendList extends Component {
 					</div>
 					<div ref="list" className="list">
 						{
+							this.props.requests.map((user, i) => {
+								return (
+									<User
+										key={i}
+										name={user.name}
+										image={user.image}
+										isRequest={true} />
+								);
+							})
+						}
+						{
 							this.props.search.map((dude, i) => {
 								if(!this.checkInContacts(dude.name) && dude.name !== this.props.user.name) {
 									return (
@@ -50,7 +61,7 @@ export default class FriendList extends Component {
 											key={i}
 											name={dude.name}
 											image={dude.image}
-											isRequest={dude.isRequest !== undefined ? true : false} />
+											isRequest={false} />
 									);
 								} else if(dude.name !== this.props.user.name) {
 									return (

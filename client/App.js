@@ -58,6 +58,7 @@ export default class App extends Component {
       	{ name: "Erica Figliolia", online: false, image: "cityweb-small.jpg" },
       	{ name: "George Figliolia", online: true, image: "cityweb-small.jpg" },
       ],
+      requests: [],
       height: window.innerHeight,
       width: window.innerWidth,
       currentChats: []
@@ -115,19 +116,9 @@ export default class App extends Component {
 			user: path.user, 
 			contacts: path.buddyList.length !== 0 ? path.buddyList[0].friends : [],
 			search: path.buddyList.length !== 0 ? path.buddyList[0].friends : [],
+			requests: path.buddyList.length !== 0 ? path.buddyList[0].requests : [],
 			loginClasses: "login login-show" 
 		});
-		if(path.buddyList.length !== 0) {
-			if(path.buddyList[0].requests.length >= 1) {
-				for(let i = 0; i<path.buddyList[0].requests.length; i++ ) {
-					// if(this.state.search.indexOf(path.buddyList[0].requests[i]) !== -1) {
-						const nu = update(path.buddyList[0].requests[i], {isRequest: {$set: true}});
-						const ns = update(this.state.search, {$unshift: [nu]});
-						this.setState({search: ns}); 
-					// }
-				}
-			}
-		}
 		setTimeout(() => { 
 			this.setState({ loginClasses: "login login-show login-hide" }) 
 			if(this.loader !== null) {
@@ -234,6 +225,7 @@ export default class App extends Component {
 						classes={this.state.friendListClasses}
 						search={this.state.search}
 						contacts={this.state.contacts}
+						requests={this.state.requests}
 						handleSearch={this.handleSearch}
 						openChat={this.openChat} />
 				}
