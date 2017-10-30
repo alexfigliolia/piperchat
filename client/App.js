@@ -62,7 +62,8 @@ export default class App extends Component {
       sentRequests: [],
       height: window.innerHeight,
       width: window.innerWidth,
-      currentChats: []
+      currentChats: [],
+      currentSearch: ''
 		}
 		this.loader = document.getElementById('appLoader');
 	}
@@ -106,6 +107,7 @@ export default class App extends Component {
 			sentRequests: path.buddyList.length !== 0 ? path.buddyList[0].sentRequests : [],
 			loginClasses: "login login-show" 
 		});
+		if(this.state.currentSearch !== '') this.handleSearch(this.state.currentSearch);
 		setTimeout(() => { 
 			this.setState({ loginClasses: "login login-show login-hide" }) 
 			if(this.loader !== null) {
@@ -152,7 +154,7 @@ export default class App extends Component {
 	        results.push(this.props.users[i]);
 	      }
 	    }
-	    this.setState({ search: results });
+	    this.setState({ search: results, currentSearch: val });
   	} else {
   		this.setState({search: this.state.contacts});
   	}

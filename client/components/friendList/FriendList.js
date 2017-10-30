@@ -26,7 +26,6 @@ export default class FriendList extends Component {
 	}
 
 	checkInReqs = (name) => {
-		console.log(this.props.sentRequests);
 		let exists = false;
 		this.props.sentRequests.forEach((contact) => {
 			if(contact.name === name) exists = true;
