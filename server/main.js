@@ -109,9 +109,7 @@ Meteor.methods({
     BuddyLists.update({owner: Meteor.userId()}, {
       $pull: { 
         requests: {_id: user._id } 
-      }
-    });
-    BuddyLists.update({owner: Meteor.userId()}, {
+      },
       $push: {
         friends: { name: name , image: image, _id: user._id } 
       }
