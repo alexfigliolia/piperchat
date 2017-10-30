@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Friend from './Friend';
+import User from './User';
 
 export default class FriendList extends Component {
 	constructor(props) {
@@ -14,6 +15,14 @@ export default class FriendList extends Component {
 		if(nextProps !== this.props && this.props.classes === "friend-list") {
 			this.refs.list.scrollTop = 0;
 		}
+	}
+
+	checkInContacts = (name) => {
+		let exists = false;
+		this.props.contacts.forEach((contact) => {
+			if(contact.name === name) exists = true;
+		});
+		return exists;
 	}
 
 	render = () => {
@@ -35,14 +44,24 @@ export default class FriendList extends Component {
 					<div ref="list" className="list">
 						{
 							this.props.search.map((dude, i) => {
-								return (
-									<Friend 
-										key={i}
-										name={dude.name}
-										image={dude.image}
-										online={dude.online}
-										openChat={this.props.openChat} />
-								);
+								if(!this.checkInContacts(dude.name) && dude.name !== this.props.user.name) {
+									return (
+										<User
+											key={i}
+											name={dude.name}
+											image={dude.image}
+											isRequest={dude.isRequest !== undefined ? true : false} />
+									);
+								} else if(dude.name !== this.props.user.name) {
+									return (
+										<Friend 
+											key={i}
+											name={dude.name}
+											image={dude.image}
+											online={dude.online}
+											openChat={this.props.openChat} />
+									);
+								}
 							})
 						}
 					</div>

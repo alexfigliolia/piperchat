@@ -175,6 +175,88 @@
 					}
 				}
 			}
+			&>.user {
+				width: 100%;
+				height: 50px;
+				@include center;
+				border-bottom: 1px solid #D0D7DB;
+				cursor: pointer;
+				position: relative;
+				// opacity: 0;
+				// transform: translateX(-100%);
+				// transition-duration: 0.3s;
+				&>div {
+					@include center;
+					width: 100%;
+					flex-direction: row;
+					justify-content: space-between;
+					width: 90%;
+					&>img {
+						height: 35px;
+						width: 35px;
+						border-radius: 50%;
+						overflow: hidden;
+						@include buttonShadow;
+						border: none;
+						outline: none;
+						margin: 0;
+						padding: 0;
+						@include center;
+					}
+					&>h3 {
+						color: #7A7E80;
+						font-weight: 500;
+						font-size: 1em;
+					}
+					&>.add-new {
+						width: 50px;
+						height: 50px;
+						@include center;
+						&>button {
+							height: 35px;
+							width: 35px;
+							outline: none; 
+							border: none;
+							border-radius: 50%;
+							background: $plite url('addperson.svg') no-repeat 45% 50%;
+							background-size: 20px 20px;
+							@include buttonShadow;
+						}
+						&>div {
+							height: 35px;
+							width: 35px;
+							outline: none; 
+							border: none;
+							border-radius: 50%;
+							background: $plite url('loader.gif') no-repeat center;
+							background-size: contain;
+							@include buttonShadow;
+						}
+					}
+					&>.accept-deny {
+						width: 80px;
+						height: 100%;
+						@include center;
+						justify-content: space-between;
+						&>button {
+							outline: none;
+							border: none;
+							height: 35px;
+							width: 35px;
+							background: blue;
+							border-radius: 50%;
+							background: #D43647 url('x.svg') no-repeat center;
+							background-size: 22.5px 22.5px;
+							@include buttonShadow;
+							padding: 0;
+						}
+						&>button:last-of-type {
+							background: $plite url('check.svg') no-repeat center;
+							background-size: 22.5px 22.5px;
+						}
+					}
+				}
+			}
 		}
 	}
 }

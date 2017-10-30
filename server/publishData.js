@@ -36,20 +36,21 @@ Meteor.publish('userData', function() {
   }
 });
 
-// Meteor.publish('allUserData', function() {
-//   var currentUser;
-//   currentUser = this.userId;
-//   if (currentUser) {
-//      return Meteor.users.find({},
-//      {
-//        fields: {
-//           "name" : 1
-//        }
-//      });
-//   } else {
-//     return this.ready();
-//   }
-// });
+Meteor.publish('allUserData', function() {
+  var currentUser;
+  currentUser = this.userId;
+  if (currentUser) {
+     return Meteor.users.find({},
+     {
+       fields: {
+          "name" : 1,
+          "image": 1
+       }
+     });
+  } else {
+    return this.ready();
+  }
+});
 
 Meteor.publish('buddyLists', function(){
 	var currentUser;
@@ -57,6 +58,7 @@ Meteor.publish('buddyLists', function(){
 	var schedules = BuddyLists.find({owner: currentUser}, {
 		fields: {
 			friends: 1,
+      requests: 1,
 			owner: 1,
 		}
 	});

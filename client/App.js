@@ -96,7 +96,38 @@ export default class App extends Component {
 	}
 
 	letEmIn = (path) => {
-		this.setState({ user: path.user, loginClasses: "login login-show" });
+		Meteor.call('user.checkForBuddyList', (error, result) => {
+			if(error){
+				console.log(error);
+			} else {
+				if(result.length === 0) {
+					Meteor.call('user.createBuddyList', (error, result) => {
+						if(error) {
+							console.log(error);
+						} else {
+							console.log(result);
+						}
+					});
+				}
+			}
+		});
+		this.setState({ 
+			user: path.user, 
+			contacts: path.buddyList.length !== 0 ? path.buddyList[0].friends : [],
+			search: path.buddyList.length !== 0 ? path.buddyList[0].friends : [],
+			loginClasses: "login login-show" 
+		});
+		if(path.buddyList.length !== 0) {
+			if(path.buddyList[0].requests.length >= 1) {
+				for(let i = 0; i<path.buddyList[0].requests.length; i++ ) {
+					// if(this.state.search.indexOf(path.buddyList[0].requests[i]) !== -1) {
+						const nu = update(path.buddyList[0].requests[i], {isRequest: {$set: true}});
+						const ns = update(this.state.search, {$unshift: [nu]});
+						this.setState({search: ns}); 
+					// }
+				}
+			}
+		}
 		setTimeout(() => { 
 			this.setState({ loginClasses: "login login-show login-hide" }) 
 			if(this.loader !== null) {
@@ -135,14 +166,18 @@ export default class App extends Component {
   }
 
   handleSearch = (val) => {
-  	const results = [];
-    for(let i = 0; i < this.state.contacts.length; i++) {
-      const friend = this.state.contacts[i].name.toLowerCase();
-      if(friend.indexOf(val.toLowerCase()) !== -1) {
-        results.push(this.state.contacts[i]);
-      }
-    }
-    this.setState({ search: results });
+  	if(val !== '') {
+  		const results = [];
+	    for(let i = 0; i < this.props.users.length; i++) {
+	      const friend = this.props.users[i].name.toLowerCase();
+	      if(friend.indexOf(val.toLowerCase()) !== -1 && friend !== this.state.user.name) {
+	        results.push(this.props.users[i]);
+	      }
+	    }
+	    this.setState({ search: results });
+  	} else {
+  		this.setState({search: this.state.contacts});
+  	}
   }
 
   closeChat = (e) => {
@@ -195,8 +230,10 @@ export default class App extends Component {
 				{
 					this.state.loggedIn &&
 					<FriendList
+						user={this.props.user}
 						classes={this.state.friendListClasses}
 						search={this.state.search}
+						contacts={this.state.contacts}
 						handleSearch={this.handleSearch}
 						openChat={this.openChat} />
 				}
