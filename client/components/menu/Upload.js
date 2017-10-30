@@ -22,7 +22,13 @@ export default class Upload extends PureComponent {
       url.splice(-2, 0, 'q_auto/f_auto/w_100,h_100,c_fill');
       url = url.join('/')
 	    Meteor.call('user.addImage', url, (error, result) => {
-	    	if(error) console.log(error);
+	    	if(error) {
+	    		console.log(error);
+	    	} else {
+	    		Meteor.call('user.cleanImage', url, (error, result) => {
+	    			if(error) console.log(error);
+	    		}); 
+	    	}
 	    });
 	  }).catch(err => console.log(err) );
   }

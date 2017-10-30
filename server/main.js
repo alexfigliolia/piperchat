@@ -20,6 +20,12 @@ Meteor.methods({
 
   'user.changeName'(name){
     check(name, String);
+    return Meteor.users.update({ _id: Meteor.userId() }, {
+      $set: { name: name }
+    });
+  },
+
+  'user.cleanName'(name) {
     const buddyLists = BuddyLists.find().fetch();
     for(let i = 0; i<buddyLists.length; i++) {
       const buddyListId = buddyLists[i]._id
@@ -42,13 +48,18 @@ Meteor.methods({
         }
       }
     }
-    return Meteor.users.update({ _id: Meteor.userId() }, {
-      $set: { name: name }
-    });
   },
 
   'user.addImage'(url) {
     check(url, String);
+    return Meteor.users.update({ _id: Meteor.userId() }, {
+      $set: { image: url }
+    });
+    //Add garbage collection for old images
+    //Fetch old image from user object and delete
+  },
+
+  'user.cleanImage'(url) {
     const buddyLists = BuddyLists.find().fetch();
     for(let i = 0; i<buddyLists.length; i++) {
       const buddyListId = buddyLists[i]._id
@@ -71,12 +82,7 @@ Meteor.methods({
         }
       }
     }
-    return Meteor.users.update({ _id: Meteor.userId() }, {
-      $set: { image: url }
-    });
-    //Add garbage collection for old images
-    //Fetch old image from user object and delete
-  },
+  }, 
 
   'user.sendRequest'(name, image) {
     check(name, String);

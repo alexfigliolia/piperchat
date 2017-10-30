@@ -52,7 +52,14 @@ export default class Menu extends PureComponent {
   handleNameChange = () => {
  		if(this.refs.newName.value !== this.props.user.name) {
  			Meteor.call('user.changeName', this.refs.newName.value, (error, result) => {
- 				if(error) { console.log(error) } else { this.makeChanges() }
+ 				if(error) { 
+ 					console.log(error) 
+ 				} else { 
+ 					this.makeChanges();
+ 					Meteor.call('user.cleanName', this.refs.newName.value, (error, result) => {
+ 						if(error) console.log(error);
+ 					});
+ 				}
  			});
 	  }
   }
