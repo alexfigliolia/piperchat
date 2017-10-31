@@ -15,18 +15,18 @@ export default class Chatbox extends Component {
 
   componentDidMount() {
     this.setState({width: this.refs.mc.clientWidth});
+    this.handleScroll();
   }
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.width !== this.props.width) {
       this.setState({width: this.refs.mc.clientWidth});
     }
+    if(nextProps.messages.length !== this.props.messages.length) this.handleScroll();
   }
 
   getWidth = () => {
-    if(this.refs.mc) {
-      return this.refs.mc.clientWidth;
-    }
+    if(this.refs.mc) return this.refs.mc.clientWidth;
   }
 
   handleEnter = (e) => {
@@ -46,7 +46,6 @@ export default class Chatbox extends Component {
         if(error) {
           console.log(error);
         } else {
-          this.refs.mc.scrollTop = this.refs.mc.scrollHeight;
           this.refs.m.value = '';
         }
       });
@@ -55,10 +54,13 @@ export default class Chatbox extends Component {
 
   hideChat = () => {
     this.setState((prevState, prevProps) => {
-      return {
-        classes: prevState.classes === "chatbox" ? "chatbox chatbox-hide" : "chatbox"
-      }
+      return { classes: prevState.classes === "chatbox" ? "chatbox chatbox-hide" : "chatbox" }
     });
+  }
+
+
+  handleScroll = () => {
+    setTimeout(() => { this.refs.mc.scrollTop = this.refs.mc.scrollHeight }, 50);
   }
 
 	render() {
@@ -85,19 +87,21 @@ export default class Chatbox extends Component {
               onClick={this.hideChat}
               className="hide"></button>
           </div>
-      		<div className="messages" ref="mc">
-      			{
-      				this.props.messages.map((message, i) => {
-                if(message.to.name === this.props.user.name && message.from.name === this.props.with.name ||
-                  message.from.name === this.props.user.name && message.to.name === this.props.with.name)
-      					return (
-      						<div 
-      							className={message.from.name === this.props.user.name ? 
-      							"message message-mine" : "message message-yours"}
-                    key={i}>{message.text}</div>
-      					);
-      				})
-      			}
+      		<div className="messages" ref="mc" id="mc">
+      			<div>
+              {
+                this.props.messages.map((message, i) => {
+                  if(message.to.name === this.props.user.name && message.from.name === this.props.with.name ||
+                    message.from.name === this.props.user.name && message.to.name === this.props.with.name)
+                  return (
+                    <div 
+                      className={message.from.name === this.props.user.name ? 
+                      "message message-mine" : "message message-yours"}
+                      key={i}>{message.text}</div>
+                  );
+                })
+              }   
+            </div>
       		</div>
       		<div className="send-messages">
       			<textarea

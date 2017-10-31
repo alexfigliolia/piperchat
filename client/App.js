@@ -130,11 +130,16 @@ export default class App extends Component {
   	this.setState({currentChats: ns});
   }
 
-  openChat = (e) => {
-  	const name = e.target.dataset.with;
-  	const image = e.target.dataset.image;
+  openChat = (name, image) => {
   	const cc = this.state.currentChats;
-  	if(cc.indexOf(name) === -1) {
+  	let exists = false;
+  	for(let i = 0; i<cc.length; i++) {
+  		if(name === cc[i].name) {
+  			exists = true;
+  			break;
+  		}
+  	}
+  	if(!exists) {
   		Meteor.call('convo.create', name, image, (error, result) => {
   			if(error) {
   				console.log(error);
@@ -168,7 +173,9 @@ export default class App extends Component {
 				<Header
 					burgerStuff={this.state.burgerClasses}
 					burger={this.toggleBurger}
-					friends={this.toggleFriends} />
+					friends={this.toggleFriends}
+					messages={this.props.messages}
+					user={this.state.user} />
 
 				<Dashboard
 					user={this.state.user}
@@ -187,7 +194,9 @@ export default class App extends Component {
 						requests={this.state.requests}
 						sentRequests={this.state.sentRequests}
 						handleSearch={this.handleSearch}
-						openChat={this.openChat} />
+						openChat={this.openChat}
+						messages={this.props.messages}
+						user={this.state.user} />
 				}
 
 				{

@@ -31,6 +31,34 @@
 				background-size: 45px 45px;
 			}
 		}
+		&>.has-new {
+			// background: url('people-red.svg') no-repeat center;
+			// background-size: 35px 35px;
+			// height: 40px;
+			// width: 40px;
+			// @media #{$mq-670} {
+			// 	width: 60px;
+			// 	height: 60px;
+			// 	background-size: 45px 45px;
+			// }
+			&::after {
+				content: "!";
+				position: absolute;
+				top: 0;
+				right: -5px;
+				width: 20px;
+				height: 20px;
+				background: #FC3F55;
+				color: #fff;
+				border-radius: 50%;
+				font-size: 0.8em;
+				@include center;
+				@media #{$mq-670} {
+					top: 5px;
+					right: 0px;
+				}
+			}
+		}
 		&>.logo {
 			background: url('piper.jpg') no-repeat center;
 			background-size: contain;

@@ -4,7 +4,7 @@ export default class Friend extends Component {
   render() {
     return (
     	<div 
-    		className="contact"
+    		className={this.props.hasNew ? "contact has-new" : "contact"}
     		onClick={this.props.openFriend}>
 				<div>
 					<img src={this.props.image} alt="friend" />
@@ -18,7 +18,7 @@ export default class Friend extends Component {
 				<div className="call-message">
 					<div>
 						<button
-							data-image={this.props.image}
+							data-image={this.props.image === undefined ? null : this.props.image}
 							data-with={this.props.name} 
 							onClick={this.props.openChat}></button>
 						<button></button>
