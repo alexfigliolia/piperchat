@@ -19,6 +19,7 @@ export default class App extends Component {
       friendToggle: true,
       menuClasses: "menu",
       loginClasses: "login",
+      callingClasses: "calling",
       contacts: [],
       search: [],
       requests: [],
@@ -158,6 +159,16 @@ export default class App extends Component {
   	this.setState({user: newTempImage});
   }
 
+  call = (e) => {
+  	this.toggleFriends();
+  	this.setState({ callingClasses: "calling calling-show" });
+  	setTimeout(() => { this.endCall() }, 2000);
+  }
+
+  endCall = (e) => {
+  	this.setState({ callingClasses: "calling" });
+  }
+
 	render = () => {
 		return(
 			<section
@@ -182,7 +193,9 @@ export default class App extends Component {
 					userId={this.props.id}
 					height={this.state.height}
 					width={this.state.width}
-					loggedIn={this.state.loggedIn} />
+					loggedIn={this.state.loggedIn}
+					classes={this.state.callingClasses}
+					endCall={this.endCall} />
 
 				{
 					this.state.loggedIn &&
@@ -196,7 +209,8 @@ export default class App extends Component {
 						handleSearch={this.handleSearch}
 						openChat={this.openChat}
 						messages={this.props.messages}
-						user={this.state.user} />
+						user={this.state.user}
+						call={this.call} />
 				}
 
 				{

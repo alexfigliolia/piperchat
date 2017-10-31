@@ -21,7 +21,10 @@ export default class Friend extends Component {
 							data-image={this.props.image === undefined ? null : this.props.image}
 							data-with={this.props.name} 
 							onClick={this.props.openChat}></button>
-						<button></button>
+						<button 
+							onClick={this.props.call}
+							data-image={this.props.image === undefined ? null : this.props.image}
+							data-with={this.props.name}></button>
 					</div>
 				</div>
 			</div>

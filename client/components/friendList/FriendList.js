@@ -123,7 +123,8 @@ export default class FriendList extends Component {
 											image={dude.image}
 											online={dude.online}
 											hasNew={this.state.hasNew.indexOf(dude.name) !== -1}
-											openChat={this.openChat} />
+											openChat={this.openChat}
+											call={this.props.call} />
 									);
 								}
 							})

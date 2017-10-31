@@ -33,7 +33,12 @@ export default class Dashboard extends Component {
 							style={{background: "green"}} 
 							src={this.state.meUrl} />
 					}
-					
+				</div>
+				<div className={this.props.classes}>
+					<div></div>
+					<button
+						onClick={this.props.endCall}
+						className="end-call"></button>
 				</div>
 			</section>
 		);
