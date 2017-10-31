@@ -30,18 +30,34 @@ Meteor.methods({
     const buddyLists = BuddyLists.find().fetch();
     for(let i = 0; i<buddyLists.length; i++) {
       const buddyListId = buddyLists[i]._id
-      for(let j = 0; j < buddyLists[i].friends.length; j++) {
-        if(buddyLists[i].friends[j]._id === Meteor.userId()) {
-          BuddyLists.update({_id: buddyListId}, {
-            $set: { ['friends.' + j + '.name']: name }
-          });
+      if(buddyLists[i].friends.length > 0) {
+        for(let j = 0; j < buddyLists[i].friends.length; j++) {
+          if(buddyLists[i].friends[j]._id === Meteor.userId()) {
+            BuddyLists.update({_id: buddyListId}, {
+              $set: { ['friends.' + j + '.name']: name }
+            });
+            break;
+          }
         }
       }
-      for(let k = 0; k < buddyLists[i].requests.length; j++) {
-        if(buddyLists[k].requests[k]._id === Meteor.userId()) {
-          BuddyLists.update({_id: buddyListId}, {
-            $set: { ['requests.' + k + '.name']: name }
-          });
+      if(buddyLists[i].requests.length > 0) {
+        for(let k = 0; k < buddyLists[i].requests.length; k++) {
+          if(buddyLists[i].requests[k]._id === Meteor.userId()) {
+            BuddyLists.update({_id: buddyListId}, {
+              $set: { ['requests.' + k + '.name']: name }
+            });
+            break;
+          }
+        }
+      }
+      if(buddyLists[i].sentRequests.length > 0) {
+        for(let l = 0; l < buddyLists[i].sentRequests.length; l++) {
+          if(buddyLists[i].sentRequests[l]._id === Meteor.userId()) {
+            BuddyLists.update({_id: buddyListId}, {
+              $set: { ['sentRequests.' + l + '.name']: name }
+            });
+            break;
+          }
         }
       }
     }
@@ -65,13 +81,23 @@ Meteor.methods({
           BuddyLists.update({_id: buddyListId}, {
             $set: { ['friends.' + j + '.image']: url }
           });
+          break;
         }
       }
-      for(let k = 0; k < buddyLists[i].requests.length; j++) {
-        if(buddyLists[k].requests[k]._id === Meteor.userId()) {
+      for(let k = 0; k < buddyLists[i].requests.length; k++) {
+        if(buddyLists[i].requests[k]._id === Meteor.userId()) {
           BuddyLists.update({_id: buddyListId}, {
             $set: { ['requests.' + k + '.image']: url }
           });
+          break;
+        }
+      }
+      for(let l = 0; l < buddyLists[i].sentRequests.length; l++) {
+        if(buddyLists[i].sentRequests[l]._id === Meteor.userId()) {
+          BuddyLists.update({_id: buddyListId}, {
+            $set: { ['sentRequests.' + l + '.image']: url }
+          });
+          break;
         }
       }
     }
