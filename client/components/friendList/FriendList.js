@@ -19,17 +19,23 @@ export default class FriendList extends Component {
 
 	checkInContacts = (name) => {
 		let exists = false;
-		this.props.contacts.forEach((contact) => {
-			if(contact.name === name) exists = true;
-		});
+		for(let i = 0; i<this.props.contacts.length; i++) {
+			if(this.props.contacts[i].name === name) { 
+				exists = true;
+				break;
+			}
+		}
 		return exists;
 	}
 
 	checkInReqs = (name) => {
 		let exists = false;
-		this.props.sentRequests.forEach((contact) => {
-			if(contact.name === name) exists = true;
-		});
+		for(let i = 0; i<this.props.sentRequests.length; i++) {
+			if(this.props.sentRequests[i].name === name){
+				exists = true;
+				break;
+			}
+		}
 		return exists;
 	}
 
@@ -51,17 +57,6 @@ export default class FriendList extends Component {
 					</div>
 					<div ref="list" className="list">
 						{
-							this.props.sentRequests.map((user, i) => {
-								return (
-									<User
-										key={i}
-										name={user.name}
-										image={user.image}
-										sentRequest={true} />
-								);
-							})
-						}
-						{
 							this.props.requests.map((user, i) => {
 								return (
 									<User
@@ -70,6 +65,17 @@ export default class FriendList extends Component {
 										image={user.image}
 										isRequest={true}
 										sentRequest={false} />
+								);
+							})
+						}
+						{
+							this.props.sentRequests.map((user, i) => {
+								return (
+									<User
+										key={i}
+										name={user.name}
+										image={user.image}
+										sentRequest={true} />
 								);
 							})
 						}

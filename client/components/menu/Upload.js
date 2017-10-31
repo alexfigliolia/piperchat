@@ -19,7 +19,7 @@ export default class Upload extends PureComponent {
     axios.post(CloudConfig.url, fd, AxiosConfig)
 	  .then(res => {
 	    let url = res.data.secure_url.split('/');
-      url.splice(-2, 0, 'q_auto/f_auto/w_100,h_100,c_fill');
+      url.splice(-2, 0, 'q_auto/f_auto/w_200,h_200,c_fill');
       url = url.join('/')
 	    Meteor.call('user.addImage', url, (error, result) => {
 	    	if(error) {

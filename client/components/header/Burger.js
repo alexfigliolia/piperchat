@@ -10,7 +10,15 @@ export default class Burger extends Component {
           id="hamburger" 
           className={this.props.classes}>
             <div id="top"></div>
-            <svg id='svb' x="0px" y="0px" width="64px" height="64px" viewBox="0 0 64 64" enableBackground="new 0 0 64 64" xmlSpace="preserve">
+            <svg 
+              id='svb' 
+              x="0px" 
+              y="0px" 
+              width="64px" 
+              height="64px" 
+              viewBox="0 0 64 64" 
+              enableBackground="new 0 0 64 64" 
+              xmlSpace="preserve">
               <path 
                 stroke="#fff" 
                 id="circle" 

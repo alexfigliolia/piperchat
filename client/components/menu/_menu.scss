@@ -39,6 +39,8 @@
 				background: #fff;
 				background-size: cover;
 				@include headerShadow;
+				background: url('userpl.svg') no-repeat center;
+				background-size: 100px 100px;
 				&>img {
 					@include center;
 					height: 100px;
