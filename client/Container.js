@@ -20,7 +20,7 @@ export default AppContainer = withTracker(() => {
   const users = Meteor.users.find().fetch();
   const buddyList = BuddyLists.find().fetch();
   const conversations = Conversations.find().fetch();
-  const messages = Messages.find().fetch();
+  const messages = Messages.find({}, {sort: {date: 1}}).fetch();
   const usersExist = usersReady && !!users;
   const buddyListExist = buddyListReady && !!buddyList;
   const conversationsExist = conversationsReady && !!conversations;

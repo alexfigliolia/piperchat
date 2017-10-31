@@ -18,6 +18,7 @@ export default class Friend extends Component {
 				<div className="call-message">
 					<div>
 						<button
+							data-image={this.props.image}
 							data-with={this.props.name} 
 							onClick={this.props.openChat}></button>
 						<button></button>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Meteor } from 'meteor/meteor';
 import update from 'immutability-helper';
 
 export default class Chatbox extends Component {
@@ -8,10 +9,6 @@ export default class Chatbox extends Component {
       classes: "chatbox",
 			me: 'Alex Figliolia',
 			currentChat: 'Steve Figliolia',
-			messages: [
-				{ to: 'Alex Figliolia', from: 'Steve Figliolia', text: 'hello', date: new Date() },
-				{ to: 'Steve Figliolia', from: 'Alex Figliolia', text: 'hello', date: new Date() }
-			],
       width: 300
 		}
 	}
@@ -45,12 +42,13 @@ export default class Chatbox extends Component {
       setTimeout(() => { this.refs.send.classList.add('return')}, 300);
       setTimeout(() => { this.refs.send.classList.add('came-back')}, 350);
       setTimeout(() => { this.refs.send.classList.remove('fly', 'return', 'came-back')}, 600);
-      const m = { to: 'Steve Figliolia', from: 'Alex Figliolia', text: this.refs.m.value, date: new Date()};
-      const s = this.state.messages;
-      const ns = update(s, {$push: [m]});
-      this.setState({ messages: ns }, () => {
-        this.refs.mc.scrollTop = this.refs.mc.scrollHeight;
-        this.refs.m.value = '';
+      Meteor.call('message.send', this.props.with.name, this.props.with.image, this.refs.m.value, (error, result) => {
+        if(error) {
+          console.log(error);
+        } else {
+          this.refs.mc.scrollTop = this.refs.mc.scrollHeight;
+          this.refs.m.value = '';
+        }
       });
     }
   }
@@ -74,7 +72,7 @@ export default class Chatbox extends Component {
         }}>
       	<div>
       		<div className="with">
-            {this.props.with}
+            {this.props.with.name}
             <button
               data-index={this.props.index} 
               onClick={this.props.closeChat}
@@ -89,10 +87,12 @@ export default class Chatbox extends Component {
           </div>
       		<div className="messages" ref="mc">
       			{
-      				this.state.messages.map((message, i) => {
+      				this.props.messages.map((message, i) => {
+                if(message.to.name === this.props.user.name && message.from.name === this.props.with.name ||
+                  message.from.name === this.props.user.name && message.to.name === this.props.with.name)
       					return (
       						<div 
-      							className={message.from === this.state.me ? 
+      							className={message.from.name === this.props.user.name ? 
       							"message message-mine" : "message message-yours"}
                     key={i}>{message.text}</div>
       					);

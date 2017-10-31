@@ -3,6 +3,8 @@ import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 import './publishData';
 import { BuddyLists } from '../api/buddyList.js';
+import { Conversations } from '../api/conversations.js';
+import { Messages } from '../api/messages.js';
 
 Meteor.methods({
 
@@ -150,6 +152,33 @@ Meteor.methods({
         });
         break;
       }
+    }
+  },
+
+  'convo.create'(name, image) {
+    check(name, String);
+    const them = Meteor.users.findOne({name: name, image: image}, { _id: 1});
+    const exists = Conversations.find({ owners: {$all: [them._id, Meteor.userId()]} }).fetch();
+    if(exists.length === 0) {
+      return Conversations.insert({
+        owners: [them._id, Meteor.userId()]
+      });
+    }
+  },
+
+  'message.send'(name, image, text){
+    check(name, String);
+    check(text, String);
+    const them = Meteor.users.findOne({name: name, image: image}, { _id: 1});
+    const convo = Conversations.find({ owners: {$all: [them._id, Meteor.userId()]} }, {_id: 1}).fetch();
+    if(convo.length !== 0) {
+      return Messages.insert({
+        conversation: convo[0]._id,
+        from: {name: Meteor.user().name, image: Meteor.user().image, _id: Meteor.userId()}, 
+        to: {name: them.name, image: them.image, _id: them._id},
+        date: new Date(),
+        text: text
+      });
     }
   }
 

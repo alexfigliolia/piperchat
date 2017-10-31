@@ -98,13 +98,13 @@ Meteor.publish('messages', function() {
         chatIds.push(cs[i]._id);
       }
       updateRV(chatIds);
-      const messages = Messages.find({chatId: {$in: convos.curValue}},{
+      const messages = Messages.find({conversation: {$in: convos.curValue}},{
         fields: {
-          by: 1,
+          from: 1,
           to: 1,
           text: 1,
           date: 1,
-          chatId: 1
+          conversation: 1
         }
       });
       return messages;

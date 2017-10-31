@@ -132,10 +132,17 @@ export default class App extends Component {
 
   openChat = (e) => {
   	const name = e.target.dataset.with;
+  	const image = e.target.dataset.image;
   	const cc = this.state.currentChats;
   	if(cc.indexOf(name) === -1) {
-  		const ns = update(cc, {$push: [name]});
-  		this.setState({currentChats: ns});
+  		Meteor.call('convo.create', name, image, (error, result) => {
+  			if(error) {
+  				console.log(error);
+  			} else {
+  				const ns = update(cc, {$push: [{name: name, image: image}]});
+  				this.setState({currentChats: ns});
+  			}
+  		});
   	}
   	this.toggleFriends();
   }
@@ -200,7 +207,9 @@ export default class App extends Component {
 							with={this.state.currentChats[this.state.currentChats.length - 1]}
 							left={0}
 							width={this.state.width}
-							closeChat={this.closeChat} />	
+							closeChat={this.closeChat}
+							messages={this.props.messages}
+							user={this.state.user} />	
 					: this.state.loggedIn &&
 						this.state.currentChats.map((chat, i) => {
 						return <Chatbox
@@ -210,7 +219,9 @@ export default class App extends Component {
 											left={i}
 											width={this.state.currentChats.length}
 											wwidth={this.state.width}
-											closeChat={this.closeChat} />	
+											closeChat={this.closeChat}
+											messages={this.props.messages}
+											user={this.state.user} />	
 					})
 				}
 
