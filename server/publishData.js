@@ -14,6 +14,7 @@ function updateRV(val) {
 
 Accounts.onCreateUser((options, user) => {
   user.name = options.name;
+  user.image = null;
   return user;
 });
 
