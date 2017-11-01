@@ -14,7 +14,9 @@ export default class Me extends Component {
 	}
 
 	componentDidMount(){
-		setTimeout(() => { getLocalStream() }, 1000);
+		setTimeout(() => { 
+			getLocalStream();
+		}, 1000);
 		this.refs.me.onloadedmetadata = (e) => {
 	    this.refs.me.play();
 	    this.setState({ 

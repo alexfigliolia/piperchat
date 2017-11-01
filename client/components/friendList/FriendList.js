@@ -24,7 +24,6 @@ export default class FriendList extends Component {
       nextProps.messages[nextProps.messages.length - 1].from.name !== this.props.user.name) {
       	const hasNew = this.state.hasNew;
       	const ns = update(hasNew, {$push : [nextProps.messages[nextProps.messages.length - 1].from.name]});
-        console.log(nextProps.messages[nextProps.messages.length - 1].from.name);
         this.setState({hasNew: ns});
       }
     }
@@ -60,6 +59,17 @@ export default class FriendList extends Component {
   	const ns = update(s, {$splice: [[i, 1]]});
   	this.setState({hasNew: ns});
 		this.props.openChat(name, image);
+	}
+
+	checkOnline = (id) => {
+		let online = false;
+		for(let i = 0; i<this.props.states.length; i++) {
+			if(id === this.props.states[i].userId) {
+				online = true;
+				break;
+			}
+		}
+		return online;
 	}
 
 	render = () => {
@@ -124,7 +134,8 @@ export default class FriendList extends Component {
 											online={dude.online}
 											hasNew={this.state.hasNew.indexOf(dude.name) !== -1}
 											openChat={this.openChat}
-											call={this.props.call} />
+											call={this.props.call}
+											online={this.checkOnline(dude._id)} />
 									);
 								}
 							})

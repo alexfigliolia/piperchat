@@ -6,6 +6,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import FriendList from './components/friendList/FriendList';
 import Menu from './components/menu/Menu';
 import Chatbox from './components/chatbox/Chatbox';
+import { setUpCall, endCall } from './components/dashboard/stream';
 
 export default class App extends Component {
 	constructor(props) {
@@ -49,6 +50,7 @@ export default class App extends Component {
 		}
 	}
 
+	//SHOW LOGIN IF APP CANNOT IDENTIFY USER
 	needsAuth = () => {
 		if(this.loader !== null) {
 			this.loader.classList.add('app-loader-hidden-op');
@@ -62,6 +64,7 @@ export default class App extends Component {
 		}
 	}
 
+	//ALLOW ACCESS TO APP IF THE USER IS RECOGNIZED
 	letEmIn = (path) => {
 		this.setState({ 
 			user: path.user, 
@@ -82,6 +85,7 @@ export default class App extends Component {
 		setTimeout(() => { this.setState({ loggedIn: true }) }, 1100);
 	}
 
+	//OPEN MENU
 	toggleBurger = () => {
 		if(!this.state.friendToggle) this.toggleFriends();
     this.setState((prevState, prevProps) => {
@@ -97,6 +101,7 @@ export default class App extends Component {
     });
   }
 
+  //OPEN BUDDY LIST
   toggleFriends = () => {
   	if(!this.state.burgerToggle) this.toggleBurger();
     this.setState((prevState, prevProps) => {
@@ -109,6 +114,7 @@ export default class App extends Component {
     });
   }
 
+  //SEARCH FOR FRIENDS AND USERS
   handleSearch = (val) => {
   	if(val !== '') {
   		const results = [];
@@ -124,6 +130,7 @@ export default class App extends Component {
   	}
   }
 
+  //CLOSE A CHAT
   closeChat = (e) => {
   	const i = e.target.dataset.index;
   	const cc = this.state.currentChats;
@@ -131,6 +138,7 @@ export default class App extends Component {
   	this.setState({currentChats: ns});
   }
 
+  //OPEN A CHAT
   openChat = (name, image) => {
   	const cc = this.state.currentChats;
   	let exists = false;
@@ -153,20 +161,25 @@ export default class App extends Component {
   	this.toggleFriends();
   }
 
+  //UPLOAD NEW PROFILE IMAGE
   handleNewImage = (img) => {
   	const user = this.state.user;
   	const newTempImage = update(user, {image: {$set: img}});
   	this.setState({user: newTempImage});
   }
 
+  //VIDEO CALL ONE OF YOUR FRIENDS
   call = (e) => {
   	this.toggleFriends();
   	this.setState({ callingClasses: "calling calling-show" });
-  	setTimeout(() => { this.endCall() }, 2000);
+  	setUpCall(this.state.user);
+  	// setTimeout(() => { this.endCall() }, 2000);
   }
 
+  //END A CALL 
   endCall = (e) => {
   	this.setState({ callingClasses: "calling" });
+  	endCall();
   }
 
 	render = () => {
@@ -210,7 +223,8 @@ export default class App extends Component {
 						openChat={this.openChat}
 						messages={this.props.messages}
 						user={this.state.user}
-						call={this.call} />
+						call={this.call}
+						states={this.props.states} />
 				}
 
 				{

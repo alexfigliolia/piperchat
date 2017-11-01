@@ -34,7 +34,7 @@ export default class Dashboard extends Component {
 							src={this.state.meUrl} />
 					}
 				</div>
-				<div className={this.props.classes}>
+				<div className={this.props.classes} id="csc">
 					<div></div>
 					<button
 						onClick={this.props.endCall}

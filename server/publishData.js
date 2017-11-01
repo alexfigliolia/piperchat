@@ -40,6 +40,7 @@ Meteor.publish('userData', function() {
      {
        fields: {
           "name" : 1,
+          "profile.peerId" : 1,
           "image": 1,
           "_id": 1
        }
@@ -54,6 +55,7 @@ Meteor.publish('userPresence', function() {
     let currentUser;
     currentUser = this.userId;
     if (currentUser) {
+      updateFriends(currentUser);
       let filter = {userId: { $in: friends.curValue }}; 
       return Presences.find(filter, { fields: { state: true, userId: true }});
     } else {

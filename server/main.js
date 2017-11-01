@@ -155,6 +155,12 @@ Meteor.methods({
     }
   },
 
+  'user.updatePeerID'(id){
+    Meteor.users.update({_id: Meteor.userId()}, {
+      $set: { profile: { peerId: id} }
+    });
+  },
+
   'convo.create'(name, image) {
     check(name, String);
     const them = Meteor.users.findOne({name: name, image: image}, { _id: 1});
