@@ -49,8 +49,42 @@ const onInitConnect = (stream) => {
 		me.src = window.URL.createObjectURL(stream);
 		you.src = window.URL.createObjectURL(stream);
 	}
+	window.localStream = stream;
 	// this.setState({ meUrl: stream});
 	// this.stream = stream;
+	window.peer = new Peer({
+	  key: '7t5hftjgba2fyldi',
+	  debug: 3,
+	  config: {'iceServers': [
+	    { url: 'stun:stun.l.google.com:19302' },
+	    { url: 'stun:stun1.l.google.com:19302' },
+	  ]}
+	});
+
+	peer.on('open', () => {
+	  peerID = peer.id;
+	  console.log('opened');
+	  Meteor.call('user.updatePeerID', peer.id, (error, result) => {
+	  	if(error) console.log(error);
+	  })
+	});
+
+	peer.on('call', function (incomingCall) {
+		console.log('receiving a call');
+	  window.currentCall = incomingCall;
+	  incomingCall.answer(window.localStream);
+	  incomingCall.on('stream', function (remoteStream) {
+	    window.remoteStream = remoteStream;
+	    const you = document.getElementById("you")
+	    window.url = window.URL || window.webkitURL;
+			if ("srcObject" in you) {
+				you.srcObject = remoteStream;
+			} else {
+				you.src = window.URL.createObjectURL(remoteStream);
+			}
+			document.getElementById('csc').classList.add('received');
+	  });
+	});
 }
 
 const onFailConnect = () => console.log('fail');
@@ -58,40 +92,6 @@ const onFailConnect = () => console.log('fail');
 const closeStream = () => {
 	rs.getTracks()[0].stop();
 }
-
-
-
-window.peer = new Peer({
-  key: '7t5hftjgba2fyldi',
-  debug: 3,
-  config: {'iceServers': [
-    { url: 'stun:stun.l.google.com:19302' },
-    { url: 'stun:stun1.l.google.com:19302' },
-  ]}
-});
-
-peer.on('open', () => {
-  peerID = peer.id;
-  Meteor.call('user.updatePeerID', peer.id, (error, result) => {
-  	if(error) console.log(error);
-  })
-});
-
-peer.on('call', function (incomingCall) {
-  window.currentCall = incomingCall;
-  incomingCall.answer(window.localStream);
-  incomingCall.on('stream', function (remoteStream) {
-    window.remoteStream = remoteStream;
-    const you = document.getElementById("you")
-    window.url = window.URL || window.webkitURL;
-		if ("srcObject" in you) {
-			you.srcObject = remoteStream;
-		} else {
-			you.src = window.URL.createObjectURL(remoteStream);
-		}
-		document.getElementById('csc').classList.add('received');
-  });
-});
 
 const setUpCall = (user) => {
 	console.log(user);
