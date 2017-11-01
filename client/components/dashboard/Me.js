@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getLocalStream, closeStream } from './stream';
+import { getLocalStream, closeStream, initCon } from './stream';
 
 export default class Me extends Component {
 	constructor(props){

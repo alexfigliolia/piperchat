@@ -1,8 +1,9 @@
-import '../../peer.min.js';
+import '../../peer.js';
 
 let rs = null;
 let peerConn = null;
 let peerID = null;
+let ls = null;
 
 const peerConnCfg = {
 	'iceServers': [
@@ -32,8 +33,8 @@ const getLocalStream = () => {
 		})
 		.catch((err) => {
 			console.log(err);
+			onFailConnect();
 			return err;
-		  onFailConnect();
 		});
 	// this.pc = new RTCPeerConnection(null);
 }
@@ -49,9 +50,20 @@ const onInitConnect = (stream) => {
 		me.src = window.URL.createObjectURL(stream);
 		you.src = window.URL.createObjectURL(stream);
 	}
-	window.localStream = stream;
+	ls = stream;
+	initCon();
 	// this.setState({ meUrl: stream});
 	// this.stream = stream;
+}
+
+const onFailConnect = () => console.log('fail');
+
+const closeStream = () => {
+	rs.getTracks()[0].stop();
+}
+
+
+function initCon(){
 	window.peer = new Peer({
 	  key: '7t5hftjgba2fyldi',
 	  debug: 3,
@@ -63,14 +75,12 @@ const onInitConnect = (stream) => {
 
 	peer.on('open', () => {
 	  peerID = peer.id;
-	  console.log('opened');
 	  Meteor.call('user.updatePeerID', peer.id, (error, result) => {
 	  	if(error) console.log(error);
 	  })
 	});
 
 	peer.on('call', function (incomingCall) {
-		console.log('receiving a call');
 	  window.currentCall = incomingCall;
 	  incomingCall.answer(window.localStream);
 	  incomingCall.on('stream', function (remoteStream) {
@@ -87,15 +97,9 @@ const onInitConnect = (stream) => {
 	});
 }
 
-const onFailConnect = () => console.log('fail');
-
-const closeStream = () => {
-	rs.getTracks()[0].stop();
-}
-
 const setUpCall = (user) => {
 	console.log(user);
-  const outgoingCall = peer.call(user.profile.peerId, window.localStream);
+  const outgoingCall = peer.call(user.profile.peerId, ls);
   window.currentCall = outgoingCall;
   outgoingCall.on('stream', function (remoteStream) {
     window.remoteStream = remoteStream;
@@ -114,4 +118,4 @@ const endCall = () => {
 	document.getElementById('csc').classList.remove('calling-show', 'received');
 }
 
-export { getLocalStream, closeStream, setUpCall, endCall };
+export { getLocalStream, closeStream, setUpCall, endCall, initCon };
