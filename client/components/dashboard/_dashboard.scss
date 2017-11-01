@@ -70,7 +70,8 @@
 		flex-direction: column;
 		visibility: hidden;
 		opacity: 0;
-		transition-duration: 0.3s;
+		transform: scale(0);
+		transition: opacity 0.3s, transform 0s 1.3s;
 		&>div {
 			margin-top: 25px;
 			height: 50px;
@@ -81,6 +82,7 @@
 			transition-duration: 0.3s;
 		}
 		&>button {
+			visibility: collapse;
 			position: absolute;
 			bottom: 10%;
 			left: calc(50% - 35px);
@@ -100,11 +102,14 @@
 	&>.calling-show {
 		visibility: visible;
 		opacity: 1;
+		transform: scale(1);
+		transition: opacity 0.3s;
 		&>div {
 			transform: scale(1);
 			transition-delay: 0.2s;
 		}
 		&>button {
+			visibility: visible;
 			transform: translateY(0px);
 			opacity: 1;
 			transition-delay: 0.3s;

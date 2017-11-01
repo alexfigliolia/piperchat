@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
+import { check } from 'meteor/check';
 import { Accounts } from 'meteor/accounts-base';
 import { BuddyLists } from '../api/buddyList.js';
 import { Conversations } from '../api/conversations.js';
@@ -7,9 +8,20 @@ import { Messages } from '../api/messages.js';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 const convos = new ReactiveVar([]);
+const friends = new ReactiveVar([]);
 
 function updateRV(val) {
   convos.set(val);
+}
+
+function updateFriends(id) {
+  const list = BuddyLists.find({owner: id}).fetch();
+  const userFriends = list[0].friends;
+  const nv = [];
+  for(let i = 0; i<userFriends.length; i++) {
+    nv.push(userFriends[i]._id);
+  }
+  friends.set(nv);
 }
 
 Accounts.onCreateUser((options, user) => {
@@ -19,13 +31,13 @@ Accounts.onCreateUser((options, user) => {
 });
 
 Meteor.publish('userData', function() {
-  var currentUser;
+  let currentUser;
   currentUser = this.userId;
   if (currentUser) {
      return Meteor.users.find({
         _id: currentUser
-     }
-     ,{
+     },
+     {
        fields: {
           "name" : 1,
           "image": 1,
@@ -37,8 +49,21 @@ Meteor.publish('userData', function() {
   }
 });
 
+Meteor.publish('userPresence', function() {
+  this.autorun(function(computation) {
+    let currentUser;
+    currentUser = this.userId;
+    if (currentUser) {
+      let filter = {userId: { $in: friends.curValue }}; 
+      return Presences.find(filter, { fields: { state: true, userId: true }});
+    } else {
+      return this.ready();
+    }
+  });
+});
+
 Meteor.publish('allUserData', function() {
-  var currentUser;
+  let currentUser;
   currentUser = this.userId;
   if (currentUser) {
      return Meteor.users.find({},
@@ -54,18 +79,19 @@ Meteor.publish('allUserData', function() {
 });
 
 Meteor.publish('buddyLists', function(){
-	var currentUser;
+	let currentUser;
 	currentUser = this.userId;
-	var schedules = BuddyLists.find({owner: currentUser}, {
-		fields: {
-			friends: 1,
-      requests: 1,
-      sentRequests: 1,
-			owner: 1,
-		}
-	});
-	if(currentUser) {
-		return schedules;
+  if(currentUser) {
+  	const buddyLists = BuddyLists.find({owner: currentUser}, {
+  		fields: {
+  			friends: 1,
+        requests: 1,
+        sentRequests: 1,
+  			owner: 1,
+  		}
+  	});
+    updateFriends(currentUser);
+		return buddyLists;
 	} else {
 		return this.ready();
 	}

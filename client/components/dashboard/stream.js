@@ -1,4 +1,12 @@
 let rs = null;
+let peerConn = null;
+
+const peerConnCfg = {
+	'iceServers': [
+		{'url': 'stun:stun.services.mozilla.com'}, 
+   	{'url': 'stun:stun.l.google.com:19302'}
+  ]
+};
 
 const getLocalStream = () => {
 	if (navigator.mediaDevices === undefined) navigator.mediaDevices = {};
@@ -47,5 +55,13 @@ const onFailConnect = () => console.log('fail');
 const closeStream = () => {
 	rs.getTracks()[0].stop();
 }
+
+function prepareCall() {
+  peerConn = new RTCPeerConnection(peerConnCfg);
+  // send any ice candidates to the other peer
+  peerConn.onicecandidate = onIceCandidateHandler;
+  // once remote stream arrives, show it in the remote video element
+  peerConn.onaddstream = onAddStreamHandler;
+};
 
 export { getLocalStream, closeStream };
