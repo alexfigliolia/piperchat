@@ -170,10 +170,26 @@ export default class App extends Component {
 
   //VIDEO CALL ONE OF YOUR FRIENDS
   call = (e) => {
-  	this.toggleFriends();
-  	this.setState({ callingClasses: "calling calling-show" });
-  	setUpCall(this.state.user);
-  	// setTimeout(() => { this.endCall() }, 2000);
+  	const name = e.target.dataset.with;
+  	let id;
+  	let isOnline = false;
+  	this.state.contacts.forEach(contact => {
+  		if(contact.name === name) id = contact._id;
+  		this.props.states.forEach(onlineContact => {
+  			if(id === onlineContact.userId) isOnline = true;
+  		});
+  	});
+  	if(isOnline) {
+  		Meteor.call('user.getPeerId', id, (error, result) => {
+  			if(error) {
+  				console.log(error);
+  			} else {
+  				this.toggleFriends();
+			  	this.setState({ callingClasses: "calling calling-show" });
+			  	setUpCall(result);
+  			}
+  		})
+  	}
   }
 
   //END A CALL 

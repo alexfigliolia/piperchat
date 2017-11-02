@@ -82,6 +82,9 @@ function initCon(){
 
 	peer.on('call', function (incomingCall) {
 	  window.currentCall = incomingCall;
+	  //Display accept/deny call UI
+
+	  //On answer follow through
 	  incomingCall.answer(window.localStream);
 	  incomingCall.on('stream', function (remoteStream) {
 	    window.remoteStream = remoteStream;
@@ -97,9 +100,8 @@ function initCon(){
 	});
 }
 
-const setUpCall = (user) => {
-	console.log(user);
-  const outgoingCall = peer.call(user.profile.peerId, ls);
+const setUpCall = (peerId) => {
+  const outgoingCall = peer.call(peerId, ls);
   window.currentCall = outgoingCall;
   outgoingCall.on('stream', function (remoteStream) {
     window.remoteStream = remoteStream;
