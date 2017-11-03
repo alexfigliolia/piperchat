@@ -72,7 +72,7 @@
 		opacity: 0;
 		transform: scale(0);
 		transition: opacity 0.3s, transform 0s 1.3s;
-		&>div {
+		&>.loader-pic {
 			margin-top: 25px;
 			height: 50px;
 			width: 50px;
@@ -81,22 +81,33 @@
 			transform: scale(0);
 			transition-duration: 0.3s;
 		}
-		&>button {
-			visibility: collapse;
+		&>.answer-deny {
 			position: absolute;
 			bottom: 10%;
-			left: calc(50% - 35px);
-			width: 70px;
-			height: 70px;
-			outline: none;
-			border: none;
-			border-radius: 50%;
-			@include headerShadow;
-			background: rgba(#EC4653, 0.95) url('hangup.svg') no-repeat 50% 42.5%;
-			background-size: 37.5px 37.5px;
-			transform: translateY(500px);
-			opacity: 0;
-			transition-duration: 0.4s;
+			left: calc(50% - 90px);
+			width: 180px;
+			@include center;
+			&>button {
+				visibility: collapse;
+				width: 70px;
+				height: 70px;
+				outline: none;
+				border: none;
+				border-radius: 50%;
+				@include headerShadow;
+				transform: translateY(500px);
+				opacity: 0;
+				transition-duration: 0.4s;
+			}
+			&>button:first-of-type {
+				background: rgba(#EC4653, 0.95) url('hangup.svg') no-repeat 50% 42.5%;
+				background-size: 37.5px 37.5px;
+			}
+			&>button:last-of-type {
+				background: rgba(#58EA6F, 0.95) url('call.svg') no-repeat 50% 42.5%;
+				background-size: 37.5px 37.5px;
+				display: none;
+			}
 		}
 	}
 	&>.calling-show {
@@ -104,21 +115,53 @@
 		opacity: 1;
 		transform: scale(1);
 		transition: opacity 0.3s;
-		&>div {
+		&>.loader-pic {
 			transform: scale(1);
 			transition-delay: 0.2s;
 		}
-		&>button {
+		&>.answer-deny>button:first-of-type {
 			visibility: visible;
 			transform: translateY(0px);
 			opacity: 1;
 			transition-delay: 0.3s;
 		}
 	}
+	&>.receiving-call {
+		visibility: visible;
+		opacity: 1;
+		transform: scale(1);
+		transition: opacity 0.3s;
+		&>.loader-pic {
+			transform: scale(1);
+			transition-delay: 0.2s;
+		}
+		&>.answer-deny {
+			justify-content: space-between;
+		}
+		&>.answer-deny>button {
+			visibility: visible;
+			transform: translateY(0px);
+			opacity: 1;
+			transition-delay: 0.3s;
+		}
+		&>.answer-deny>button:last-of-type {
+			visibility: visible;
+			transform: translateY(0px);
+			opacity: 1;
+			transition-delay: 0.3s;
+			display: flex;
+		}
+	}
 	&>.received {
 		background: transparent;
-		&>div {
-			background: none;
+		&>.loader-pic {
+			transform: scale(0);
+		}
+		&>.answer-deny {
+			justify-content: center;
+		}
+		&>.answer-deny>button:last-of-type {
+			display: none;
 		}
 	}
 }

@@ -6,7 +6,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import FriendList from './components/friendList/FriendList';
 import Menu from './components/menu/Menu';
 import Chatbox from './components/chatbox/Chatbox';
-import { setUpCall, endCall } from './components/dashboard/stream';
+import './peer';
 
 export default class App extends Component {
 	constructor(props) {
@@ -31,6 +31,8 @@ export default class App extends Component {
       currentSearch: ''
 		}
 		this.loader = document.getElementById('appLoader');
+		this.stream = null;
+		this.incomingCall = null;
 	}
 
 	componentDidMount() {
@@ -168,6 +170,102 @@ export default class App extends Component {
   	this.setState({user: newTempImage});
   }
 
+  getLocalStream = () => {
+		if (navigator.mediaDevices === undefined) navigator.mediaDevices = {};
+		if (navigator.mediaDevices.getUserMedia === undefined) {
+		  navigator.mediaDevices.getUserMedia = function(constraints) {
+		    let getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+		    if (!getUserMedia) {
+		      return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+		    }
+		    return new Promise(function(resolve, reject) {
+		      getUserMedia.call(navigator, constraints, resolve, reject);
+		    });
+		  }
+		}
+		const c  = { audio: false, video: true };
+		navigator.mediaDevices.getUserMedia(c)
+			.then((stream) => {
+			  this.onInitConnect(stream);
+			  rs = stream;
+			})
+			.catch((err) => {
+				console.log(err);
+				this.onFailConnect();
+			});
+		// this.pc = new RTCPeerConnection(null);
+	}
+
+	onInitConnect = (stream) => {
+		const me = document.querySelector('#me');
+		const you = document.querySelector('#you');
+		const url = window.URL || window.webkitURL;
+		if ("srcObject" in me) {
+			me.srcObject = stream;
+			you.srcObject = stream;
+		} else {
+			me.src = url.createObjectURL(stream);
+			you.src = url.createObjectURL(stream);
+		}
+		this.stream = stream;
+	}
+
+	onFailConnect = () => console.log('fail');
+
+  initPeer = () => {
+		window.peer = new Peer({
+		  key: '7t5hftjgba2fyldi',
+		  debug: 3,
+		  config: {'iceServers': [
+		    { url: 'stun:stun.l.google.com:19302' },
+		    { url: 'stun:stun1.l.google.com:19302' },
+		  ]}
+		});
+
+		peer.on('open', () => {
+		  peerID = peer.id;
+		  Meteor.call('user.updatePeerID', peer.id, (error, result) => {
+		  	if(error) console.log(error);
+		  })
+		});
+
+		//When user is receiving a video call request
+		peer.on('call', (incomingCall) => {
+			console.log('incoming call');
+			this.setState({ callingClasses: "calling calling-show receiving-call" });
+			this.incomingCall = incomingCall;
+		});
+
+		peer.on('disconnected', () => {
+			this.setState({ callingClasses: 'calling' });
+		});
+	}
+
+	setCallingScreen = () => {
+		console.log('set Calling Screen');
+		if(this.incomingCall !== null) {
+			this.setState({ callingClasses: "calling calling-show receiving-call received" });
+		}
+ 	}
+
+	acceptCall = () => {
+		console.log('accept call');
+		this.setState({ callingClasses: "calling calling-show received" });
+		window.currentCall = this.incomingCall;
+	  this.incomingCall.answer(window.localStream);
+	  this.incomingCall.on('stream', (remoteStream) => {
+	  	console.log('streaming call');
+	    window.remoteStream = remoteStream;
+	    const you = document.getElementById("you")
+	    const url = window.URL || window.webkitURL;
+			if ("srcObject" in you) {
+				you.srcObject = remoteStream;
+			} else {
+				you.src = url.createObjectURL(remoteStream);
+			}
+	  });
+	}
+
   //VIDEO CALL ONE OF YOUR FRIENDS
   call = (e) => {
   	const name = e.target.dataset.with;
@@ -184,18 +282,42 @@ export default class App extends Component {
   			if(error) {
   				console.log(error);
   			} else {
+  				this.setUpCall(result);
   				this.toggleFriends();
 			  	this.setState({ callingClasses: "calling calling-show" });
-			  	setUpCall(result);
   			}
-  		})
+  		});
   	}
   }
+
+  setUpCall = (peerId) => {
+	  let outgoingCall = peer.call(peerId, this.stream);
+	  console.log(outgoingCall);
+	  window.currentCall = outgoingCall;
+	  console.log('making the call');
+	  outgoingCall.on('stream', (remoteStream) => {
+	  	console.log('receiving remote stream');
+	    window.remoteStream = remoteStream;
+	    const you = document.getElementById("you")
+	    const url = window.URL || window.webkitURL;
+			if ("srcObject" in you) {
+				you.srcObject = remoteStream;
+			} else {
+				you.src = url.createObjectURL(remoteStream);
+			}
+			console.log('set remote stream');
+			this.setState({ callingClasses: "calling calling-show received" });
+	  });
+	}
 
   //END A CALL 
   endCall = (e) => {
   	this.setState({ callingClasses: "calling" });
-  	endCall();
+  	this.incomingCall = null;
+  	this.onInitConnect(this.stream);
+  	if(window.currentCall) {
+  		window.currentCall.close();
+  	}
   }
 
 	render = () => {
@@ -224,7 +346,12 @@ export default class App extends Component {
 					width={this.state.width}
 					loggedIn={this.state.loggedIn}
 					classes={this.state.callingClasses}
-					endCall={this.endCall} />
+					endCall={this.endCall}
+					initPeer={this.initPeer}
+					getLocalStream={this.getLocalStream}
+					stream={this.stream}
+					acceptCall={this.acceptCall}
+					setCallingScreen={this.setCallingScreen} />
 
 				{
 					this.state.loggedIn &&

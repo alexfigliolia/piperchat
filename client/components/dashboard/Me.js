@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { getLocalStream, closeStream, initCon } from './stream';
 
 export default class Me extends Component {
 	constructor(props){
@@ -15,7 +14,8 @@ export default class Me extends Component {
 
 	componentDidMount(){
 		setTimeout(() => { 
-			getLocalStream();
+			this.props.getLocalStream();
+			this.props.initPeer();
 		}, 1000);
 		this.refs.me.onloadedmetadata = (e) => {
 	    this.refs.me.play();
@@ -29,7 +29,7 @@ export default class Me extends Component {
 	}
 
 	componentWillUnmount() {
-		closeStream();
+		this.props.localStream.getTracks()[0].stop();
 	}
 
 	moveMe = (e) => {
