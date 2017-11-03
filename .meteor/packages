@@ -27,3 +27,4 @@ peerlibrary:reactive-publish
 tmeasday:presence
 check@1.2.5
 ejson@1.1.0
+force-ssl
