@@ -11,6 +11,7 @@
     "core-js": "^2.5.1",
     "immutability-helper": "^2.4.0",
     "meteor-node-stubs": "~0.2.4",
+    "peer": "^0.2.8",
     "react": "^16.0.0",
     "react-addons-pure-render-mixin": "^15.6.2",
     "react-dom": "^16.0.0"

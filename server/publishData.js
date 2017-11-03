@@ -6,8 +6,9 @@ import { BuddyLists } from '../api/buddyList.js';
 import { Conversations } from '../api/conversations.js';
 import { Messages } from '../api/messages.js';
 import { ReactiveVar } from 'meteor/reactive-var';
-// var PeerServer = require('peer').PeerServer;
-// var server = PeerServer({port: 9000, path: '/', proxied: true});
+var PeerServer = require('peer').PeerServer;
+var server = PeerServer({port: 9000, path: '/'});
+console.log(PeerServer);
 
 const convos = new ReactiveVar([]);
 const friends = new ReactiveVar([]);
