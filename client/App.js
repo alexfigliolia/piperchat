@@ -215,7 +215,7 @@ export default class App extends Component {
   initPeer = () => {
 		window.peer = new Peer({
 		  key: '7t5hftjgba2fyldi',
-		  debug: 3,
+		  debug: 1,
 		  config: {'iceServers': [
 		    { url: 'stun:stun.l.google.com:19302' },
 		    { url: 'stun:stun1.l.google.com:19302' },
