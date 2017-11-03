@@ -23,7 +23,6 @@ accounts-facebook@1.3.0
 accounts-google@1.3.0
 fourseven:scss
 seba:minifiers-autoprefixer
-force-ssl@1.1.0
 peerlibrary:reactive-publish
 tmeasday:presence
 check@1.2.5
