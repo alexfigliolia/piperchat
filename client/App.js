@@ -224,7 +224,6 @@ export default class App extends Component {
 		window.peer = new Peer({
 			host: 'localhost', 
 			port: 9000, 
-			path: '/',
 			debug: 3,
 		  config: {'iceServers': [
 		    { url: 'stun:stun.l.google.com:19302' },
