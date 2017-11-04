@@ -274,6 +274,10 @@
 							background: $plite url('check.svg') no-repeat center;
 							background-size: 22.5px 22.5px;
 						}
+						&>.action-loading {
+							background: $plite url('loader.gif') no-repeat center;
+							background-size: 25px 25px;
+						}
 					}
 				}
 			}

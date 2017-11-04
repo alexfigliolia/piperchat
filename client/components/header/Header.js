@@ -16,6 +16,14 @@ export default class Header extends Component {
         this.setState({ hasNew: true });
       }
     }
+    if(nextProps.messages.length !== 0 && this.props.messages.length !== 0) {
+      if(nextProps.messages.length !== this.props.messages.length && 
+      nextProps.messages[nextProps.messages.length - 1].from.name === this.props.user.name &&
+      nextProps.messages[nextProps.messages.length - 1].to.name === nextProps.messages[nextProps.messages.length - 2].from.name) 
+      {
+        this.setState({hasNew: false});
+      }
+    }
   }
 
   seeBuddies = () => {

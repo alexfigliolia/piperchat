@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
 
 export default class Friend extends Component {
+
+	openChat = () => {
+		const image = this.props.image === undefined ? null : this.props.image;
+		this.props.openChat(this.props.name, image, this.props.id);
+	}
+
+	call = () => {
+		this.props.call(this.props.name);
+	}
+
   render() {
     return (
     	<div 
@@ -17,14 +27,8 @@ export default class Friend extends Component {
 				</div>
 				<div className="call-message">
 					<div>
-						<button
-							data-image={this.props.image === undefined ? null : this.props.image}
-							data-with={this.props.name} 
-							onClick={this.props.openChat}></button>
-						<button 
-							onClick={this.props.call}
-							data-image={this.props.image === undefined ? null : this.props.image}
-							data-with={this.props.name}></button>
+						<button onClick={this.openChat}></button>
+						<button onClick={this.call}></button>
 					</div>
 				</div>
 			</div>

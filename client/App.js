@@ -118,6 +118,7 @@ export default class App extends Component {
 
   //SEARCH FOR FRIENDS AND USERS
   handleSearch = (val) => {
+  	this.setState({ currentSearch: val });
   	if(val !== '') {
   		const results = [];
 	    for(let i = 0; i < this.props.users.length; i++) {
@@ -126,7 +127,7 @@ export default class App extends Component {
 	        results.push(this.props.users[i]);
 	      }
 	    }
-	    this.setState({ search: results, currentSearch: val });
+	    this.setState({ search: results });
   	} else {
   		this.setState({search: this.state.contacts});
   	}
@@ -141,7 +142,7 @@ export default class App extends Component {
   }
 
   //OPEN A CHAT
-  openChat = (name, image) => {
+  openChat = (name, image, id) => {
   	const cc = this.state.currentChats;
   	let exists = false;
   	for(let i = 0; i<cc.length; i++) {
@@ -151,11 +152,11 @@ export default class App extends Component {
   		}
   	}
   	if(!exists) {
-  		Meteor.call('convo.create', name, image, (error, result) => {
+  		Meteor.call('convo.create', id, (error, result) => {
   			if(error) {
   				console.log(error);
   			} else {
-  				const ns = update(cc, {$push: [{name: name, image: image}]});
+  				const ns = update(cc, {$push: [{name: name, image: image, _id: id}]});
   				this.setState({currentChats: ns});
   			}
   		});
@@ -256,7 +257,7 @@ export default class App extends Component {
 		console.log('accept call');
 		this.setState({ callingClasses: "calling calling-show received" });
 		window.currentCall = this.incomingCall;
-	  this.incomingCall.answer(window.localStream);
+	  this.incomingCall.answer(this.stream);
 	  this.incomingCall.on('stream', (remoteStream) => {
 	  	console.log('streaming call');
 	    window.remoteStream = remoteStream;
@@ -271,8 +272,7 @@ export default class App extends Component {
 	}
 
   //VIDEO CALL ONE OF YOUR FRIENDS
-  call = (e) => {
-  	const name = e.target.dataset.with;
+  call = (name) => {
   	let id;
   	let isOnline = false;
   	this.state.contacts.forEach(contact => {

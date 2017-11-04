@@ -42,7 +42,7 @@ export default class Chatbox extends Component {
       setTimeout(() => { this.refs.send.classList.add('return')}, 300);
       setTimeout(() => { this.refs.send.classList.add('came-back')}, 350);
       setTimeout(() => { this.refs.send.classList.remove('fly', 'return', 'came-back')}, 600);
-      Meteor.call('message.send', this.props.with.name, this.props.with.image, this.refs.m.value, (error, result) => {
+      Meteor.call('message.send', this.props.with._id, this.refs.m.value, (error, result) => {
         if(error) {
           console.log(error);
         } else {

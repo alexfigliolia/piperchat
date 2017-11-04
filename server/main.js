@@ -105,10 +105,10 @@ Meteor.methods({
     }
   }, 
 
-  'user.sendRequest'(name, image) {
-    check(name, String);
+  'user.sendRequest'(id) {
+    check(id, String);
     // check(image, String);
-    const user =  Meteor.users.findOne({name: name, image: image}, { _id: 1});
+    const user =  Meteor.users.findOne({_id: id}, { _id: 1, name: 1, image: 1});
     BuddyLists.update({owner: Meteor.userId()}, {
       $push: { sentRequests: {name: user.name, image: user.image, _id: user._id} }
     });
@@ -126,11 +126,12 @@ Meteor.methods({
     }
   },
 
-  'user.acceptRequest'(name, image){
-    const user =  Meteor.users.findOne({name: name, image: image}, { _id: 1});
+  'user.acceptRequest'(id){
+    check(id, String);
+    const user =  Meteor.users.findOne({_id: id}, { _id: 1, name: 1, image: 1});
     BuddyLists.update({owner: Meteor.userId()}, {
       $pull: { requests: {_id: user._id } },
-      $push: { friends: { name: name , image: image, _id: user._id } }
+      $push: { friends: { name: user.name , image: user.image, _id: user._id } }
     });
     BuddyLists.update({owner: user._id}, {
       $push: { friends: { name: Meteor.user().name , image: Meteor.user().image, _id: Meteor.userId() } },
@@ -138,8 +139,9 @@ Meteor.methods({
     });
   },
 
-  'user.denyRequest'(name, image) {
-    const user =  Meteor.users.findOne({name: name, image: image}, { _id: 1});
+  'user.denyRequest'(id) {
+    check(id, String);
+    const user =  Meteor.users.findOne({_id: id}, { _id: 1, name: 1, image: 1});
     BuddyLists.update({owner: user._id}, {
       $pull: { sentRequests: {_id: Meteor.userId()} }
     });
@@ -166,9 +168,9 @@ Meteor.methods({
     return user.profile.peerId;
   },
 
-  'convo.create'(name, image) {
-    check(name, String);
-    const them = Meteor.users.findOne({name: name, image: image}, { _id: 1});
+  'convo.create'(id) {
+    check(id, String);
+    const them = Meteor.users.findOne({_id: id}, { _id: 1, name: 1, image: 1});
     const exists = Conversations.find({ owners: {$all: [them._id, Meteor.userId()]} }).fetch();
     if(exists.length === 0) {
       return Conversations.insert({
@@ -177,10 +179,10 @@ Meteor.methods({
     }
   },
 
-  'message.send'(name, image, text){
-    check(name, String);
+  'message.send'(id, text){
+    check(id, String);
     check(text, String);
-    const them = Meteor.users.findOne({name: name, image: image}, { _id: 1});
+    const them = Meteor.users.findOne({_id: id}, { _id: 1, name: 1, image: 1});
     const convo = Conversations.find({ owners: {$all: [them._id, Meteor.userId()]} }, {_id: 1}).fetch();
     if(convo.length !== 0) {
       return Messages.insert({

@@ -1,21 +1,33 @@
 import React, { Component } from 'react';
 
 export default class User extends Component {
+
+	componentWillReceiveProps(nextProps) {
+		if(nextProps !== this.props) {
+			const al = document.getElementsByClassName('action-loading');
+			Array.from(al).forEach(el => {
+				el.classList.remove('action-loading');
+			});
+		}
+	}
+
   sendRequest = (e) => {
-  	Meteor.call('user.sendRequest', e.target.dataset.name, e.target.dataset.image, (error, result) => {
+  	Meteor.call('user.sendRequest', this.props.id, (error, result) => {
   		if(error) console.log(error);
   	});
   }
 
   acceptRequest = (e) => {
-  	Meteor.call('user.acceptRequest', e.target.dataset.name, e.target.dataset.image, (error, result) => {
-  		if(error) console.log(error);
+  	e.target.classList.add('action-loading');
+  	Meteor.call('user.acceptRequest', this.props.id, (error, result) => {
+  		if(error) { console.log(error) }
   	});
   }
 
   denyRequest = (e) => {
-  	Meteor.call('user.denyRequest', e.target.dataset.name, e.target.dataset.image, (error, result) => {
-  		if(error) console.log(error);
+  	e.target.classList.add('action-loading');
+  	Meteor.call('user.denyRequest', this.props.id, (error, result) => {
+  		if(error) { console.log(error) }
   	});
   }
 
@@ -31,23 +43,16 @@ export default class User extends Component {
 						<div className="accept-deny">
 							<button 
 								className="deny"
-								onClick={this.denyRequest}
-								data-name={this.props.name}
-								data-image={this.props.image}></button>
+								onClick={this.denyRequest}></button>
 							<button 
 								className="accept"
-								onClick={this.acceptRequest}
-								data-name={this.props.name}
-								data-image={this.props.image}></button>
+								onClick={this.acceptRequest}></button>
 						</div>
 						:
 						<div className="add-new">
 							{
 								!this.props.sentRequest ?
-								<button 
-									data-name={this.props.name}
-									data-image={this.props.image}
-									onClick={this.sendRequest}></button>
+								<button onClick={this.sendRequest}></button>
 								:
 								<div className="r-pending"></div>
 							}

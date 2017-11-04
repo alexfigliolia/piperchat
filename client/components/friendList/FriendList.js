@@ -27,6 +27,17 @@ export default class FriendList extends Component {
         this.setState({hasNew: ns});
       }
     }
+    if(nextProps.messages.length !== 0 && this.props.messages.length !== 0) {
+    	if(nextProps.messages.length !== this.props.messages.length && 
+      nextProps.messages[nextProps.messages.length - 1].from.name === this.props.user.name &&
+      nextProps.messages[nextProps.messages.length - 1].to.name === nextProps.messages[nextProps.messages.length - 2].from.name) 
+      {
+      	const hasNew = this.state.hasNew;
+      	const index = hasNew.indexOf(nextProps.messages[nextProps.messages.length - 2].from.name)
+      	const ns = update(hasNew, {$splice : [[index, 1]]});
+        this.setState({hasNew: ns});
+      }
+    }
 	}
 
 	checkInContacts = (name) => {
@@ -51,14 +62,12 @@ export default class FriendList extends Component {
 		return exists;
 	}
 
-	openChat = (e) => {
-		const name = e.target.dataset.with;
-  	const image = e.target.dataset.image;
+	openChat = (name, image, id) => {
   	const s = this.state.hasNew;
   	const i = s.indexOf(name);
   	const ns = update(s, {$splice: [[i, 1]]});
   	this.setState({hasNew: ns});
-		this.props.openChat(name, image);
+		this.props.openChat(name, image, id);
 	}
 
 	checkOnline = (id) => {
@@ -96,6 +105,7 @@ export default class FriendList extends Component {
 										key={i}
 										name={user.name}
 										image={user.image}
+										id={user._id}
 										isRequest={true}
 										sentRequest={false} />
 								);
@@ -103,11 +113,13 @@ export default class FriendList extends Component {
 						}
 						{
 							this.props.sentRequests.map((user, i) => {
+								console.log(user);
 								return (
 									<User
 										key={i}
 										name={user.name}
 										image={user.image}
+										id={user._id}
 										sentRequest={true} />
 								);
 							})
@@ -122,6 +134,7 @@ export default class FriendList extends Component {
 											key={i}
 											name={dude.name}
 											image={dude.image}
+											id={dude._id}
 											isRequest={false}
 											sentRequest={false} />
 									);
@@ -131,6 +144,7 @@ export default class FriendList extends Component {
 											key={i}
 											name={dude.name}
 											image={dude.image}
+											id={dude._id}
 											online={dude.online}
 											hasNew={this.state.hasNew.indexOf(dude.name) !== -1}
 											openChat={this.openChat}
