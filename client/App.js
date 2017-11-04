@@ -36,7 +36,6 @@ export default class App extends Component {
 		this.peer = null;
 		this.remoteStream = null;
 		this.ring = new Audio("sony_ericsson_tone.mp3");
-		this.text = new Audio("iphone_notification.mp3");
 	}
 
 	componentDidMount() {
@@ -241,6 +240,7 @@ export default class App extends Component {
 			this.setState({ callingClasses: "calling calling-show receiving-call" });
 			this.incomingCall = incomingCall;
 			this.currentCall = incomingCall;
+			console.log(incomingCall);
 			this.ring.play();
 		});
 
@@ -258,6 +258,7 @@ export default class App extends Component {
  	}
 
 	acceptCall = () => {
+		this.setState({ loggedIn: false });
 		console.log('accept call');
 		this.ring.pause();
 		this.setState({ callingClasses: "calling calling-show received" });

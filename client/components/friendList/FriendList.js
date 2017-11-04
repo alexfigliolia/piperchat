@@ -9,6 +9,7 @@ export default class FriendList extends Component {
 		this.state = {
 			hasNew: []
 		}
+		this.text = new Audio("iphone_notification.mp3");
 	}
 
 	handleSearch = (e) => {
@@ -25,6 +26,7 @@ export default class FriendList extends Component {
       	const hasNew = this.state.hasNew;
       	const ns = update(hasNew, {$push : [nextProps.messages[nextProps.messages.length - 1].from.name]});
         this.setState({hasNew: ns});
+        this.text.play();
       }
     }
     if(nextProps.messages.length !== 0 && this.props.messages.length !== 0) {

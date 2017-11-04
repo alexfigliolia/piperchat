@@ -11,13 +11,9 @@ export default class Dashboard extends Component {
 		this.stream = null;
 	}
 
-	touchStart = (e) => e.preventDefault();
-
 	render = () => {
 		return (
-			<section 
-				className="dashboard"
-				onTouchStart={this.touchStart}>
+			<section className="dashboard">
 				<div>
 					{
 						this.props.loggedIn &&
