@@ -213,14 +213,6 @@ export default class App extends Component {
 	onFailConnect = () => console.log('fail');
 
   initPeer = () => {
-		// window.peer = new Peer({
-		//   key: '7t5hftjgba2fyldi',
-		//   debug: 1,
-		//   config: {'iceServers': [
-		//     { url: 'stun:stun.l.google.com:19302' },
-		//     { url: 'stun:stun1.l.google.com:19302' },
-		//   ]}
-		// });
 		window.peer = new Peer({
 			host: 'piper-server.herokuapp.com', 
 			port: '', 
