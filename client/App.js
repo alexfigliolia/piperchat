@@ -33,6 +33,8 @@ export default class App extends Component {
 		this.loader = document.getElementById('appLoader');
 		this.stream = null;
 		this.incomingCall = null;
+		this.peer = null;
+		this.remoteStream = null;
 	}
 
 	componentDidMount() {
@@ -186,15 +188,13 @@ export default class App extends Component {
 		}
 		const c  = { audio: false, video: true };
 		navigator.mediaDevices.getUserMedia(c)
-			.then((stream) => {
-			  this.onInitConnect(stream);
-			  rs = stream;
-			})
-			.catch((err) => {
-				console.log(err);
-				this.onFailConnect();
-			});
-		// this.pc = new RTCPeerConnection(null);
+		.then((stream) => {
+		  this.onInitConnect(stream);
+		})
+		.catch((err) => {
+			console.log(err);
+			this.onFailConnect();
+		});
 	}
 
 	onInitConnect = (stream) => {
@@ -214,7 +214,7 @@ export default class App extends Component {
 	onFailConnect = () => console.log('fail');
 
   initPeer = () => {
-		window.peer = new Peer({
+		this.peer = new Peer({
 			host: 'piper-server.herokuapp.com', 
 			port: '', 
 			secure: true,
@@ -227,21 +227,20 @@ export default class App extends Component {
 		});
 
 
-		peer.on('open', () => {
-		  peerID = peer.id;
-		  Meteor.call('user.updatePeerID', peer.id, (error, result) => {
+		this.peer.on('open', () => {
+		  Meteor.call('user.updatePeerID', this.peer.id, (error, result) => {
 		  	if(error) console.log(error);
 		  })
 		});
 
 		//When user is receiving a video call request
-		peer.on('call', (incomingCall) => {
+		this.peer.on('call', (incomingCall) => {
 			console.log('incoming call');
 			this.setState({ callingClasses: "calling calling-show receiving-call" });
 			this.incomingCall = incomingCall;
 		});
 
-		peer.on('disconnected', () => {
+		this.peer.on('disconnected', () => {
 			this.setState({ callingClasses: 'calling' });
 		});
 	}
@@ -256,11 +255,10 @@ export default class App extends Component {
 	acceptCall = () => {
 		console.log('accept call');
 		this.setState({ callingClasses: "calling calling-show received" });
-		window.currentCall = this.incomingCall;
 	  this.incomingCall.answer(this.stream);
 	  this.incomingCall.on('stream', (remoteStream) => {
 	  	console.log('streaming call');
-	    window.remoteStream = remoteStream;
+	    this.remoteStream = remoteStream;
 	    const you = document.getElementById("you")
 	    const url = window.URL || window.webkitURL;
 			if ("srcObject" in you) {
@@ -296,12 +294,11 @@ export default class App extends Component {
 
   setUpCall = (peerId) => {
 	  let outgoingCall = peer.call(peerId, this.stream);
-	  console.log(outgoingCall);
-	  window.currentCall = outgoingCall;
+	  this.currentCall = outgoingCall;
 	  console.log('making the call');
-	  outgoingCall.on('stream', (remoteStream) => {
+	  this.currentCall.on('stream', (remoteStream) => {
 	  	console.log('receiving remote stream');
-	    window.remoteStream = remoteStream;
+	    this.remoteStream = remoteStream;
 	    const you = document.getElementById("you")
 	    const url = window.URL || window.webkitURL;
 			if ("srcObject" in you) {
