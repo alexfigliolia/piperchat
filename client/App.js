@@ -41,6 +41,8 @@ export default class App extends Component {
 		window.addEventListener('resize', () => {
 			this.setState({ height: window.innerHeight, width: window.innerWidth });
 		});
+		this.ring = new Audio("sony_ericsson_tone.mp3");
+		this.text = new Audio("iphone_notification.mp3");
 	}
 
 	componentWillReceiveProps(nextProps) {
