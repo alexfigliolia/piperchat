@@ -238,6 +238,7 @@ export default class App extends Component {
 			console.log('incoming call');
 			this.setState({ callingClasses: "calling calling-show receiving-call" });
 			this.incomingCall = incomingCall;
+			this.currentCall = incomingCall;
 		});
 
 		this.peer.on('disconnected', () => {
@@ -319,6 +320,8 @@ export default class App extends Component {
   	this.onInitConnect(this.stream);
   	if(this.currentCall !== null) {
   		this.currentCall.close();
+  		this.incomingCall = null;
+  		this.outgoingCall = null;
   	}
   }
 
