@@ -258,7 +258,6 @@ export default class App extends Component {
  	}
 
 	acceptCall = () => {
-		this.setState({ loggedIn: false });
 		console.log('accept call');
 		this.ring.pause();
 		this.setState({ callingClasses: "calling calling-show received" });
