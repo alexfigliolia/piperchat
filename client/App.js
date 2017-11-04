@@ -205,8 +205,8 @@ export default class App extends Component {
 			me.srcObject = stream;
 			you.srcObject = stream;
 		} else {
-			me.src = url.createObjectURL(stream);
-			you.src = url.createObjectURL(stream);
+			me.src = window.URL.createObjectURL(stream);
+			you.src = window.URL.createObjectURL(stream);
 		}
 		this.stream = stream;
 	}
@@ -264,7 +264,7 @@ export default class App extends Component {
 			if ("srcObject" in you) {
 				you.srcObject = remoteStream;
 			} else {
-				you.src = url.createObjectURL(remoteStream);
+				you.src = window.URL.createObjectURL(remoteStream);
 			}
 	  });
 	}
