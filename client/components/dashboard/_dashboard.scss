@@ -15,9 +15,8 @@
 			background-size: 50px 50px;
 			@include headerShadow;
 			cursor: grab;
-			z-index: 2;
+			z-index: 10;
 			&:active {
-				z-index: 10;
 				cursor: grabbing;
 			}
 		}
@@ -72,6 +71,7 @@
 		opacity: 0;
 		transform: scale(0);
 		transition: opacity 0.3s, transform 0s 1.3s;
+		z-index: 11;
 		&>.loader-pic {
 			margin-top: 25px;
 			height: 50px;
@@ -137,6 +137,7 @@
 		}
 		&>.answer-deny {
 			justify-content: space-between;
+			z-index: 11;
 		}
 		&>.answer-deny>button {
 			visibility: visible;
@@ -154,11 +155,13 @@
 	}
 	&>.received {
 		background: transparent;
+		z-index: 5;
 		&>.loader-pic {
 			transform: scale(0);
 		}
 		&>.answer-deny {
 			justify-content: center;
+			z-index: 11;
 		}
 		&>.answer-deny>button:last-of-type {
 			display: none;

@@ -7,7 +7,7 @@
 	height: calc(100% - 50px);
 	transition-duration: 0.25s;
 	overflow: hidden;
-	z-index: 4;
+	z-index: 10;
 	@media #{$mq-670} {
 		left: 0px;
 		width: 400px;

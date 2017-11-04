@@ -242,6 +242,7 @@ export default class App extends Component {
 		});
 
 		this.peer.on('disconnected', () => {
+			this.initPeer();
 			this.setState({ callingClasses: 'calling' });
 		});
 	}
@@ -261,7 +262,7 @@ export default class App extends Component {
 	  	console.log('streaming call');
 	    this.remoteStream = remoteStream;
 	    const you = document.getElementById("you")
-	    const url = window.URL || window.webkitURL;
+	    // const url = window.URL || window.webkitURL;
 			if ("srcObject" in you) {
 				you.srcObject = remoteStream;
 			} else {
@@ -302,11 +303,11 @@ export default class App extends Component {
 	  	console.log('receiving remote stream');
 	    this.remoteStream = remoteStream;
 	    const you = document.getElementById("you")
-	    const url = window.URL || window.webkitURL;
+	    // const url = window.URL || window.webkitURL;
 			if ("srcObject" in you) {
 				you.srcObject = remoteStream;
 			} else {
-				you.src = url.createObjectURL(remoteStream);
+				you.src = window.URL.createObjectURL(remoteStream);
 			}
 			console.log('set remote stream');
 			this.setState({ callingClasses: "calling calling-show received" });
