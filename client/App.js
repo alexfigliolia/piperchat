@@ -35,14 +35,14 @@ export default class App extends Component {
 		this.incomingCall = null;
 		this.peer = null;
 		this.remoteStream = null;
+		this.ring = new Audio("sony_ericsson_tone.mp3");
+		this.text = new Audio("iphone_notification.mp3");
 	}
 
 	componentDidMount() {
 		window.addEventListener('resize', () => {
 			this.setState({ height: window.innerHeight, width: window.innerWidth });
 		});
-		this.ring = new Audio("sony_ericsson_tone.mp3");
-		this.text = new Audio("iphone_notification.mp3");
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -241,6 +241,7 @@ export default class App extends Component {
 			this.setState({ callingClasses: "calling calling-show receiving-call" });
 			this.incomingCall = incomingCall;
 			this.currentCall = incomingCall;
+			this.ring.play();
 		});
 
 		this.peer.on('disconnected', () => {
@@ -258,6 +259,7 @@ export default class App extends Component {
 
 	acceptCall = () => {
 		console.log('accept call');
+		this.ring.pause();
 		this.setState({ callingClasses: "calling calling-show received" });
 	  this.incomingCall.answer(this.stream);
 	  this.incomingCall.on('stream', (remoteStream) => {
@@ -298,10 +300,12 @@ export default class App extends Component {
   }
 
   setUpCall = (peerId) => {
+  	this.ring.play();
 	  let outgoingCall = this.peer.call(peerId, this.stream);
 	  this.currentCall = outgoingCall;
 	  console.log('making the call');
 	  this.currentCall.on('stream', (remoteStream) => {
+	  	this.ring.pause();
 	  	console.log('receiving remote stream');
 	    this.remoteStream = remoteStream;
 	    const you = document.getElementById("you")
@@ -318,6 +322,7 @@ export default class App extends Component {
 
   //END A CALL 
   endCall = (e) => {
+  	this.ring.pause();
   	this.setState({ callingClasses: "calling" });
   	this.incomingCall = null;
   	this.onInitConnect(this.stream);
