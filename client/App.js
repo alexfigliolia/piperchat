@@ -280,6 +280,7 @@ export default class App extends Component {
   		});
   	});
   	if(isOnline) {
+  		console.log(id);
   		Meteor.call('user.getPeerId', id, (error, result) => {
   			if(error) {
   				console.log(error);
@@ -293,7 +294,7 @@ export default class App extends Component {
   }
 
   setUpCall = (peerId) => {
-	  let outgoingCall = peer.call(peerId, this.stream);
+	  let outgoingCall = this.peer.call(peerId, this.stream);
 	  this.currentCall = outgoingCall;
 	  console.log('making the call');
 	  this.currentCall.on('stream', (remoteStream) => {
@@ -316,8 +317,8 @@ export default class App extends Component {
   	this.setState({ callingClasses: "calling" });
   	this.incomingCall = null;
   	this.onInitConnect(this.stream);
-  	if(window.currentCall) {
-  		window.currentCall.close();
+  	if(this.currentCall !== null) {
+  		this.currentCall.close();
   	}
   }
 

@@ -113,7 +113,6 @@ export default class FriendList extends Component {
 						}
 						{
 							this.props.sentRequests.map((user, i) => {
-								console.log(user);
 								return (
 									<User
 										key={i}
