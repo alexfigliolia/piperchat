@@ -251,7 +251,6 @@ export default class App extends Component {
 	}
 
 	setCallingScreen = () => {
-		console.log('set Calling Screen');
 		if(this.incomingCall !== null) {
 			this.setState({ callingClasses: "calling calling-show receiving-call received" });
 		}
@@ -266,7 +265,6 @@ export default class App extends Component {
 	  	console.log('streaming call');
 	    this.remoteStream = remoteStream;
 	    const you = document.getElementById("you")
-	    // const url = window.URL || window.webkitURL;
 			if ("srcObject" in you) {
 				you.srcObject = remoteStream;
 			} else {
@@ -286,7 +284,6 @@ export default class App extends Component {
   		});
   	});
   	if(isOnline) {
-  		console.log(id);
   		Meteor.call('user.getPeerId', id, (error, result) => {
   			if(error) {
   				console.log(error);
@@ -309,7 +306,6 @@ export default class App extends Component {
 	  	console.log('receiving remote stream');
 	    this.remoteStream = remoteStream;
 	    const you = document.getElementById("you")
-	    // const url = window.URL || window.webkitURL;
 			if ("srcObject" in you) {
 				you.srcObject = remoteStream;
 			} else {

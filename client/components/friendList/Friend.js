@@ -7,9 +7,7 @@ export default class Friend extends Component {
 		this.props.openChat(this.props.name, image, this.props.id);
 	}
 
-	call = () => {
-		this.props.call(this.props.name);
-	}
+	call = () => this.props.call(this.props.name);
 
   render() {
     return (
@@ -28,7 +26,11 @@ export default class Friend extends Component {
 				<div className="call-message">
 					<div>
 						<button onClick={this.openChat}></button>
-						<button onClick={this.call}></button>
+						<button
+							style={{
+								opacity: this.props.online ? 1 : 0.25
+							}} 
+							onClick={this.call}></button>
 					</div>
 				</div>
 			</div>
