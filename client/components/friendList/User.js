@@ -31,7 +31,7 @@ export default class User extends Component {
   	});
   }
 
-  render() {
+  render = () => {
     return (
       <div 
     		className="user">

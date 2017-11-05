@@ -63,7 +63,7 @@ export default class Chatbox extends Component {
     setTimeout(() => { this.refs.mc.scrollTop = this.refs.mc.scrollHeight }, 50);
   }
 
-	render() {
+	render = () => {
     const l = this.getWidth() + 1;
     return (
       <div 

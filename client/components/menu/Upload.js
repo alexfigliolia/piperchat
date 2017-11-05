@@ -33,7 +33,7 @@ export default class Upload extends PureComponent {
 	  }).catch(err => console.log(err) );
   }
 
-	render() {
+	render = () => {
     return (
       <div 
 				onClick={this.focusUpload}

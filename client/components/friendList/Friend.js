@@ -9,7 +9,7 @@ export default class Friend extends Component {
 
 	call = () => this.props.call(this.props.name);
 
-  render() {
+  render = () => {
     return (
     	<div 
     		className={this.props.hasNew ? "contact has-new" : "contact"}

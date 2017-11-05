@@ -3,14 +3,6 @@ import You from './You';
 import Me from './Me';
 
 export default class Dashboard extends Component {
-	constructor(props){
-		super(props);
-		this.state = {
-			meUrl: null
-		}
-		this.stream = null;
-	}
-
 	render = () => {
 		return (
 			<section className="dashboard">
@@ -28,7 +20,6 @@ export default class Dashboard extends Component {
 						this.props.loggedIn &&
 						<Me 
 							style={{background: "green"}} 
-							src={this.state.meUrl}
 							initPeer={this.props.initPeer}
 							getLocalStream={this.props.getLocalStream}
 							localStream={this.props.stream} />
