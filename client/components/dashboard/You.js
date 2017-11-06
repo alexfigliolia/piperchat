@@ -9,9 +9,14 @@ export default class You extends Component {
     }
   }
 
+  preventTouchStart = (e) => {
+    e.preventDefault();
+  }
+
   render = () => {
     return (
     	<video 
+        onTouchStart={this.preventTouchStart}
         autoPlay
     		height={this.props.height - 50} 
     		width={this.props.width}
