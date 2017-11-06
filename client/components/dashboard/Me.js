@@ -28,10 +28,6 @@ export default class Me extends Component {
 	  }
 	}
 
-	componentWillUnmount() {
-		this.props.localStream.getTracks()[0].stop();
-	}
-
 	moveMe = (e) => {
 		this.setState({top: e.clientY - 70, left: e.clientX - 50});
 	}
@@ -80,6 +76,7 @@ export default class Me extends Component {
     		width={this.state.width}
     		autoPlay
     		playsInline
+    		muted="muted"
     		style={{
     			transition: `all ${this.state.tD}s`,
     			top: `${y}px`,
