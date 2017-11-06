@@ -74,6 +74,20 @@ $scale: 0.8; // icon scale 68/68 default
     transition: all 0.75s ease; 
 }
 
+.hamburglar::after {
+    content: "";
+    position: absolute;
+    top: calc(50% - 4px);
+    left: 15.45px;
+    width: 30px;
+    height: 4px;
+    border-radius: 5px;
+    background: #fff;
+    transform: scaleX(0) translateX(3px);
+    transform-origin: 50% 50%;
+    transition: all 0.5s cubic-bezier(.8, -1.1, .5, 1.9);
+}
+
 
 /* // End values (animation done by transitions) */
 /* .hamburglar.is-closed { */
@@ -95,3 +109,17 @@ $scale: 0.8; // icon scale 68/68 default
     -webkit-transform: translateX( -4.5px ) rotate( 45deg );
       transform: translateX( -4.5px ) rotate( 45deg );
   }
+
+
+.hamburglar.is-closed.is-arrow {
+  &::after {
+    transform: scaleX(1) translateX(0px);
+    transform-origin: 100% 50%;
+  }
+  &>#top {
+    transform: translateX( -4.5px ) translateY( 11px ) rotate( 45deg ) scaleX(0.5);
+  }
+  &>#bottom1 {
+    transform: translateX( -4.5px ) translateY( -11px ) rotate( -45deg ) scaleX(0.5);
+  }
+}

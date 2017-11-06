@@ -76,7 +76,7 @@ export default class Me extends Component {
     		width={this.state.width}
     		autoPlay
     		playsInline
-    		muted="muted"
+    		muted="true"
     		style={{
     			transition: `all ${this.state.tD}s`,
     			top: `${y}px`,

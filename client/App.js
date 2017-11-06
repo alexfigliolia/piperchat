@@ -94,19 +94,25 @@ export default class App extends Component {
 
 	//OPEN MENU
 	toggleBurger = () => {
-		if(!this.state.friendToggle) this.toggleFriends();
-    this.setState((prevState, prevProps) => {
-      return {
-        burgerToggle : !prevState.burgerToggle,
-        burgerClasses : (prevState.burgerClasses === "hamburglar is-closed") ? 
-                          "hamburglar is-open" : 
-                          "hamburglar is-closed",
-       	menuClasses: (prevState.menuClasses === "menu") ?
-       								"menu menu-show" :
-       								"menu",
-       	removeFriendClasses: "remove-friend"
-      }
-    });
+		if(this.state.removeFriendClasses === "remove-friend remove-friend-show") {
+			this.setState({
+				removeFriendClasses: "remove-friend",
+				burgerClasses: "hamburglar is-closed"
+			});
+		} else {
+			if(!this.state.friendToggle) this.toggleFriends();
+	    this.setState((prevState, prevProps) => {
+	      return {
+	        burgerToggle : !prevState.burgerToggle,
+	        burgerClasses : (prevState.burgerClasses === "hamburglar is-closed") ? 
+	                          "hamburglar is-open" : 
+	                          "hamburglar is-closed",
+	       	menuClasses: (prevState.menuClasses === "menu") ?
+	       								"menu menu-show" :
+	       								"menu"
+	      }
+	    });
+		}
   }
 
   //OPEN BUDDY LIST
@@ -127,8 +133,11 @@ export default class App extends Component {
   		return {
   			removeFriendClasses: prevState.removeFriendClasses === "remove-friend" ?
   													"remove-friend remove-friend-show" :
-  													"remove-friend" 
-  		}
+  													"remove-friend",
+  			burgerClasses: prevState.burgerClasses === "hamburglar is-closed" ?
+  											"hamburglar is-closed is-arrow" :
+  											"hamburglar is-closed"
+  		}									
   	});
   }
 

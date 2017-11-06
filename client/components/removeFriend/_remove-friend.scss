@@ -5,7 +5,6 @@
 	height: calc(100% - 50px);
 	width: 70%;
 	@include center;
-	@include leftShadow;
 	background: #E3EBF0;
 	z-index: 10002;
 	transform: translateX(110%);
@@ -27,10 +26,11 @@
 		transition-duration: 0.3s;
 		&>h2 {
 			width: 90%;
-			font-weight: 200;
+			font-weight: 300;
 			font-size: 1.25em;
 			text-align: center;
 			max-width: 450px;
+			color: #D44355;
 			background: #E3EBF0;
 			@media #{$mq-670} {
 				font-size: 1.5em;

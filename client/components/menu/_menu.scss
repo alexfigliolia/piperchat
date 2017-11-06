@@ -166,11 +166,7 @@
 					height: 40px;
 					border-bottom: 1px solid #C1C1C1;
 					padding: auto;
-					color: #828282;
-				}
-				&>button:last-of-type {
 					color: #E34A59;
-					background: transparent;
 				}
 			}
 		}
@@ -185,6 +181,7 @@
 			border-radius: 5px;
 			@include buttonShadow;
 			text-transform: uppercase;
+			margin-bottom: 30px;
 		}
 	}
 }
