@@ -8,15 +8,10 @@ export default class You extends Component {
       this.props.setCallingScreen();
     }
   }
-
-  preventTouchStart = (e) => {
-    e.preventDefault();
-  }
-
+  
   render = () => {
     return (
-    	<video 
-        onTouchStart={this.preventTouchStart}
+    	<video
         autoPlay
     		height={this.props.height - 50} 
     		width={this.props.width}
