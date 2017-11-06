@@ -6,6 +6,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import FriendList from './components/friendList/FriendList';
 import Menu from './components/menu/Menu';
 import Chatbox from './components/chatbox/Chatbox';
+import RemoveFriend from './components/removeFriend/RemoveFriend';
 import './peer';
 
 export default class App extends Component {
@@ -21,6 +22,7 @@ export default class App extends Component {
       menuClasses: "menu",
       loginClasses: "login",
       callingClasses: "calling",
+      removeFriendClasses: "remove-friend",
       contacts: [],
       search: [],
       requests: [],
@@ -101,7 +103,8 @@ export default class App extends Component {
                           "hamburglar is-closed",
        	menuClasses: (prevState.menuClasses === "menu") ?
        								"menu menu-show" :
-       								"menu"
+       								"menu",
+       	removeFriendClasses: "remove-friend"
       }
     });
   }
@@ -117,6 +120,16 @@ export default class App extends Component {
         										"friend-list"
       }
     });
+  }
+
+  toggleRemoveFriend = () => {
+  	this.setState((prevState) => {
+  		return {
+  			removeFriendClasses: prevState.removeFriendClasses === "remove-friend" ?
+  													"remove-friend remove-friend-show" :
+  													"remove-friend" 
+  		}
+  	});
   }
 
   //SEARCH FOR FRIENDS AND USERS
@@ -187,7 +200,7 @@ export default class App extends Component {
 		    });
 		  }
 		}
-		const c  = { audio: false, video: true };
+		const c  = { audio: true, video: true };
 		navigator.mediaDevices.getUserMedia(c)
 		.then((stream) => {
 		  this.onInitConnect(stream);
@@ -226,24 +239,21 @@ export default class App extends Component {
 		    { url: 'stun:stun1.l.google.com:19302' },
 		  ]}
 		});
-
-
+		//WHEN THE PEER CONNECTS TO THE WEBSOCKET
 		this.peer.on('open', () => {
 		  Meteor.call('user.updatePeerID', this.peer.id, (error, result) => {
 		  	if(error) console.log(error);
 		  })
 		});
-
-		//When user is receiving a video call request
+		//WHEN THE USER RECEIVES AN INCOMING CALL
 		this.peer.on('call', (incomingCall) => {
 			console.log('incoming call');
 			this.setState({ callingClasses: "calling calling-show receiving-call" });
 			this.incomingCall = incomingCall;
 			this.currentCall = incomingCall;
-			console.log(incomingCall);
 			this.ring.play();
 		});
-
+		//WHEN THE PEER IS DISCONNECTED FROM THE WEBSOCKET
 		this.peer.on('disconnected', () => {
 			this.initPeer();
 			this.setState({ callingClasses: 'calling' });
@@ -324,7 +334,6 @@ export default class App extends Component {
   	this.onInitConnect(this.stream);
   	if(this.currentCall !== null) {
   		this.currentCall.close();
-  		this.incomingCall = null;
   		this.outgoingCall = null;
   	}
   }
@@ -384,7 +393,8 @@ export default class App extends Component {
 					<Menu
 						classes={this.state.menuClasses}
 						user={this.state.user}
-						handleNewImage={this.handleNewImage} />
+						handleNewImage={this.handleNewImage}
+						toggleRemoveFriend={this.toggleRemoveFriend} />
 				}
 
 				{
@@ -412,6 +422,14 @@ export default class App extends Component {
 											messages={this.props.messages}
 											user={this.state.user} />	
 					})
+				}
+
+				{
+					this.state.loggedIn &&
+					this.state.contacts.length > 0 &&
+					<RemoveFriend
+						classes={this.state.removeFriendClasses} 
+						friends={this.state.contacts} />
 				}
 
 			</section>

@@ -2,9 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 import { Accounts } from 'meteor/accounts-base';
-import { BuddyLists } from '../api/buddyList.js';
-import { Conversations } from '../api/conversations.js';
-import { Messages } from '../api/messages.js';
+import { BuddyLists, Conversations, Messages } from '../api/collections.js';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 const convos = new ReactiveVar([]);

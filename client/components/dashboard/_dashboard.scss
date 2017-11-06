@@ -125,7 +125,9 @@
 			visibility: visible;
 			transform: translateY(0px);
 			opacity: 1;
+			transition-duration: 0.5s;
 			transition-delay: 0.3s;
+			transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 		}
 	}
 	&>.receiving-call {
@@ -173,6 +175,7 @@
 			height: 0px;
 			padding: 0px;
 			transition-duration: 0.3s;
+			transition-timing-function: none;
 		}
 	}
 }

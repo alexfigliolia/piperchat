@@ -1,7 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { BuddyLists } from '../api/buddyList.js';
-import { Conversations } from '../api/conversations.js';
-import { Messages } from '../api/messages.js';
+import { BuddyLists, Conversations, Messages } from '../api/collections.js';
 import { withTracker } from 'meteor/react-meteor-data';
 import App from './App.js';
 

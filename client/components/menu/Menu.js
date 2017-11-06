@@ -10,6 +10,8 @@ export default class Menu extends PureComponent {
 			profClasses: "prof",
 			profileClasses: "profile",
 			profText: "Profile",
+			privacyClasses: "privacy",
+			privText: "Privacy",
 			userName: this.props.user.name
 		}
 	}
@@ -19,6 +21,13 @@ export default class Menu extends PureComponent {
 		if(nextProps.classes === "menu" && this.state.profClasses === "prof prof-flip") {
 			this.makeChanges();
 			this.setState({ userName: nextProps.user.name });
+		}
+		if(nextProps.classes === "menu" && this.state.privClasses !== "privacy") {
+			this.setState({
+				userName: nextProps.user.name, 
+				privacyClasses: "privacy", 
+				privText: "Privacy"
+			});
 		}
 	}
 
@@ -64,6 +73,15 @@ export default class Menu extends PureComponent {
 	  }
   }
 
+  togglePrivacy = () => {
+  	this.setState((prevState) => {
+  		return {
+  			privacyClasses: prevState.privacyClasses === "privacy" ? "privacy privacy-show" : "privacy",
+  			privText: prevState.privText === "Privacy" ? "Close" : "Privacy"
+  		}
+  	});
+  }
+
 	render = () => {
 		return (
 			<section className={this.props.classes}>
@@ -83,9 +101,18 @@ export default class Menu extends PureComponent {
 											 this.state.profText === "Close" ? this.makeChanges : this.handleNameChange}
 							style={{
 								color: this.state.profText === "Profile" ? "#828282" : "#fff",
-								background: this.state.profText === "Profile" ? "none" : "#139A8F"
+								background: this.state.profText === "Profile" ? "transparent" : "#139A8F"
 							}}>{this.state.profText}</button>
-						<button>Privacy</button>
+						<button 
+							onClick={this.togglePrivacy}
+							style={{
+								background: this.state.privText === "Close" ? "#E34A59" : "transparent",
+								color: this.state.privText === "Close" ? "#fff" : "#828282"
+							}}>{this.state.privText}</button>
+						<div className={this.state.privacyClasses}>
+							<button onClick={this.props.toggleRemoveFriend}>Remove a Friend</button>
+							<button>Report Abuse</button>
+						</div>
 						<button>Settings</button>
 					</div>
 					<button onClick={this.logout}>Log out</button>

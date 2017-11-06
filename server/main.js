@@ -2,9 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 import './publishData';
-import { BuddyLists } from '../api/buddyList.js';
-import { Conversations } from '../api/conversations.js';
-import { Messages } from '../api/messages.js';
+import { BuddyLists, Conversations, Messages } from '../api/collections.js';
 
 Meteor.methods({
 
@@ -166,6 +164,17 @@ Meteor.methods({
   'user.getPeerId'(id){
     const user = Meteor.users.findOne({_id: id});
     return user.profile.peerId;
+  },
+
+  'user.removeFriend'(id){
+    const user = Meteor.users.findOne({_id: id}, { _id: 1, name: 1, image: 1});
+    BuddyLists.update({owner: id}, {
+      $pull: { friends: {_id: Meteor.userId()} }
+    });
+    BuddyLists.update({owner: Meteor.userId()}, {
+      $pull: { friends: { _id: id } }
+    });
+    return 'Removed a friend';
   },
 
   'convo.create'(id) {

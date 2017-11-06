@@ -1,0 +1,123 @@
+.remove-friend {
+	position: fixed;
+	top: 50px;
+	right: 0;
+	height: calc(100% - 50px);
+	width: 70%;
+	@include center;
+	@include leftShadow;
+	background: #E3EBF0;
+	z-index: 10002;
+	transform: translateX(110%);
+	transition-duration: 0.3s;
+	@media #{$mq-670} {
+		width: 400px;
+		top: 80px;
+		height: calc(100% - 80px);
+	}
+	&>div {
+		@include center;
+		flex-direction: column;
+		justify-content: flex-start;
+		height: 100%;
+		width: 100%;
+	}
+	&>.rf {
+		transition-duration: 0.3s;
+		&>h2 {
+			width: 90%;
+			font-weight: 200;
+			font-size: 1.25em;
+			text-align: center;
+			max-width: 450px;
+			background: #E3EBF0;
+			@media #{$mq-670} {
+				font-size: 1.5em;
+			}
+		}
+		&>.search-friends {
+			width: 100%;
+			@include center;
+			padding-bottom: 10px;
+			border-bottom: 1px solid #C1C1C1;
+			background: #E3EBF0;
+			&>input {
+				outline: none;
+				border: none;
+				width: 90%;
+				border-radius: 100px;
+				height: 30px;
+				padding: 0;
+				text-align: center;
+				font-size: 0.9em;
+			}
+		}
+		&>.remove-list {
+			width: 100%;
+			display: block;
+			width: 100%;
+			height: calc(100% - 145px);
+			max-height: calc(100% - 145px);
+			overflow-y: scroll;
+			-webkit-overflow-scrolling: touch;
+			&>.remove-item {
+				width: 100%;
+				border-bottom: 1px solid #C1C1C1;
+				height: 40px;
+				@include center;
+				color: #7A7E80;
+				cursor: pointer;
+			}
+		}
+	}
+	&>.rf-move {
+		transform: translateY(150px);
+	}
+	&>.confirm {
+		position: absolute;
+		top: 0;
+		left: 0;
+		@include center;
+		width: 100%;
+		height: auto;
+		background: $plite;
+		border-bottom: 1px solid #CED7D3;
+		color: #fff;
+		transform: translateY(-100%);
+		transition-duration: 0.3s;
+		&>h3 {
+			font-weight: 200;
+			width: 90%;
+			max-width: 400px;
+			text-align: center;
+		}
+		&>div {
+			@include center;
+			width: 100%;
+			height: auto;
+			margin-bottom: 25px;
+			&>button {
+				height: 40px;
+				width: 42.5%;
+				margin: 0 2.5%;
+				border: none;
+				outline: none;
+				background: #FC5655;
+				color: #fff;
+				@include buttonShadow;
+				border-radius: 2.5px;
+			}
+			&>button:first-of-type {
+				background: #fff;
+				color: $plite;
+			}
+		}
+	}
+	&>.confirm-show {
+		transform: translateY(0%);
+	}
+}
+
+.remove-friend-show {
+	transform: translateX(0%);
+}
