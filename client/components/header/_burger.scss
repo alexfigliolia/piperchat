@@ -79,7 +79,7 @@ $scale: 0.8; // icon scale 68/68 default
     position: absolute;
     top: calc(50% - 4px);
     left: 15.45px;
-    width: 30px;
+    width: 35px;
     height: 4px;
     border-radius: 5px;
     background: #fff;
@@ -117,9 +117,9 @@ $scale: 0.8; // icon scale 68/68 default
     transform-origin: 100% 50%;
   }
   &>#top {
-    transform: translateX( -4.5px ) translateY( 11px ) rotate( 45deg ) scaleX(0.5);
+    transform: translateX( 0px ) translateY( 11px ) rotate( 45deg ) scaleX(0.5);
   }
   &>#bottom1 {
-    transform: translateX( -4.5px ) translateY( -11px ) rotate( -45deg ) scaleX(0.5);
+    transform: translateX( 0px ) translateY( -11px ) rotate( -45deg ) scaleX(0.5);
   }
 }
