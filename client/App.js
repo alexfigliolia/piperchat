@@ -456,7 +456,6 @@ export default class App extends Component {
 
 				{
 					this.state.loggedIn &&
-					this.state.contacts.length > 0 &&
 					<RemoveFriend
 						classes={this.state.removeFriendClasses} 
 						friends={this.state.contacts} />
