@@ -1,0 +1,118 @@
+.report-abuse {
+	position: fixed;
+	top: 50px;
+	right: 0;
+	height: calc(100% - 50px);
+	width: 70%;
+	@include center;
+	background: #E3EBF0;
+	z-index: 10002;
+	transform: translateX(110%);
+	transition-duration: 0.3s;
+	overflow: hidden;
+	@media #{$mq-670} {
+		width: 400px;
+		top: 80px;
+		height: calc(100% - 80px);
+	}
+	&>div {
+		@include center;
+		flex-direction: column;
+		justify-content: flex-start;
+		height: 100%;
+		width: 100%;
+		&>h2 {
+			color: #DC4D57;
+			margin-bottom: 10px;
+		}
+		&>p {
+			margin: 0;
+			margin-bottom: 20px;
+			width: 95%;
+			max-width: 300px;
+			text-align: center;
+			color: $piper;
+		}
+		&>.rp {
+			@include center;
+			width: 90%;
+			flex-direction: column;
+			transition-duration: 0.4s;
+			&>textarea {
+				width: 100%;
+				min-width: 100%;
+				max-width: 100%;
+				outline: none;
+				border: none;
+				height: 150px;
+				min-height: 150px;
+				max-height: 150px;
+				margin-bottom: 20px;
+				border-radius: 2.5px;
+			}
+			&>div {
+				@include center;
+				flex-direction: row;
+				width: 100%;
+				&>button {
+					width: 45%;
+					height: 40px;
+					margin: 0;
+					margin-right: 2.5%;
+					border: none;
+					outline: none;
+					border-radius: 5px;
+					background: #fff;
+					@include buttonShadow;
+				}
+				&>button:last-of-type {
+					background: $plite;
+					color: #fff;
+					margin: 0;
+					margin-left: 2.5%;
+				}
+			}
+		}
+		&>.rp-hide {
+			transform: translateX(-100%);
+			opacity: 0;
+		}
+		&>.thank-you {
+			position: absolute;
+			top: 100px;
+			left: 5%;
+			width: 90%;
+			@include center;
+			flex-direction: column;
+			transform: translateX(100%);
+			opacity: 0;
+			transition-duration: 0.4s;
+			&>h2 {
+				color: $plite;
+				margin-bottom: 0;
+			}
+			&>p {
+				text-align: center;
+				margin-bottom: 20px;
+			}
+			&>button {
+				height: 40px;
+				width: 120px;
+				background: $plite;
+				color: #fff;
+				outline: none;
+				border: none;
+				@include buttonShadow;
+				border-radius: 5px;
+			}
+		}
+		&>.thank-you-show {
+			transform: translateX(0%);
+			opacity: 1;
+		}
+	}
+}
+
+.report-abuse-show {
+	transform: translateX(0%);
+}

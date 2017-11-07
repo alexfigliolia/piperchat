@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 import './publishData';
-import { BuddyLists, Conversations, Messages } from '../api/collections.js';
+import { BuddyLists, Conversations, Messages, Reports } from '../api/collections.js';
 
 Meteor.methods({
 
@@ -175,6 +175,13 @@ Meteor.methods({
       $pull: { friends: { _id: id } }
     });
     return 'Removed a friend';
+  },
+
+  'user.reportAbuse'(message) {
+    return Reports.insert({
+      message: message,
+      reportedBy: Meteor.userId()
+    });
   },
 
   'convo.create'(id) {

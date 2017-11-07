@@ -7,6 +7,7 @@ import FriendList from './components/friendList/FriendList';
 import Menu from './components/menu/Menu';
 import Chatbox from './components/chatbox/Chatbox';
 import RemoveFriend from './components/removeFriend/RemoveFriend';
+import ReportAbuse from './components/reportAbuse/ReportAbuse';
 import './peer';
 
 export default class App extends Component {
@@ -23,6 +24,7 @@ export default class App extends Component {
       loginClasses: "login",
       callingClasses: "calling",
       removeFriendClasses: "remove-friend",
+      reportAbuseClasses: "report-abuse",
       contacts: [],
       search: [],
       requests: [],
@@ -99,6 +101,11 @@ export default class App extends Component {
 				removeFriendClasses: "remove-friend",
 				burgerClasses: "hamburglar is-closed"
 			});
+		} else if(this.state.reportAbuseClasses === "report-abuse report-abuse-show") {
+			this.setState({
+				reportAbuseClasses: "report-abuse",
+				burgerClasses: "hamburglar is-closed"
+			});
 		} else {
 			if(!this.state.friendToggle) this.toggleFriends();
 	    this.setState((prevState, prevProps) => {
@@ -140,6 +147,19 @@ export default class App extends Component {
   		}									
   	});
   }
+
+	toggleReportAbuse = () => {
+  	this.setState((prevState) => {
+  		return {
+  			reportAbuseClasses: prevState.reportAbuseClasses === "report-abuse" ?
+  													"report-abuse report-abuse-show" :
+  													"report-abuse",
+  			burgerClasses: prevState.burgerClasses === "hamburglar is-closed" ?
+  											"hamburglar is-closed is-arrow" :
+  											"hamburglar is-closed"
+  		}									
+  	});
+  }  
 
   //SEARCH FOR FRIENDS AND USERS
   handleSearch = (val) => {
@@ -403,7 +423,8 @@ export default class App extends Component {
 						classes={this.state.menuClasses}
 						user={this.state.user}
 						handleNewImage={this.handleNewImage}
-						toggleRemoveFriend={this.toggleRemoveFriend} />
+						toggleRemoveFriend={this.toggleRemoveFriend}
+						toggleReportAbuse={this.toggleReportAbuse} />
 				}
 
 				{
@@ -439,6 +460,13 @@ export default class App extends Component {
 					<RemoveFriend
 						classes={this.state.removeFriendClasses} 
 						friends={this.state.contacts} />
+				}
+
+				{
+					this.state.loggedIn &&
+					<ReportAbuse
+						classes={this.state.reportAbuseClasses}
+						toggleReportAbuse={this.toggleReportAbuse} />
 				}
 
 			</section>
