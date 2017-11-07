@@ -13,7 +13,7 @@ export default class RemoveFriend extends Component {
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentWillReceiveProps = (nextProps) => {
 		if(nextProps.friends !== this.props.friends && this.state.currentSearch === "") {
 			this.handleSearch({target: { value: ""}});
 		}

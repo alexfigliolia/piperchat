@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export default class User extends Component {
 
-	componentWillReceiveProps(nextProps) {
+	componentWillReceiveProps = (nextProps) => {
 		if(nextProps !== this.props) {
 			const al = document.getElementsByClassName('action-loading');
 			Array.from(al).forEach(el => {

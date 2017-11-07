@@ -13,12 +13,12 @@ export default class Chatbox extends Component {
 		}
 	}
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.setState({width: this.refs.mc.clientWidth});
     this.handleScroll();
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     if(nextProps.width !== this.props.width) {
       this.setState({width: this.refs.mc.clientWidth});
     }

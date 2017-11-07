@@ -14,7 +14,7 @@ export default class Menu extends PureComponent {
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentWillReceiveProps = (nextProps) => {
 		if(nextProps.user.name !== this.props.user.name) this.setState({ userName: nextProps.user.name});
 		if(nextProps.classes === "menu" && this.state.profClasses === "prof prof-flip") {
 			this.makeChanges();

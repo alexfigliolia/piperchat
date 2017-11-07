@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import update from 'immutability-helper';
 import Login from './components/login/Login';
 import Header from './components/header/Header';
-import Dashboard from './components/dashboard/Dashboard';
+import { Dashboard } from './components/dashboard/Dashboard';
 import FriendList from './components/friendList/FriendList';
 import Menu from './components/menu/Menu';
 import Chatbox from './components/chatbox/Chatbox';
@@ -42,13 +42,13 @@ export default class App extends Component {
 		this.ring = new Audio("sony_ericsson_tone.mp3");
 	}
 
-	componentDidMount() {
+	componentDidMount = () => {
 		window.addEventListener('resize', () => {
 			this.setState({ height: window.innerHeight, width: window.innerWidth });
 		});
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentWillReceiveProps = (nextProps) => {
 		if(this.props !== nextProps) {
 			console.log(nextProps);
 			if(nextProps.user === null || nextProps.user === undefined) {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export default class You extends Component {
   
-  componentDidMount(){
+  componentDidMount = () => {
     this.refs.you.onloadedmetadata = (e) => {
       this.refs.you.play();
       this.props.setCallingScreen();

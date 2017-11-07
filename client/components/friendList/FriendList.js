@@ -16,7 +16,7 @@ export default class FriendList extends Component {
 		this.props.handleSearch(e.target.value);
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentWillReceiveProps = (nextProps) => {
 		if(nextProps !== this.props && this.props.classes === "friend-list") {
 			this.refs.list.scrollTop = 0;
 		}

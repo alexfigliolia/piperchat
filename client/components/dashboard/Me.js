@@ -12,7 +12,7 @@ export default class Me extends Component {
 		}
 	}
 
-	componentDidMount(){
+	componentDidMount = () => {
 		setTimeout(() => { 
 			this.props.getLocalStream();
 			this.props.initPeer();

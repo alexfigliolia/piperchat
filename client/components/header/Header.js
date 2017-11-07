@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Burger from './Burger.js';
+import { Burger } from './Burger.js';
 
 export default class Header extends Component {
   constructor(props) {
@@ -9,7 +9,7 @@ export default class Header extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     if(this.props.messages.length !== 0 && nextProps.messages.length !== 0) {
       if(nextProps.messages.length !== this.props.messages.length && 
       nextProps.messages[nextProps.messages.length - 1].from.name !== this.props.user.name) {

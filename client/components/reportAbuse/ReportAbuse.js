@@ -10,7 +10,7 @@ export default class ReportAbuse extends Component {
 		}
 	}
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
   	if(nextProps.classes === "report-abuse") {
   		this.refs.t.value = '';
   		this.setState({
@@ -37,7 +37,7 @@ export default class ReportAbuse extends Component {
   	}
   }
 
-  render() {
+  render = () => {
     return (
     	<section className={this.props.classes}>
     		<div>
