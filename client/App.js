@@ -313,6 +313,7 @@ export default class App extends Component {
 			} else {
 				you.src = window.URL.createObjectURL(remoteStream);
 			}
+			you.muted = false;
 	  });
 	}
 
@@ -354,6 +355,7 @@ export default class App extends Component {
 			} else {
 				you.src = window.URL.createObjectURL(remoteStream);
 			}
+			you.muted = false;
 			console.log('set remote stream');
 			this.setState({ callingClasses: "calling calling-show received" });
 	  });
@@ -369,6 +371,7 @@ export default class App extends Component {
   		this.currentCall.close();
   		this.outgoingCall = null;
   	}
+  	document.getElementById('you').muted = true;
   }
 
 	render = () => {

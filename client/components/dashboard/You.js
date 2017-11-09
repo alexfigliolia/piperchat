@@ -17,6 +17,7 @@ export default class You extends Component {
     		width={this.props.width}
         ref="you"
         playsInline
+        muted="true"
         id="you"></video>
     );
   }
