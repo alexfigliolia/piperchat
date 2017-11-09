@@ -5,7 +5,7 @@
 	height: 50px;
 	width: 100%;
 	@include center;
-	background: #0F776E;
+	background: $piper;
 	@include headerShadow;
 	z-index: 98876;
 	@media #{$mq-670} {
@@ -25,6 +25,9 @@
 			width: 40px;
 			margin-left: 10px;
 			position: relative;
+			transform: translateX(-120%);
+			transition-duration: 0.3s;
+			z-index: 2;
 			@media #{$mq-670} {
 				width: 60px;
 				height: 60px;
@@ -32,15 +35,6 @@
 			}
 		}
 		&>.has-new {
-			// background: url('people-red.svg') no-repeat center;
-			// background-size: 35px 35px;
-			// height: 40px;
-			// width: 40px;
-			// @media #{$mq-670} {
-			// 	width: 60px;
-			// 	height: 60px;
-			// 	background-size: 45px 45px;
-			// }
 			&::after {
 				content: "!";
 				position: absolute;
@@ -65,18 +59,38 @@
 			margin-top: 2.5px;
 			height: 45px;
 			width: 100px;
+			transition-duration: 0.3s;
+			transform: translateY(-100%);
+			z-index: 2;
 			@media #{$mq-670} {
 				width: 150px;
 				height: 75px;
 			}
 		}
 		&>#burg {
+			transform: translateX(100%);
 			height: 40px;
 			width: 40px;
+			transition-duration: 0.3s;
+			z-index: 2;
 			@media #{$mq-670} {
 				width: 60px;
 				height: 60px;
 			}
 		}
+	}
+}
+
+.header-show {
+	&>div>.contacts {
+		transform: translateX(0%);
+		transition-delay: 0.3s;
+	}
+	&>div>#burg {
+		transform: translateX(0%);
+		transition-delay: 0.3s;
+	}
+	&>div>.logo {
+		transform: translateY(0%);
 	}
 }

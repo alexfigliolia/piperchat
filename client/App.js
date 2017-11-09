@@ -16,6 +16,7 @@ export default class App extends Component {
 		this.state = {
 			loggedIn: false,
 			user: null,
+			headerClasses: "header",
 			burgerClasses: "hamburglar is-open",
       burgerToggle: true,
       friendListClasses: "friend-list",
@@ -63,7 +64,7 @@ export default class App extends Component {
 	needsAuth = () => {
 		if(this.loader !== null) {
 			this.loader.classList.add('app-loader-hidden-op');
-			this.setState({ loggedIn: false, user: null, burgerClasses: "hamburglar is-open", burgerToggle: true, friendListClasses: "friend-list", friendToggle: true, menuClasses: "menu" });
+			this.setState({ loggedIn: false, user: null, headerClasses: "header", burgerClasses: "hamburglar is-open", burgerToggle: true, friendListClasses: "friend-list", friendToggle: true, menuClasses: "menu" });
 			setTimeout(() => { 
 				this.loader.remove();
 				this.setState({ loginClasses: "login login-show "})
@@ -96,7 +97,10 @@ export default class App extends Component {
 			this.setState({ loginClasses: "login login-show login-hide" }) 
 			if(this.loader !== null) {
 				this.loader.classList.add('app-loader-hidden')
-				setTimeout(() => { this.loader.remove() }, 800);
+				setTimeout(() => { 
+					this.loader.remove();
+					this.setState({ headerClasses: "header header-show" });
+				}, 800);
 			}
 		}, 600);
 		setTimeout(() => { this.setState({ loggedIn: true }) }, 1100);
@@ -105,15 +109,9 @@ export default class App extends Component {
 	//OPEN MENU
 	toggleBurger = () => {
 		if(this.state.removeFriendClasses === "remove-friend remove-friend-show") {
-			this.setState({
-				removeFriendClasses: "remove-friend",
-				burgerClasses: "hamburglar is-closed"
-			});
+			this.toggleRemoveFriend();
 		} else if(this.state.reportAbuseClasses === "report-abuse report-abuse-show") {
-			this.setState({
-				reportAbuseClasses: "report-abuse",
-				burgerClasses: "hamburglar is-closed"
-			});
+			this.toggleReportAbuse();
 		} else {
 			if(!this.state.friendToggle) this.toggleFriends();
 	    this.setState((prevState, prevProps) => {
@@ -151,7 +149,10 @@ export default class App extends Component {
   													"remove-friend",
   			burgerClasses: prevState.burgerClasses === "hamburglar is-closed" ?
   											"hamburglar is-closed is-arrow" :
-  											"hamburglar is-closed"
+  											"hamburglar is-closed",
+  			menuClasses: prevState.menuClasses === "menu menu-show" ?
+  										"menu menu-show menu-move" :
+  										"menu menu-show"
   		}									
   	});
   }
@@ -164,7 +165,10 @@ export default class App extends Component {
   													"report-abuse",
   			burgerClasses: prevState.burgerClasses === "hamburglar is-closed" ?
   											"hamburglar is-closed is-arrow" :
-  											"hamburglar is-closed"
+  											"hamburglar is-closed",
+  			menuClasses: prevState.menuClasses === "menu menu-show" ?
+  										"menu menu-show menu-move" :
+  										"menu menu-show"
   		}									
   	});
   }  
@@ -393,6 +397,7 @@ export default class App extends Component {
 				}
 
 				<Header
+					classes={this.state.headerClasses}
 					burgerStuff={this.state.burgerClasses}
 					burger={this.toggleBurger}
 					friends={this.toggleFriends}

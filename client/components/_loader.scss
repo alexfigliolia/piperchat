@@ -6,7 +6,7 @@
 	max-height: 100vh;
 	overflow: hidden;
 	width: 100%;
-	@include backgroundBottom;
+	@include backgroundPiper;
 	z-index: 20000900987;
 	@include center;
 	&>div {
@@ -29,7 +29,7 @@
 	transform: translateY(-100%);
 	transition-duration: 0.5s;
 	transition-delay: 0.3s;
-	transition-timing-function: ease-in-out;
+	transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   &>div {
     transform: scale(0);
     transition-duration: 0.3s;
@@ -41,7 +41,7 @@
   opacity: 0;
   transition-duration: 0.3s;
   transition-delay: 0.3s;
-  transition-timing-function: ease-in;
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   &>div {
     transform: scale(0);
     transition-duration: 0.3s;

@@ -23,6 +23,7 @@
 		width: 100%;
 		flex-direction: column;
 		position: relative;
+		transition-duration: 0.3s;
 		&>.prof {
 			margin-top: 20px;
 			width: 100%;
@@ -172,4 +173,10 @@
 
 .menu-show {
 	transform: translateX(0%);
+}
+
+.menu-move {
+	&>div {
+		transform: translateX(-100%);
+	}
 }

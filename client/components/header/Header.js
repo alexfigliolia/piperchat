@@ -33,7 +33,7 @@ export default class Header extends Component {
 
   render = () => {
     return (
-    	<header className="header">
+    	<header className={this.props.classes}>
     		<div>
     			<button 
             onClick={this.seeBuddies}
