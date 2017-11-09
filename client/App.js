@@ -71,6 +71,10 @@ export default class App extends Component {
 		} else {
 			this.setState({ loggedIn: false, loginClasses: "login login-show "});
 		}
+		this.stream = null;
+		this.incomingCall = null;
+		this.peer = null;
+		this.remoteStream = null;
 	}
 
 	//ALLOW ACCESS TO APP IF THE USER IS RECOGNIZED
