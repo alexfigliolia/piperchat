@@ -141,6 +141,7 @@
 				@include center;
 				transition-duration: 0.5s;
 				overflow: hidden;
+				border-radius: 0px;
 				&:hover {
 					background: lighten($plite, 15%);
 				}

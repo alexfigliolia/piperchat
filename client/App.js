@@ -82,7 +82,11 @@ export default class App extends Component {
 		this.setState({ 
 			user: path.user, 
 			contacts: path.buddyList.length !== 0 ? path.buddyList[0].friends : [],
-			search: path.buddyList.length !== 0 ? path.buddyList[0].friends : [],
+			search: path.buddyList.length !== 0 ? path.buddyList[0].friends.sort((a, b) => {
+        if(a.name < b.name) return -1;
+        if(a.name > b.name) return 1;
+        return 0;
+    	}) : [],
 			requests: path.buddyList.length !== 0 ? path.buddyList[0].requests : [],
 			sentRequests: path.buddyList.length !== 0 ? path.buddyList[0].sentRequests : [],
 			loginClasses: "login login-show" 
@@ -181,6 +185,8 @@ export default class App extends Component {
   		this.setState({search: this.state.contacts});
   	}
   }
+
+
 
   //CLOSE A CHAT
   closeChat = (e) => {
