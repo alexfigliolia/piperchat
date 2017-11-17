@@ -25,6 +25,7 @@ function updateFriends(id) {
 Accounts.onCreateUser((options, user) => {
   user.name = options.name;
   user.image = null;
+  user.newMessages = [];
   return user;
 });
 
@@ -40,7 +41,8 @@ Meteor.publish('userData', function() {
           "name" : 1,
           "profile.peerId" : 1,
           "image": 1,
-          "_id": 1
+          "_id": 1,
+          "newMessages": 1
        }
      });
   } else {
@@ -70,7 +72,10 @@ Meteor.publish('allUserData', function() {
      {
        fields: {
           "name" : 1,
-          "image": 1
+          "image": 1,
+          "_id" : 1,
+          "emails": 0,
+          "newMessages": 0
        }
      });
   } else {

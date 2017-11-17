@@ -27,6 +27,7 @@ Meteor.methods({
   },
 
   'user.cleanName'(name) {
+    check(name, String);
     const buddyLists = BuddyLists.find().fetch();
     for(let i = 0; i<buddyLists.length; i++) {
       const buddyListId = buddyLists[i]._id
@@ -73,6 +74,7 @@ Meteor.methods({
   },
 
   'user.cleanImage'(url) {
+    check(url, String);
     const buddyLists = BuddyLists.find().fetch();
     for(let i = 0; i<buddyLists.length; i++) {
       const buddyListId = buddyLists[i]._id
@@ -156,17 +158,33 @@ Meteor.methods({
   },
 
   'user.updatePeerID'(id){
+    check(id, String);
     return Meteor.users.update({_id: Meteor.userId()}, {
       $set: { profile: { peerId: id} }
     });
   },
 
   'user.getPeerId'(id){
+    check(id, String);
     const user = Meteor.users.findOne({_id: id});
     return user.profile.peerId;
   },
 
+  'user.addNew'(id){
+    check(id, String);
+    const user = Meteor.users.findOne({_id: id});
+    if(user.newMessages === undefined){
+      Meteor.users.update({_id: id}, {
+        $set: { newMessages: [] }
+      });
+    }
+    Meteor.users.update({_id: id}, {
+      $push: { newMessages: Meteor.userId() }
+    });
+  },
+
   'user.removeFriend'(id){
+    check(id, String);
     const user = Meteor.users.findOne({_id: id}, { _id: 1, name: 1, image: 1});
     BuddyLists.update({owner: id}, {
       $pull: { friends: {_id: Meteor.userId()} }
@@ -178,6 +196,7 @@ Meteor.methods({
   },
 
   'user.reportAbuse'(message) {
+    check(message, String);
     return Reports.insert({
       message: message,
       reportedBy: Meteor.userId()
