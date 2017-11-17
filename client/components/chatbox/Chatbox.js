@@ -47,6 +47,9 @@ export default class Chatbox extends Component {
           console.log(error);
         } else {
           this.refs.m.value = '';
+          Meteor.call('user.addNew', this.props.with._id, (err, res) => {
+            if(err) console.log(err);
+          })
         }
       });
     }
