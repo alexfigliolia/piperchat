@@ -72,10 +72,7 @@ Meteor.publish('allUserData', function() {
      {
        fields: {
           "name" : 1,
-          "image": 1,
-          "_id" : 1,
-          "emails": 0,
-          "newMessages": 0
+          "image": 1
        }
      });
   } else {
