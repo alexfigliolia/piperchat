@@ -185,13 +185,8 @@ Meteor.methods({
 
   'user.removeNew'(id){
     check(id, String);
-    const user = Meteor.users.findOne({_id: id});
-    if(user.newMessages === undefined){
-      Meteor.users.update({_id: id}, {
-        $set: { newMessages: [] }
-      });
-    } else {
-      Meteor.users.update({_id: id}, {
+    if(Meteor.user().newMessages !== undefined){
+      Meteor.users.update({_id: Meteor.userId()}, {
         $pull: { newMessages: id }
       });
     }
