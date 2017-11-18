@@ -192,7 +192,7 @@ Meteor.methods({
       });
     } else {
       Meteor.users.update({_id: id}, {
-        $pull: { newMessages: Meteor.userId() }
+        $pull: { newMessages: id }
       });
     }
   },
