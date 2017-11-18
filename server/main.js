@@ -183,6 +183,20 @@ Meteor.methods({
     });
   },
 
+  'user.removeNew'(id){
+    check(id, String);
+    const user = Meteor.users.findOne({_id: id});
+    if(user.newMessages === undefined){
+      Meteor.users.update({_id: id}, {
+        $set: { newMessages: [] }
+      });
+    } else {
+      Meteor.users.update({_id: id}, {
+        $pull: { newMessages: Meteor.userId() }
+      });
+    }
+  },
+
   'user.removeFriend'(id){
     check(id, String);
     const user = Meteor.users.findOne({_id: id}, { _id: 1, name: 1, image: 1});
