@@ -215,7 +215,7 @@ Meteor.methods({
   'user.addPresence'(id){
     check(id, String);
     if(id !== null) {
-      const exists = Presences.find({ userId: Meteor.userId() });
+      const exists = Presences.find({ userId: id });
       if(exists.length === 0) {
         return Presences.insert({ userId: id, state: 'online' });
       }
