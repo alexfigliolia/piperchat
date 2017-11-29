@@ -212,19 +212,25 @@ Meteor.methods({
     });
   },
 
-  'user.addPresence'(){
-    const exists = Presences.find({ userId: Meteor.userId() });
-    if(exists.length === 0) {
-      return Presences.insert({
-        userId: Meteor.userId()
-      });
+  'user.addPresence'(id){
+    check(id, String);
+    if(id !== null) {
+      const exists = Presences.find({ userId: Meteor.userId() });
+      if(exists.length === 0) {
+        return Presences.insert({
+          userId: Meteor.userId()
+        });
+      }
     }
   },
 
-  'user.removePresence'(){
-    return Presences.remove({
-      userId: Meteor.userId()
-    });
+  'user.removePresence'(id){
+    check(id, String);
+    if(id !== null) {
+      return Presences.remove({
+        userId: Meteor.userId()
+      });
+    }
   },
 
   'convo.create'(id) {
