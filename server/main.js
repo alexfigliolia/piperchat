@@ -212,23 +212,6 @@ Meteor.methods({
     });
   },
 
-  'user.addPresence'(id){
-    check(id, String);
-    if(id !== null) {
-      const exists = Presences.find({ userId: id });
-      if(exists.length === 0) {
-        return Presences.insert({ userId: id, state: 'online' });
-      }
-    }
-  },
-
-  'user.removePresence'(id){
-    check(id, String);
-    if(id !== null) {
-      return Presences.remove({ userId: id });
-    }
-  },
-
   'convo.create'(id) {
     check(id, String);
     const them = Meteor.users.findOne({_id: id}, { _id: 1, name: 1, image: 1});
