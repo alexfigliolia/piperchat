@@ -212,6 +212,21 @@ Meteor.methods({
     });
   },
 
+  'user.addPresence'(){
+    const exists = Presences.find({ userId: Meteor.userId() });
+    if(exists.length === 0) {
+      return Presences.insert({
+        userId: Meteor.userId()
+      });
+    }
+  },
+
+  'user.removePresence'(){
+    return Presences.remove({
+      userId: Meteor.userId()
+    });
+  },
+
   'convo.create'(id) {
     check(id, String);
     const them = Meteor.users.findOne({_id: id}, { _id: 1, name: 1, image: 1});
